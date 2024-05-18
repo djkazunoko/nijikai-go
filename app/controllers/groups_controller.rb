@@ -2,6 +2,7 @@
 
 class GroupsController < ApplicationController
   before_action :set_group, only: %i[show edit update destroy]
+  skip_before_action :authenticate, only: %i[index show]
 
   def index
     @groups = Group.all
