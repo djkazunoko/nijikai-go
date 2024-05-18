@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_many :groups, foreign_key: :owner_id, dependent: :destroy, inverse_of: :owner
+
   validates :provider, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }
   validates :name, presence: true, uniqueness: true
