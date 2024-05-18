@@ -10,13 +10,13 @@ class GroupsController < ApplicationController
   def show; end
 
   def new
-    @group = Group.new
+    @group = current_user.groups.new
   end
 
   def edit; end
 
   def create
-    @group = Group.new(group_params)
+    @group = current_user.groups.new(group_params)
 
     if @group.save
       redirect_to group_url(@group), notice: '2次会グループが作成されました'
