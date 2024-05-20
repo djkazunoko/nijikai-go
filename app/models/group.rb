@@ -9,4 +9,10 @@ class Group < ApplicationRecord
   validates :capacity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :location, presence: true
   validates :payment_method, presence: true
+
+  def created_by?(user)
+    return false unless user
+
+    owner_id == user.id
+  end
 end
