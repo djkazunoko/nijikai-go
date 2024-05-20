@@ -1,5 +1,9 @@
 div id="#{dom_id group}"
   p
+    | 主催者
+    = link_to("https://github.com/#{group.owner.name}", target: '_blank',) do
+      = image_tag(group.owner.image_url, width: '50', height: '50')
+  p
     = "#{group.hashtag} の2次会"
   p
     = group.name
