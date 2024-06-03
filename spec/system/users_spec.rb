@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :system do
   before do
-    Rails.application.env_config['omniauth.auth'] = github_mock
+    github_mock(FactoryBot.build(:user))
   end
 
   describe 'user authentication' do
@@ -12,7 +12,7 @@ RSpec.describe 'Users', type: :system do
       it 'allows users to login' do
         visit root_path
         expect(page).to have_content 'GitHubアカウントが必要です'
-        expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
+        expect(page).not_to have_css('.avatar img[src="https://example.com/alice.png"]')
 
         expect do
           click_button 'サインアップ / ログインをして2次会グループを作成'
@@ -21,19 +21,19 @@ RSpec.describe 'Users', type: :system do
         end.to change(User, :count).by(1)
 
         expect(page).to have_current_path(new_group_path)
-        expect(page).to have_css('.avatar img[src="https://example.com/testuser.png"]')
+        expect(page).to have_css('.avatar img[src="https://example.com/alice.png"]')
       end
     end
 
     context 'when authentication is failed' do
       before do
-        Rails.application.env_config['omniauth.auth'] = github_invalid_mock
+        github_invalid_mock
       end
 
       it 'redirects to root_path' do
         visit root_path
         expect(page).to have_content 'GitHubアカウントが必要です'
-        expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
+        expect(page).not_to have_css('.avatar img[src="https://example.com/alice.png"]')
 
         expect do
           click_button 'サインアップ / ログインをして2次会グループを作成'
@@ -42,7 +42,7 @@ RSpec.describe 'Users', type: :system do
         end.not_to change(User, :count)
 
         expect(page).to have_current_path(root_path)
-        expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
+        expect(page).not_to have_css('.avatar img[src="https://example.com/alice.png"]')
       end
     end
   end
@@ -51,18 +51,18 @@ RSpec.describe 'Users', type: :system do
     it 'allows users to logout' do
       visit root_path
       expect(page).to have_content 'GitHubアカウントが必要です'
-      expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
+      expect(page).not_to have_css('.avatar img[src="https://example.com/alice.png"]')
 
       click_button 'サインアップ / ログインをして2次会グループを作成'
       expect(page).to have_current_path(new_group_path)
-      expect(page).to have_css('.avatar img[src="https://example.com/testuser.png"]')
+      expect(page).to have_css('.avatar img[src="https://example.com/alice.png"]')
 
       find('.avatar').click
       click_button 'ログアウト'
       expect(page).to have_current_path(root_path)
       expect(page).to have_content 'ログアウトしました'
       expect(page).to have_content 'GitHubアカウントが必要です'
-      expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
+      expect(page).not_to have_css('.avatar img[src="https://example.com/alice.png"]')
     end
   end
 
@@ -71,7 +71,7 @@ RSpec.describe 'Users', type: :system do
       visit root_path
       click_button 'サインアップ / ログインをして2次会グループを作成'
       expect(page).to have_current_path(new_group_path)
-      expect(page).to have_css('.avatar img[src="https://example.com/testuser.png"]')
+      expect(page).to have_css('.avatar img[src="https://example.com/alice.png"]')
 
       find('.avatar').click
       expect do
@@ -80,7 +80,7 @@ RSpec.describe 'Users', type: :system do
         end
         expect(page).to have_current_path(root_path)
         expect(page).to have_content 'アカウントが削除されました'
-        expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
+        expect(page).not_to have_css('.avatar img[src="https://example.com/alice.png"]')
       end.to change(User, :count).by(-1)
     end
   end
