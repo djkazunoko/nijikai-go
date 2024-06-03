@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Retirements', type: :request do
   before do
-    Rails.application.env_config['omniauth.auth'] = github_mock
-    get '/auth/github/callback'
+    github_mock(FactoryBot.build(:user))
+    login
   end
 
   describe 'POST /create' do

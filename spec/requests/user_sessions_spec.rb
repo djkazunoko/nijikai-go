@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'UserSessions', type: :request do
   before do
-    Rails.application.env_config['omniauth.auth'] = github_mock
+    github_mock(FactoryBot.build(:user))
   end
 
   describe 'POST /create' do
@@ -28,7 +28,7 @@ RSpec.describe 'UserSessions', type: :request do
 
     context 'with invalid parameters' do
       before do
-        Rails.application.env_config['omniauth.auth'] = github_invalid_mock
+        github_invalid_mock
       end
 
       it 'does not create a new user' do
