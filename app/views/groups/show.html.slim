@@ -1,11 +1,9 @@
-p style="color: green" = notice
-
 .mb-4
   == render @group
 
 div
-  = link_to '編集', edit_group_path(@group)
-
-  = button_to '削除', @group, method: :delete, data: { turbo_confirm: '本当に削除しますか？' }
+  - if @group.created_by?(current_user)
+    = link_to '編集', edit_group_path(@group)
+    = button_to '削除', @group, method: :delete, data: { turbo_confirm: '本当に削除しますか？' }
 
   = link_to '2次会グループ一覧に戻る', groups_path

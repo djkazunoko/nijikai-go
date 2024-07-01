@@ -15,4 +15,8 @@ html
     .container.mx-auto
       = render 'application/header'
       main
+        - if flash.notice
+          p style="color: green" = notice
+        - if flash.alert
+          p style="color: red" = alert
         = yield

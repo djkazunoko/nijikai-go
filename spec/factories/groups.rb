@@ -8,6 +8,7 @@ FactoryBot.define do
     capacity { 10 }
     location { '未定' }
     payment_method { '割り勘' }
+    association :owner
 
     trait :invalid do
       hashtag { nil }
