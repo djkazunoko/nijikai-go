@@ -1,5 +1,3 @@
-p style="color: green" = notice
-
 p.mb-4
   | 2次会GO！は、テック系イベントの二次会参加者を簡単に集めることができる、二次会参加者募集ツールです。
 
@@ -21,6 +19,10 @@ p.text-xl.font-bold.mb-4
 
 #groups
   - @groups.each do |group|
+    p
+      | 主催者
+      = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
+        = image_tag(group.owner.image_url, width: '50', height: '50')
     p
       = "#{group.hashtag} の2次会"
     p

@@ -36,28 +36,28 @@ RSpec.describe User, type: :model do
 
     it 'is invalid with a duplicate name' do
       FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, image_url: 'example.com/2', provider: 'twitter', uid: '0002')
+      user2 = FactoryBot.build(:user, image_url: 'https://example.com/bob.png', provider: 'twitter', uid: '0002')
       user2.valid?
       expect(user2.errors[:name]).to include('はすでに存在します')
     end
 
     it 'is invalid with a duplicate image_url' do
       FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'tester2', provider: 'twitter', uid: '0002')
+      user2 = FactoryBot.build(:user, name: 'bob', provider: 'twitter', uid: '0002')
       user2.valid?
       expect(user2.errors[:image_url]).to include('はすでに存在します')
     end
 
     it 'is invalid with a duplicate uid and provider pair' do
       FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'tester2', image_url: 'example.com/2')
+      user2 = FactoryBot.build(:user, name: 'bob', image_url: 'https://example.com/bob.png')
       user2.valid?
       expect(user2.errors[:uid]).to include('はすでに存在します')
     end
 
     it 'allows duplicate uid with different provider' do
       FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'tester2', image_url: 'example.com/2', provider: 'twitter')
+      user2 = FactoryBot.build(:user, name: 'bob', image_url: 'https://example.com/bob.png', provider: 'twitter')
       expect(user2).to be_valid
     end
   end
@@ -68,8 +68,8 @@ RSpec.describe User, type: :model do
         provider: 'github',
         uid: '0001',
         info: {
-          nickname: 'testuser',
-          image: 'https://example.com/testuser.png'
+          nickname: 'alice',
+          image: 'https://example.com/alice.png'
         }
       }
     end
@@ -86,8 +86,8 @@ RSpec.describe User, type: :model do
         expect(user).to have_attributes(
           provider: 'github',
           uid: '0001',
-          name: 'testuser',
-          image_url: 'https://example.com/testuser.png'
+          name: 'alice',
+          image_url: 'https://example.com/alice.png'
         )
       end
     end
@@ -106,8 +106,8 @@ RSpec.describe User, type: :model do
         expect(user).to have_attributes(
           provider: 'github',
           uid: '0001',
-          name: 'tester1',
-          image_url: 'example.com/1'
+          name: 'alice',
+          image_url: 'https://example.com/alice.png'
         )
       end
     end

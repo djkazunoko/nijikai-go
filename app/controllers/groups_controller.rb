@@ -1,22 +1,25 @@
 # frozen_string_literal: true
 
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[show edit update destroy]
+  before_action :set_group, only: %i[edit update destroy]
+  skip_before_action :authenticate, only: %i[index show]
 
   def index
     @groups = Group.all
   end
 
-  def show; end
+  def show
+    @group = Group.find(params[:id])
+  end
 
   def new
-    @group = Group.new
+    @group = current_user.groups.new
   end
 
   def edit; end
 
   def create
-    @group = Group.new(group_params)
+    @group = current_user.groups.new(group_params)
 
     if @group.save
       redirect_to group_url(@group), notice: '2次会グループが作成されました'
@@ -42,7 +45,7 @@ class GroupsController < ApplicationController
   private
 
   def set_group
-    @group = Group.find(params[:id])
+    @group = current_user.groups.find(params[:id])
   end
 
   def group_params
