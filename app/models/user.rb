@@ -4,6 +4,7 @@ class User < ApplicationRecord
   before_destroy :check_no_groups_exist
 
   has_many :groups, foreign_key: :owner_id, dependent: :destroy, inverse_of: :owner
+  has_many :tickets, dependent: :destroy
 
   validates :provider, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }
