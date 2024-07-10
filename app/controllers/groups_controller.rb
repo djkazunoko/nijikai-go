@@ -10,6 +10,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @tickets = @group.tickets.includes(:user).order(:created_at)
   end
 
   def new
