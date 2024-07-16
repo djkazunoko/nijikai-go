@@ -10,3 +10,12 @@ ja:
         capacity: 定員
         location: 会場
         payment_method: 会計方法
+      ticket:
+        group_id: 2次会グループ
+    errors:
+      models:
+        ticket:
+          attributes:
+            group_id:
+              format: '%{message}'
+              taken: この%{attribute}には既に参加しています

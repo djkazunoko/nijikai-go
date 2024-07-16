@@ -6,6 +6,8 @@ class TicketsController < ApplicationController
     ticket = current_user.tickets.build(group:)
     if ticket.save
       redirect_to group, notice: '2次会グループに参加しました'
+    else
+      redirect_to group, alert: ticket.errors.full_messages.to_sentence
     end
   end
 
