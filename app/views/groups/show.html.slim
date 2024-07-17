@@ -9,6 +9,8 @@ div
   = link_to '2次会グループ一覧に戻る', groups_path
 
 div
-  - if logged_in?
+  - if @ticket
+    = button_to '参加をキャンセルする', group_ticket_path(@group, @ticket), method: :delete
+  - elsif logged_in?
     = form_with(url: group_tickets_path(@group)) do |form|
       = form.submit "この2次会グループに参加する"
