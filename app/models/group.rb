@@ -16,4 +16,8 @@ class Group < ApplicationRecord
 
     owner_id == user.id
   end
+
+  def can_participate?
+    tickets.count < capacity
+  end
 end
