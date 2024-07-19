@@ -11,6 +11,10 @@ div
 div
   - if @ticket
     = button_to '参加をキャンセルする', group_ticket_path(@group, @ticket), method: :delete
-  - elsif logged_in?
-    = form_with(url: group_tickets_path(@group)) do |form|
-      = form.submit "この2次会グループに参加する"
+  - elsif @group.can_participate?
+    - if logged_in?
+      = form_with(url: group_tickets_path(@group)) do |form|
+        = form.submit "この2次会グループに参加する"
+  - else
+    p
+     | 定員に達したため参加できません
