@@ -16,6 +16,11 @@ div
       - if logged_in?
         = form_with(url: group_tickets_path(@group)) do |form|
           = form.submit "この2次会グループに参加する"
+      - else
+        = button_to 'サインアップ / ログインをして2次会グループに参加',
+                    "/auth/github/?group_id=#{@group.id}",
+                    data: { turbo: false },
+                    class: 'btn'
     - else
       p
         | 定員に達したため参加できません

@@ -2,13 +2,7 @@
 
 class TicketsController < ApplicationController
   def create
-    group = Group.find(params[:group_id])
-    ticket = current_user.tickets.build(group:)
-    if ticket.save
-      redirect_to group, notice: '2次会グループに参加しました'
-    else
-      redirect_to group, alert: ticket.errors.full_messages.to_sentence
-    end
+    create_ticket_and_redirect(current_user, params[:group_id])
   end
 
   def destroy

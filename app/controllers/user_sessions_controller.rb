@@ -6,7 +6,13 @@ class UserSessionsController < ApplicationController
   def create
     user = User.find_or_create_from_auth_hash!(request.env['omniauth.auth'])
     session[:user_id] = user.id
-    redirect_to new_group_path, notice: 'ログインしました'
+    params = request.env['omniauth.params']
+
+    if params['group_id']
+      create_ticket_and_redirect(user, params['group_id'])
+    else
+      redirect_to new_group_path, notice: 'ログインしました'
+    end
   end
 
   def destroy
