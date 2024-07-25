@@ -2,6 +2,7 @@
 
 class Group < ApplicationRecord
   belongs_to :owner, class_name: 'User', inverse_of: :groups
+  has_many :tickets, dependent: :destroy
 
   validates :hashtag, presence: true
   validates :name, presence: true
@@ -10,9 +11,23 @@ class Group < ApplicationRecord
   validates :location, presence: true
   validates :payment_method, presence: true
 
+  validate :capacity_cannot_be_less_than_participants, on: :update
+
   def created_by?(user)
     return false unless user
 
     owner_id == user.id
+  end
+
+  def can_participate?
+    tickets.count < capacity
+  end
+
+  private
+
+  def capacity_cannot_be_less_than_participants
+    return unless capacity < tickets.count
+
+    errors.add(:capacity, 'は参加人数以上の値にしてください')
   end
 end
