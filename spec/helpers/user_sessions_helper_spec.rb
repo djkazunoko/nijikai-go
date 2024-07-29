@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe UserSessionsHelper, type: :helper do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
 
   describe '#current_user' do
     context 'when user is logged in' do

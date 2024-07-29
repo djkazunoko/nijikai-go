@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Retirements', type: :request do
   before do
-    github_mock(FactoryBot.build(:user))
+    github_mock(build(:user))
     login
   end
 

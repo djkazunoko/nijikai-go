@@ -6,7 +6,7 @@ RSpec.describe 'Users', type: :system do
   describe 'login' do
     context 'when authentication is successful' do
       before do
-        github_mock(FactoryBot.build(:user))
+        github_mock(build(:user))
       end
 
       it 'can login' do
@@ -49,7 +49,7 @@ RSpec.describe 'Users', type: :system do
 
   describe 'logout' do
     before do
-      github_mock(FactoryBot.build(:user))
+      github_mock(build(:user))
     end
 
     it 'can logout' do
@@ -73,7 +73,7 @@ RSpec.describe 'Users', type: :system do
   describe 'delete account' do
     context 'when no hosted groups exist' do
       before do
-        github_mock(FactoryBot.build(:user))
+        github_mock(build(:user))
       end
 
       it 'can delete own account' do
@@ -96,7 +96,7 @@ RSpec.describe 'Users', type: :system do
 
     context 'when hosted groups exist' do
       before do
-        group = FactoryBot.create(:group)
+        group = create(:group)
         github_mock(group.owner)
       end
 

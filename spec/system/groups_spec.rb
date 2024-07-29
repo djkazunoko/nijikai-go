@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Groups', type: :system do
-  let(:group) { FactoryBot.create(:group) }
-  let(:bob) { FactoryBot.build(:user, :bob) }
+  let(:group) { create(:group) }
+  let(:bob) { build(:user, :bob) }
 
   describe 'creating a new group' do
     before do

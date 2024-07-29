@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'UserSessions', type: :request do
   before do
-    github_mock(FactoryBot.build(:user))
+    github_mock(build(:user))
   end
 
   describe 'POST /create' do

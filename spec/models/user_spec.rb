@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
 
   it 'is valid with all attributes' do
     expect(user).to be_valid
@@ -35,29 +35,29 @@ RSpec.describe User, type: :model do
     end
 
     it 'is invalid with a duplicate name' do
-      FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, image_url: 'https://example.com/bob.png', provider: 'twitter', uid: '0002')
+      create(:user)
+      user2 = build(:user, image_url: 'https://example.com/bob.png', provider: 'twitter', uid: '0002')
       user2.valid?
       expect(user2.errors[:name]).to include('はすでに存在します')
     end
 
     it 'is invalid with a duplicate image_url' do
-      FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'bob', provider: 'twitter', uid: '0002')
+      create(:user)
+      user2 = build(:user, name: 'bob', provider: 'twitter', uid: '0002')
       user2.valid?
       expect(user2.errors[:image_url]).to include('はすでに存在します')
     end
 
     it 'is invalid with a duplicate uid and provider pair' do
-      FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'bob', image_url: 'https://example.com/bob.png')
+      create(:user)
+      user2 = build(:user, name: 'bob', image_url: 'https://example.com/bob.png')
       user2.valid?
       expect(user2.errors[:uid]).to include('はすでに存在します')
     end
 
     it 'allows duplicate uid with different provider' do
-      FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'bob', image_url: 'https://example.com/bob.png', provider: 'twitter')
+      create(:user)
+      user2 = build(:user, name: 'bob', image_url: 'https://example.com/bob.png', provider: 'twitter')
       expect(user2).to be_valid
     end
   end
@@ -93,7 +93,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when user already exists' do
-      before { FactoryBot.create(:user) }
+      before { create(:user) }
 
       it 'does not create a new user' do
         expect do

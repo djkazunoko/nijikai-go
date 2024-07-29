@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe '/groups', type: :request do
-  let(:owner) { FactoryBot.create(:user) }
-  let(:bob) { FactoryBot.build(:user, :bob) }
-  let(:valid_attributes) { FactoryBot.build(:group, owner:).attributes }
-  let(:invalid_attributes) { FactoryBot.build(:group, :invalid, owner:).attributes }
+  let(:owner) { create(:user) }
+  let(:bob) { build(:user, :bob) }
+  let(:valid_attributes) { build(:group, owner:).attributes }
+  let(:invalid_attributes) { build(:group, :invalid, owner:).attributes }
 
   describe 'GET /index' do
     it 'renders a successful response' do
@@ -120,7 +120,7 @@ RSpec.describe '/groups', type: :request do
   end
 
   describe 'PATCH /update' do
-    let(:new_attributes) { FactoryBot.attributes_for(:group, name: 'New Group Name') }
+    let(:new_attributes) { attributes_for(:group, name: 'New Group Name') }
 
     context 'when owner' do
       before do

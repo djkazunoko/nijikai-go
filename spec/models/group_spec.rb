@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Group, type: :model do
-  let(:group) { FactoryBot.build(:group) }
+  let(:group) { build(:group) }
 
   it 'is valid with all attributes' do
     expect(group).to be_valid
