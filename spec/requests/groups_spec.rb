@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe '/groups', type: :request do
   let(:owner) { create(:user) }
-  let(:bob) { build(:user, :bob) }
+  let(:alice) { build(:user, :alice) }
   let(:valid_attributes) { build(:group, owner:).attributes }
   let(:invalid_attributes) { build(:group, :invalid, owner:).attributes }
 
@@ -27,7 +27,7 @@ RSpec.describe '/groups', type: :request do
   describe 'GET /new' do
     context 'when authenticated' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 
@@ -61,7 +61,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when other user' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 
@@ -84,7 +84,7 @@ RSpec.describe '/groups', type: :request do
   describe 'POST /create' do
     context 'when authenticated' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 
@@ -151,7 +151,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when other user' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 
@@ -194,7 +194,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when other user' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 

@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'Groups', type: :system do
   let(:group) { create(:group) }
-  let(:bob) { build(:user, :bob) }
+  let(:alice) { build(:user, :alice) }
 
   describe 'creating a new group' do
     before do
-      github_mock(bob)
+      github_mock(alice)
     end
 
     context 'with valid input' do
@@ -101,7 +101,7 @@ RSpec.describe 'Groups', type: :system do
 
     context 'when other user' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         visit root_path
         click_button 'サインアップ / ログインをして2次会グループを作成'
       end

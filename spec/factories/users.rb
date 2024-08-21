@@ -3,14 +3,14 @@
 FactoryBot.define do
   factory :user, aliases: [:owner] do
     provider { 'github' }
-    uid { '0001' }
-    name { 'alice' }
-    image_url { 'https://example.com/alice.png' }
+    sequence(:uid) { |n| "000#{n}" }
+    sequence(:name) { |n| "user#{n}" }
+    sequence(:image_url) { |n| "https://example.com/user#{n}.png" }
 
-    trait :bob do
-      uid { '0002' }
-      name { 'bob' }
-      image_url { 'https://example.com/bob.png' }
+    trait :alice do
+      uid { '1111' }
+      name { 'alice' }
+      image_url { 'https://example.com/alice.png' }
     end
   end
 end
