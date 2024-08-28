@@ -147,6 +147,13 @@ RSpec.describe '/groups', type: :request do
         patch group_url(group), params: { group: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
+
+      it 'renders a response with 422 status when capacity is set less than the number of participants' do
+        group = Group.create! valid_attributes
+        create_list(:ticket, 2, group:)
+        patch group_url(group), params: { group: { capacity: 1 } }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
 
     context 'when other user' do
