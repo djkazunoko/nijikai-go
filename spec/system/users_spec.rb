@@ -74,7 +74,7 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'delete account' do
-    context 'when no hosted groups exist' do
+    context 'when no owned and participating groups exist' do
       before do
         github_mock(user)
       end
@@ -97,7 +97,7 @@ RSpec.describe 'Users', type: :system do
       end
     end
 
-    context 'when hosted groups exist' do
+    context 'when owned groups exist' do
       before do
         github_mock(group.owner)
       end
@@ -116,6 +116,30 @@ RSpec.describe 'Users', type: :system do
           expect(page).to have_current_path(root_path)
           expect(page).to have_content '主催の2次会グループが存在するため、アカウントを削除できません'
           expect(page).to have_css(".avatar img[src='#{group.owner.image_url}']")
+        end.not_to change(User, :count)
+      end
+    end
+
+    context 'when participating groups exist' do
+      before do
+        github_mock(user)
+        create(:ticket, user:, group:)
+      end
+
+      it 'cannot delete own account' do
+        visit root_path
+        click_button 'サインアップ / ログインをして2次会グループを作成'
+        expect(page).to have_current_path(new_group_path)
+        expect(page).to have_css(".avatar img[src='#{user.image_url}']")
+
+        find('.avatar').click
+        expect do
+          accept_confirm do
+            click_button 'アカウント削除'
+          end
+          expect(page).to have_current_path(root_path)
+          expect(page).to have_content '参加中の2次会グループが存在するため、アカウントを削除できません'
+          expect(page).to have_css(".avatar img[src='#{user.image_url}']")
         end.not_to change(User, :count)
       end
     end

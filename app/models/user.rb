@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  before_destroy :check_no_groups_exist
+  before_destroy :check_no_owned_groups_exist
+  before_destroy :check_no_participating_groups_exist
 
   has_many :groups, foreign_key: :owner_id, dependent: :destroy, inverse_of: :owner
   has_many :tickets, dependent: :destroy
@@ -25,10 +26,17 @@ class User < ApplicationRecord
 
   private
 
-  def check_no_groups_exist
+  def check_no_owned_groups_exist
     return unless groups.exists?
 
     errors.add(:base, '主催の2次会グループが存在するため、アカウントを削除できません')
+    throw(:abort)
+  end
+
+  def check_no_participating_groups_exist
+    return unless tickets.exists?
+
+    errors.add(:base, '参加中の2次会グループが存在するため、アカウントを削除できません')
     throw(:abort)
   end
 end
