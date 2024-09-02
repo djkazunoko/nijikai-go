@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe '/groups', type: :request do
-  let(:owner) { FactoryBot.create(:user) }
-  let(:bob) { FactoryBot.build(:user, :bob) }
-  let(:valid_attributes) { FactoryBot.build(:group, owner:).attributes }
-  let(:invalid_attributes) { FactoryBot.build(:group, :invalid, owner:).attributes }
+  let(:owner) { create(:user) }
+  let(:alice) { build(:user, :alice) }
+  let(:valid_attributes) { build(:group, owner:).attributes }
+  let(:invalid_attributes) { build(:group, :invalid, owner:).attributes }
 
   describe 'GET /index' do
     it 'renders a successful response' do
@@ -27,7 +27,7 @@ RSpec.describe '/groups', type: :request do
   describe 'GET /new' do
     context 'when authenticated' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 
@@ -61,7 +61,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when other user' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 
@@ -84,7 +84,7 @@ RSpec.describe '/groups', type: :request do
   describe 'POST /create' do
     context 'when authenticated' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 
@@ -120,7 +120,7 @@ RSpec.describe '/groups', type: :request do
   end
 
   describe 'PATCH /update' do
-    let(:new_attributes) { FactoryBot.attributes_for(:group, name: 'New Group Name') }
+    let(:new_attributes) { attributes_for(:group, name: 'New Group Name') }
 
     context 'when owner' do
       before do
@@ -147,11 +147,18 @@ RSpec.describe '/groups', type: :request do
         patch group_url(group), params: { group: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
+
+      it 'renders a response with 422 status when capacity is set less than the number of participants' do
+        group = Group.create! valid_attributes
+        create_list(:ticket, 2, group:)
+        patch group_url(group), params: { group: { capacity: 1 } }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
 
     context 'when other user' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 
@@ -194,7 +201,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when other user' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         login
       end
 

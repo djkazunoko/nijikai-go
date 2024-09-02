@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Groups', type: :system do
-  let(:group) { FactoryBot.create(:group) }
-  let(:bob) { FactoryBot.build(:user, :bob) }
+  let(:group) { create(:group) }
+  let(:alice) { build(:user, :alice) }
 
   describe 'creating a new group' do
     before do
-      github_mock(bob)
+      github_mock(alice)
     end
 
     context 'with valid input' do
@@ -97,11 +97,26 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_content '会場を入力してください'
         expect(page).to have_current_path(edit_group_path(group))
       end
+
+      it 'does not allow setting capacity less than the number of participants' do
+        create_list(:ticket, 2, group:)
+
+        visit group_path(group)
+        click_link '編集'
+        expect(page).to have_current_path(edit_group_path(group))
+
+        fill_in '定員', with: '1'
+        click_button '更新する'
+
+        expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+        expect(page).to have_content '定員は参加人数以上の値にしてください'
+        expect(page).to have_current_path(edit_group_path(group))
+      end
     end
 
     context 'when other user' do
       before do
-        github_mock(bob)
+        github_mock(alice)
         visit root_path
         click_button 'サインアップ / ログインをして2次会グループを作成'
       end

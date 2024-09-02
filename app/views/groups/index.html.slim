@@ -30,7 +30,7 @@ p.text-xl.font-bold.mb-4
     p
       = group.details
     p
-      = "0 / #{group.capacity}人"
+      = "#{group.tickets.count} / #{group.capacity}人"
     p
       = "▼ #{group.location}"
     p.mb-4

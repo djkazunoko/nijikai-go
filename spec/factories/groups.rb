@@ -13,5 +13,12 @@ FactoryBot.define do
     trait :invalid do
       hashtag { nil }
     end
+
+    trait :full_capacity do
+      capacity { 1 }
+      after(:create) do |group|
+        create(:ticket, group:)
+      end
+    end
   end
 end

@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
   before_action :authenticate
 
   include UserSessionsHelper
+  include TicketHelper
 end

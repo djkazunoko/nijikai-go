@@ -3,61 +3,61 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryBot.create(:user) }
+  let(:alice) { create(:user, :alice) }
 
   it 'is valid with all attributes' do
-    expect(user).to be_valid
+    expect(alice).to be_valid
   end
 
   describe 'validations' do
     it 'is invalid without a provider' do
-      user.provider = nil
-      user.valid?
-      expect(user.errors[:provider]).to include('を入力してください')
+      alice.provider = nil
+      alice.valid?
+      expect(alice.errors[:provider]).to include('を入力してください')
     end
 
     it 'is invalid without a uid' do
-      user.uid = nil
-      user.valid?
-      expect(user.errors[:uid]).to include('を入力してください')
+      alice.uid = nil
+      alice.valid?
+      expect(alice.errors[:uid]).to include('を入力してください')
     end
 
     it 'is invalid without a name' do
-      user.name = nil
-      user.valid?
-      expect(user.errors[:name]).to include('を入力してください')
+      alice.name = nil
+      alice.valid?
+      expect(alice.errors[:name]).to include('を入力してください')
     end
 
     it 'is invalid without an image_url' do
-      user.image_url = nil
-      user.valid?
-      expect(user.errors[:image_url]).to include('を入力してください')
+      alice.image_url = nil
+      alice.valid?
+      expect(alice.errors[:image_url]).to include('を入力してください')
     end
 
     it 'is invalid with a duplicate name' do
-      FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, image_url: 'https://example.com/bob.png', provider: 'twitter', uid: '0002')
+      create(:user, :alice)
+      user2 = build(:user, name: 'alice')
       user2.valid?
       expect(user2.errors[:name]).to include('はすでに存在します')
     end
 
     it 'is invalid with a duplicate image_url' do
-      FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'bob', provider: 'twitter', uid: '0002')
+      create(:user, :alice)
+      user2 = build(:user, image_url: 'https://example.com/alice.png')
       user2.valid?
       expect(user2.errors[:image_url]).to include('はすでに存在します')
     end
 
     it 'is invalid with a duplicate uid and provider pair' do
-      FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'bob', image_url: 'https://example.com/bob.png')
+      create(:user, :alice)
+      user2 = build(:user, uid: '1111')
       user2.valid?
       expect(user2.errors[:uid]).to include('はすでに存在します')
     end
 
     it 'allows duplicate uid with different provider' do
-      FactoryBot.create(:user)
-      user2 = FactoryBot.build(:user, name: 'bob', image_url: 'https://example.com/bob.png', provider: 'twitter')
+      create(:user, :alice)
+      user2 = build(:user, provider: 'twitter', uid: '1111')
       expect(user2).to be_valid
     end
   end
@@ -66,10 +66,10 @@ RSpec.describe User, type: :model do
     let(:auth_hash) do
       {
         provider: 'github',
-        uid: '0001',
+        uid: '1111',
         info: {
-          nickname: 'alice',
-          image: 'https://example.com/alice.png'
+          nickname: 'bob',
+          image: 'https://example.com/bob.png'
         }
       }
     end
@@ -85,15 +85,15 @@ RSpec.describe User, type: :model do
         user = described_class.find_or_create_from_auth_hash!(auth_hash)
         expect(user).to have_attributes(
           provider: 'github',
-          uid: '0001',
-          name: 'alice',
-          image_url: 'https://example.com/alice.png'
+          uid: '1111',
+          name: 'bob',
+          image_url: 'https://example.com/bob.png'
         )
       end
     end
 
-    context 'when user already exists' do
-      before { FactoryBot.create(:user) }
+    context 'when user with the same uid and provider pair already exists' do
+      before { create(:user, :alice) }
 
       it 'does not create a new user' do
         expect do
@@ -105,7 +105,7 @@ RSpec.describe User, type: :model do
         user = described_class.find_or_create_from_auth_hash!(auth_hash)
         expect(user).to have_attributes(
           provider: 'github',
-          uid: '0001',
+          uid: '1111',
           name: 'alice',
           image_url: 'https://example.com/alice.png'
         )

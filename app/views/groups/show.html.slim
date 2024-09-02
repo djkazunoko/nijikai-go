@@ -1,5 +1,5 @@
 .mb-4
-  == render @group
+  == render partial: 'groups/group', locals: { group: @group, tickets: @tickets }
 
 div
   - if @group.created_by?(current_user)
@@ -7,3 +7,20 @@ div
     = button_to '削除', @group, method: :delete, data: { turbo_confirm: '本当に削除しますか？' }
 
   = link_to '2次会グループ一覧に戻る', groups_path
+
+div
+  - unless @group.created_by?(current_user)
+    - if @ticket
+      = button_to '参加をキャンセルする', group_ticket_path(@group, @ticket), method: :delete
+    - elsif @group.can_participate?
+      - if logged_in?
+        = form_with(url: group_tickets_path(@group)) do |form|
+          = form.submit 'この2次会グループに参加する'
+      - else
+        = button_to 'サインアップ / ログインをして2次会グループに参加',
+                    "/auth/github/?group_id=#{@group.id}",
+                    data: { turbo: false },
+                    class: 'btn'
+    - else
+      p
+        | 定員に達したため参加できません
