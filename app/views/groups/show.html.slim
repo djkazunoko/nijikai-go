@@ -15,7 +15,7 @@ div
     - elsif @group.can_participate?
       - if logged_in?
         = form_with(url: group_tickets_path(@group)) do |form|
-          = form.submit "この2次会グループに参加する"
+          = form.submit 'この2次会グループに参加する'
       - else
         = button_to 'サインアップ / ログインをして2次会グループに参加',
                     "/auth/github/?group_id=#{@group.id}",
