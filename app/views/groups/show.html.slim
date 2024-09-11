@@ -24,3 +24,9 @@ div
     - else
       p
         | 定員に達したため参加できません
+
+div
+  = link_to 'Xでシェアして参加者を募集する',
+            @group.twitter_share_url,
+            target: '_blank', rel: 'noopener',
+            class: 'btn'
