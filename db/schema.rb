@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_09_042357) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_20_005845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_09_042357) do
     t.datetime "updated_at", null: false
     t.bigint "owner_id", null: false
     t.index ["owner_id"], name: "index_groups_on_owner_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "group_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_posts_on_group_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "tickets", force: :cascade do |t|
@@ -49,6 +59,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_09_042357) do
   end
 
   add_foreign_key "groups", "users", column: "owner_id"
+  add_foreign_key "posts", "groups"
+  add_foreign_key "posts", "users"
   add_foreign_key "tickets", "groups"
   add_foreign_key "tickets", "users"
 end
