@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :groups, foreign_key: :owner_id, dependent: :destroy, inverse_of: :owner
   has_many :tickets, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   validates :provider, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }
