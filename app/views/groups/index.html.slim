@@ -8,7 +8,7 @@ p.mb-4
               class: 'btn'
   - else
     = button_to 'サインアップ / ログインをして2次会グループを作成',
-                '/auth/github',
+                "/auth/github?origin=#{new_group_path}",
                 data: { turbo: false },
                 class: 'btn'
     span.text-xs

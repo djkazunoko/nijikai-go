@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
     if params['group_id']
       create_ticket_and_redirect(user, params['group_id'])
     else
-      redirect_to new_group_path, notice: 'ログインしました'
+      redirect_to request.env['omniauth.origin'] || root_path, notice: 'ログインしました'
     end
   end
 
