@@ -53,4 +53,10 @@ div
       | まだコメントはありません。
 
 div
-  == render 'posts/form', group: @group
+  - if logged_in?
+    == render 'posts/form', group: @group
+  - else
+    = button_to 'サインアップ / ログインをしてコメントを投稿する',
+                '/auth/github',
+                data: { turbo: false },
+                class: 'btn'
