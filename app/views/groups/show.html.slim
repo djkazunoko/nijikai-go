@@ -30,3 +30,27 @@ div
             @group.twitter_share_url,
             target: '_blank', rel: 'noopener',
             class: 'btn'
+
+div
+  h2 掲示板
+  - if @posts.any?
+    - @posts.each do |post|
+      .chat.chat-start
+        .chat-image.avatar
+          .w-10.rounded-full
+            = link_to("https://github.com/#{post.user.name}", target: '_blank', rel: 'noopener') do
+              = image_tag(post.user.image_url, alt: post.user.name)
+        .chat-bubble
+          = post.content
+        .chat-footer
+          span.text-xs
+            = post.user.name
+            | &nbsp;
+          time.text-xs.opacity-50
+            = l post.created_at, format: :short
+  - else
+    p
+      | まだコメントはありません。
+
+div
+  == render 'posts/form', group: @group
