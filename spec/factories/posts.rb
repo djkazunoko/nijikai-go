@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :post do
-    user { nil }
-    group { nil }
-    content { "MyText" }
+    content { 'MyText' }
+    association :user
+    association :group
   end
 end
