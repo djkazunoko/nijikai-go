@@ -1,0 +1,5 @@
+= form_with(model: [group, Post.new]) do |form|
+  = form.text_field :content, placeholder: 'コメントを入力', class: 'input input-bordered w-full max-w-xs'
+
+  div
+    = form.submit 'コメントを投稿する', class: 'btn'

@@ -20,9 +20,9 @@ RSpec.describe 'UserSessions', type: :request do
         expect(session[:user_id]).to be_present
       end
 
-      it 'redirects to new_group_path' do
+      it 'redirects to root_path' do
         get '/auth/github/callback'
-        expect(response).to redirect_to(new_group_path)
+        expect(response).to redirect_to(root_path)
       end
     end
 
