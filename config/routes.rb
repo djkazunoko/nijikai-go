@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root "groups#index"
   resources :groups do
     resources :tickets, only: [:create, :destroy]
-    resources :posts, only: [:create]
+    resources :posts, only: [:create, :destroy]
   end
   get "auth/:provider/callback" => "user_sessions#create"
   get "auth/failure" => "user_sessions#failure"

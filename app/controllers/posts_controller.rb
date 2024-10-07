@@ -14,4 +14,10 @@ class PostsController < ApplicationController
       redirect_to group, alert: post.errors.full_messages.to_sentence
     end
   end
+
+  def destroy
+    post = current_user.posts.find(params[:id])
+    post.destroy!
+    redirect_to group_path(params[:group_id]), notice: '投稿が削除されました'
+  end
 end
