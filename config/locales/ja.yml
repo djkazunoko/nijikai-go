@@ -12,6 +12,8 @@ ja:
         payment_method: 会計方法
       ticket:
         group_id: 2次会グループ
+      post:
+        content: 投稿内容
     errors:
       models:
         ticket:

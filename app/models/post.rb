@@ -4,7 +4,7 @@ class Post < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :group
 
-  validates :content, presence: true
+  validates :content, length: { maximum: 2000 }, presence: true
 
   def created_by?(user)
     return false unless user
