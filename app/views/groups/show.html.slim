@@ -38,13 +38,13 @@ div
       == render partial: 'posts/post', locals: { post: post, group: @group }
   - else
     p
-      | まだコメントはありません。
+      | まだ投稿はありません。
 
 div
   - if logged_in?
     == render 'posts/form', group: @group
   - else
-    = button_to 'サインアップ / ログインをしてコメントを投稿する',
+    = button_to 'サインアップ / ログインをして投稿を作成する',
                 '/auth/github',
                 data: { turbo: false },
                 class: 'btn'
