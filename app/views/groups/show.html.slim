@@ -30,3 +30,21 @@ div
             @group.twitter_share_url,
             target: '_blank', rel: 'noopener',
             class: 'btn'
+
+div
+  h2 掲示板
+  - if @posts.any?
+    - @posts.each do |post|
+      == render partial: 'posts/post', locals: { post:, group: @group }
+  - else
+    p
+      | まだ投稿はありません。
+
+div
+  - if logged_in?
+    == render 'posts/form', group: @group
+  - else
+    = button_to 'サインアップ / ログインをして投稿を作成する',
+                '/auth/github',
+                data: { turbo: false },
+                class: 'btn'

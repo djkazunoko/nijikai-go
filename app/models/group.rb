@@ -3,6 +3,7 @@
 class Group < ApplicationRecord
   belongs_to :owner, class_name: 'User', inverse_of: :groups
   has_many :tickets, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   validates :hashtag, presence: true
   validates :name, presence: true

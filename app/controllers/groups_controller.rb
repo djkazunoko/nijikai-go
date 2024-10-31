@@ -12,6 +12,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @ticket = current_user&.tickets&.find_by(group: @group)
     @tickets = @group.tickets.includes(:user).order(:created_at)
+    @posts = @group.posts.includes(:user).order(:created_at)
   end
 
   def new
