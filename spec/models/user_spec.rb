@@ -5,61 +5,16 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:alice) { create(:user, :alice) }
 
-  it 'is valid with all attributes' do
-    expect(alice).to be_valid
-  end
-
   describe 'validations' do
-    it 'is invalid without a provider' do
-      alice.provider = nil
-      alice.valid?
-      expect(alice.errors[:provider]).to include('を入力してください')
-    end
+    subject { build(:user) }
 
-    it 'is invalid without a uid' do
-      alice.uid = nil
-      alice.valid?
-      expect(alice.errors[:uid]).to include('を入力してください')
-    end
-
-    it 'is invalid without a name' do
-      alice.name = nil
-      alice.valid?
-      expect(alice.errors[:name]).to include('を入力してください')
-    end
-
-    it 'is invalid without an image_url' do
-      alice.image_url = nil
-      alice.valid?
-      expect(alice.errors[:image_url]).to include('を入力してください')
-    end
-
-    it 'is invalid with a duplicate name' do
-      create(:user, :alice)
-      user2 = build(:user, name: 'alice')
-      user2.valid?
-      expect(user2.errors[:name]).to include('はすでに存在します')
-    end
-
-    it 'is invalid with a duplicate image_url' do
-      create(:user, :alice)
-      user2 = build(:user, image_url: 'https://example.com/alice.png')
-      user2.valid?
-      expect(user2.errors[:image_url]).to include('はすでに存在します')
-    end
-
-    it 'is invalid with a duplicate uid and provider pair' do
-      create(:user, :alice)
-      user2 = build(:user, uid: '1111')
-      user2.valid?
-      expect(user2.errors[:uid]).to include('はすでに存在します')
-    end
-
-    it 'allows duplicate uid with different provider' do
-      create(:user, :alice)
-      user2 = build(:user, provider: 'twitter', uid: '1111')
-      expect(user2).to be_valid
-    end
+    it { is_expected.to validate_presence_of(:provider) }
+    it { is_expected.to validate_presence_of(:uid) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:image_url) }
+    it { is_expected.to validate_uniqueness_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:image_url) }
+    it { is_expected.to validate_uniqueness_of(:uid).scoped_to(:provider).ignoring_case_sensitivity }
   end
 
   describe '.find_or_create_from_auth_hash!' do
