@@ -20,8 +20,8 @@ class Group < ApplicationRecord
     owner_id == user.id
   end
 
-  def capacity?
-    tickets.count < capacity
+  def full_capacity?
+    tickets.count >= capacity
   end
 
   private
