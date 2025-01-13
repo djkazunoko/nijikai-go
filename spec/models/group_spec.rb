@@ -39,4 +39,22 @@ RSpec.describe Group, type: :model do
       end
     end
   end
+
+  describe '#capacity?' do
+    let(:group) { create(:group, capacity: 3) }
+
+    context 'when the group has not reached capacity' do
+      it 'returns true' do
+        create_list(:ticket, 2, group:)
+        expect(group.capacity?).to be true
+      end
+    end
+
+    context 'when the group has reached capacity' do
+      it 'returns false' do
+        create_list(:ticket, 3, group:)
+        expect(group.capacity?).to be false
+      end
+    end
+  end
 end

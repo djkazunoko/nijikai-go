@@ -12,7 +12,7 @@ div
   - unless @group.created_by?(current_user)
     - if @ticket
       = button_to '参加をキャンセルする', group_ticket_path(@group, @ticket), method: :delete
-    - elsif @group.can_participate?
+    - elsif @group.capacity?
       - if logged_in?
         = form_with(url: group_tickets_path(@group)) do |form|
           = form.submit 'この2次会グループに参加する'

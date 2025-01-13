@@ -20,7 +20,7 @@ class Group < ApplicationRecord
     owner_id == user.id
   end
 
-  def can_participate?
+  def capacity?
     tickets.count < capacity
   end
 
