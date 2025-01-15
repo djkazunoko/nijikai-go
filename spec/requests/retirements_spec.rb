@@ -4,8 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Retirements', type: :request do
   before do
-    github_mock(build(:user))
-    login
+    login_as(build(:user))
   end
 
   describe 'POST /create' do

@@ -9,8 +9,7 @@ RSpec.describe 'Tickets', type: :request do
   describe 'POST /create' do
     context 'when logged in and meeting the participation requirements' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'allows the user to join the group' do
@@ -45,8 +44,7 @@ RSpec.describe 'Tickets', type: :request do
     context 'when already participating in the group' do
       before do
         create(:ticket, user: alice, group:)
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'does not allow the user to join the group again' do
@@ -67,8 +65,7 @@ RSpec.describe 'Tickets', type: :request do
       let(:full_capacity_group) { create(:group, :full_capacity) }
 
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'does not allow the user to join the group' do
@@ -87,8 +84,7 @@ RSpec.describe 'Tickets', type: :request do
 
     context 'when the user is the group owner' do
       before do
-        github_mock(group.owner)
-        login
+        login_as(group.owner)
       end
 
       it 'does not allow the user to join the group' do
@@ -108,8 +104,7 @@ RSpec.describe 'Tickets', type: :request do
 
   describe 'DELETE /destroy' do
     before do
-      github_mock(alice)
-      login
+      login_as(alice)
     end
 
     it 'allows the user to cancel participation' do

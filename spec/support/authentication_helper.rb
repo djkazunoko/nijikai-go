@@ -12,10 +12,6 @@ module AuthenticationHelper
     end
   end
 
-  def login
-    get '/auth/github/callback'
-  end
-
   def github_mock(user)
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
                                                                   provider: 'github',

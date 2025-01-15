@@ -27,8 +27,7 @@ RSpec.describe '/groups', type: :request do
   describe 'GET /new' do
     context 'when authenticated' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'renders a successful response' do
@@ -48,8 +47,7 @@ RSpec.describe '/groups', type: :request do
   describe 'GET /edit' do
     context 'when owner' do
       before do
-        github_mock(owner)
-        login
+        login_as(owner)
       end
 
       it 'renders a successful response' do
@@ -61,8 +59,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when other user' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'returns a 404 response' do
@@ -84,8 +81,7 @@ RSpec.describe '/groups', type: :request do
   describe 'POST /create' do
     context 'when authenticated' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'creates a new Group with valid parameters' do
@@ -124,8 +120,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when owner' do
       before do
-        github_mock(owner)
-        login
+        login_as(owner)
       end
 
       it 'updates the requested group with valid parameters' do
@@ -158,8 +153,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when other user' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'returns a 404 response' do
@@ -181,8 +175,7 @@ RSpec.describe '/groups', type: :request do
   describe 'DELETE /destroy' do
     context 'when owner' do
       before do
-        github_mock(owner)
-        login
+        login_as(owner)
       end
 
       it 'destroys the requested group' do
@@ -201,8 +194,7 @@ RSpec.describe '/groups', type: :request do
 
     context 'when other user' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'returns a 404 response' do

@@ -9,8 +9,7 @@ RSpec.describe 'Posts', type: :request do
   describe 'POST /groups/:id/posts' do
     context 'when user is logged in' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'creates a post and redirects to the group page' do
@@ -36,8 +35,7 @@ RSpec.describe 'Posts', type: :request do
   describe 'DELETE /groups/:id/posts/:id' do
     context 'when logged in as the post owner' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'deletes a post and redirects to the group page' do
@@ -53,8 +51,7 @@ RSpec.describe 'Posts', type: :request do
 
     context 'when logged in as a non-post owner' do
       before do
-        github_mock(alice)
-        login
+        login_as(alice)
       end
 
       it 'does not delete the post and returns a 404 response' do
