@@ -3,6 +3,15 @@
 OmniAuth.config.test_mode = true
 
 module AuthenticationHelper
+  def login_as(user)
+    github_mock(user)
+    if RSpec.current_example.metadata[:type] == :request
+      get '/auth/github/callback'
+    else
+      visit '/auth/github/callback'
+    end
+  end
+
   def login
     get '/auth/github/callback'
   end
