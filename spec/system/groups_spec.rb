@@ -4,20 +4,29 @@ require 'rails_helper'
 
 RSpec.describe 'Groups', type: :system do
   describe 'group index page' do
-    let!(:groups) { create_list(:group, 2) }
-    let(:group) { groups.first }
+    context 'when there are no groups' do
+      it 'displays a no groups message' do
+        visit groups_path
+        expect(page).to have_content 'まだ2次会グループはありません。'
+      end
+    end
 
-    it 'displays a list of groups' do
-      visit groups_path
-      expect(page).to have_content '2次会グループ一覧'
-      expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
-      expect(page).to have_content group.hashtag
-      expect(page).to have_content group.name
-      expect(page).to have_content group.details
-      expect(page).to have_content group.capacity
-      expect(page).to have_content group.location
-      expect(page).not_to have_content group.payment_method
-      expect(page).to have_link '詳細を見る', count: 2
+    context 'when there are groups' do
+      let!(:groups) { create_list(:group, 2) }
+      let(:group) { groups.first }
+
+      it 'displays a list of groups' do
+        visit groups_path
+        expect(page).to have_content '2次会グループ一覧'
+        expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
+        expect(page).to have_content group.hashtag
+        expect(page).to have_content group.name
+        expect(page).to have_content group.details
+        expect(page).to have_content group.capacity
+        expect(page).to have_content group.location
+        expect(page).not_to have_content group.payment_method
+        expect(page).to have_link '詳細を見る', count: 2
+      end
     end
 
     context 'when user is logged in' do

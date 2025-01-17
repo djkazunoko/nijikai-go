@@ -18,20 +18,24 @@ p.text-xl.font-bold.mb-4
   | 2次会グループ一覧
 
 #groups
-  - @groups.each do |group|
+  - if @groups.any?
+    - @groups.each do |group|
+      p
+        | 主催者
+        = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
+          = image_tag(group.owner.image_url, width: '50', height: '50')
+      p
+        = "#{group.hashtag} の2次会"
+      p
+        = group.name
+      p
+        = group.details
+      p
+        = "#{group.tickets.count} / #{group.capacity}人"
+      p
+        = "▼ #{group.location}"
+      p.mb-4
+        = link_to '詳細を見る', group
+  - else
     p
-      | 主催者
-      = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
-        = image_tag(group.owner.image_url, width: '50', height: '50')
-    p
-      = "#{group.hashtag} の2次会"
-    p
-      = group.name
-    p
-      = group.details
-    p
-      = "#{group.tickets.count} / #{group.capacity}人"
-    p
-      = "▼ #{group.location}"
-    p.mb-4
-      = link_to '詳細を見る', group
+      | まだ2次会グループはありません。
