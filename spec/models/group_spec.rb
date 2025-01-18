@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Group, type: :model do
-  let(:group) { build(:group) }
-
   describe 'validations' do
     it { is_expected.to validate_presence_of(:hashtag) }
     it { is_expected.to validate_presence_of(:name) }
