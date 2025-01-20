@@ -103,7 +103,7 @@ RSpec.describe 'Tickets', type: :system do
       end
     end
 
-    context 'when the user is NOT the owner of the group AND is not a member of the group AND the group is full' do
+    context 'when the user is NOT the owner of the group AND is NOT a member of the group AND the group is full' do
       include_context 'when the user is NOT the owner of the group'
       before do
         create_list(:ticket, 10, group:)
@@ -120,7 +120,7 @@ RSpec.describe 'Tickets', type: :system do
       end
     end
 
-    context 'when the user is NOT the owner of the group AND is not a member of the group AND the group is NOT full' do
+    context 'when the user is NOT the owner of the group AND is NOT a member of the group AND the group is NOT full' do
       include_context 'when the user is NOT the owner of the group'
 
       it 'displays a participation button and allows participation' do
@@ -162,7 +162,7 @@ RSpec.describe 'Tickets', type: :system do
       end
     end
 
-    context 'when the user is the owner of the group AND is not a member of the group AND the group is NOT full' do
+    context 'when the user is the owner of the group AND is NOT a member of the group AND the group is NOT full' do
       include_context 'when the user is the owner of the group'
 
       it 'displays a log in and participation button but prevents participation for the owner' do
@@ -207,7 +207,7 @@ RSpec.describe 'Tickets', type: :system do
       end
     end
 
-    context 'when the user is NOT the owner of the group AND is not a member of the group AND the group is NOT full' do
+    context 'when the user is NOT the owner of the group AND is NOT a member of the group AND the group is NOT full' do
       include_context 'when the user is NOT the owner of the group'
 
       it 'displays a log in and participation button and allows participation' do
