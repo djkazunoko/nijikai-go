@@ -5,12 +5,12 @@ class Group < ApplicationRecord
   has_many :tickets, dependent: :destroy
   has_many :posts, dependent: :destroy
 
-  validates :hashtag, presence: true
-  validates :name, presence: true
-  validates :details, presence: true
+  validates :hashtag, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :details, presence: true, length: { maximum: 2000 }
   validates :capacity, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :location, presence: true
-  validates :payment_method, presence: true
+  validates :location, presence: true, length: { maximum: 100 }
+  validates :payment_method, presence: true, length: { maximum: 50 }
 
   validate :capacity_cannot_be_less_than_participants, on: :update
 
