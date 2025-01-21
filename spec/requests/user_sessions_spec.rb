@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'UserSessions', type: :request do
-  before do
-    github_mock(build(:user))
-  end
+  describe 'GET /auth/:provider/callback' do
+    context 'with valid authentication parameters' do
+      before do
+        github_mock(build(:user))
+      end
 
-  describe 'POST /create' do
-    context 'with valid parameters' do
       it 'creates a new user' do
         expect do
           get '/auth/github/callback'
@@ -23,10 +23,12 @@ RSpec.describe 'UserSessions', type: :request do
       it 'redirects to root_path' do
         get '/auth/github/callback'
         expect(response).to redirect_to(root_path)
+        follow_redirect!
+        expect(response.body).to include('ログインしました')
       end
     end
 
-    context 'with invalid parameters' do
+    context 'with invalid authentication parameters' do
       before do
         github_invalid_mock
       end
@@ -49,9 +51,12 @@ RSpec.describe 'UserSessions', type: :request do
     end
   end
 
-  describe 'DELETE /destroy' do
+  describe 'DELETE /logout' do
+    before do
+      login_as(build(:user))
+    end
+
     it 'removes user id from session' do
-      get '/auth/github/callback'
       expect(session[:user_id]).to be_present
       delete '/logout'
       expect(session[:user_id]).to be_nil
@@ -60,13 +65,17 @@ RSpec.describe 'UserSessions', type: :request do
     it 'redirects to root_path' do
       delete '/logout'
       expect(response).to redirect_to(root_path)
+      follow_redirect!
+      expect(response.body).to include('ログアウトしました')
     end
   end
 
-  describe 'GET /failure' do
+  describe 'GET /auth/failure' do
     it 'redirects to root_path' do
       get '/auth/failure'
       expect(response).to redirect_to(root_path)
+      follow_redirect!
+      expect(response.body).to include('ログインをキャンセルしました')
     end
   end
 end
