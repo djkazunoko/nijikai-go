@@ -113,11 +113,11 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(new_group_path)
         expect(page).to have_content '2次会グループを作成'
         expect(page).to have_field 'イベントのハッシュタグ'
-        expect(page).to have_field '2次会グループ名'
-        expect(page).to have_field '募集内容'
-        expect(page).to have_field '定員'
-        expect(page).to have_field '会場'
-        expect(page).to have_field '会計方法'
+        expect(page).to have_field '2次会グループ名', with: 'みんなで飲みましょう!!'
+        expect(page).to have_field '募集内容', with: '誰でも参加OK!!'
+        expect(page).to have_field '定員', with: 10
+        expect(page).to have_field '会場', with: '未定'
+        expect(page).to have_field '会計方法', with: '割り勘'
         expect(page).to have_button '登録する'
       end
     end

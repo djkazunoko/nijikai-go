@@ -16,7 +16,13 @@ class GroupsController < ApplicationController
   end
 
   def new
-    @group = current_user.groups.new
+    @group = current_user.groups.new(
+      name: 'みんなで飲みましょう!!',
+      details: '誰でも参加OK!!',
+      capacity: 10,
+      location: '未定',
+      payment_method: '割り勘'
+    )
   end
 
   def edit; end
