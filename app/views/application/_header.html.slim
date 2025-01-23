@@ -14,3 +14,8 @@
             = button_to 'ログアウト', logout_path, method: :delete
           li
             = button_to 'アカウント削除', retirements_path, data: { turbo_confirm: '本当に削除しますか？' }
+  - else
+    = button_to 'サインアップ / ログイン',
+                '/auth/github',
+                data: { turbo: false },
+                class: 'btn'

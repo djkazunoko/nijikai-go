@@ -3,32 +3,29 @@
 require 'rails_helper'
 
 RSpec.describe '/groups', type: :request do
-  let(:owner) { create(:user) }
-  let(:alice) { build(:user, :alice) }
-  let(:valid_attributes) { build(:group, owner:).attributes }
-  let(:invalid_attributes) { build(:group, :invalid, owner:).attributes }
+  let!(:group) { create(:group) }
+  let(:user) { create(:user) }
+  let(:valid_attributes) { build(:group, owner: user).attributes }
+  let(:invalid_attributes) { build(:group, :invalid, owner: user).attributes }
 
-  describe 'GET /index' do
+  describe 'GET /groups' do
     it 'renders a successful response' do
-      Group.create! valid_attributes
       get groups_url
       expect(response).to be_successful
     end
   end
 
-  describe 'GET /show' do
+  describe 'GET /groups/:id' do
     it 'renders a successful response' do
-      group = Group.create! valid_attributes
       get group_url(group)
       expect(response).to be_successful
     end
   end
 
-  describe 'GET /new' do
-    context 'when authenticated' do
+  describe 'GET /groups/new' do
+    context 'when user is logged in' do
       before do
-        github_mock(alice)
-        login
+        login_as(user)
       end
 
       it 'renders a successful response' do
@@ -37,186 +34,166 @@ RSpec.describe '/groups', type: :request do
       end
     end
 
-    context 'when not authenticated' do
-      it 'returns a 302 response' do
+    context 'when user is not logged in' do
+      it 'redirects to root_path' do
         get new_group_url
         expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe 'GET /edit' do
-    context 'when owner' do
+  describe 'GET /groups/:id/edit' do
+    context 'when logged in user is the group owner' do
       before do
-        github_mock(owner)
-        login
+        login_as(group.owner)
       end
 
       it 'renders a successful response' do
-        group = Group.create! valid_attributes
         get edit_group_url(group)
         expect(response).to be_successful
       end
     end
 
-    context 'when other user' do
+    context 'when logged in user is not the group owner' do
       before do
-        github_mock(alice)
-        login
+        login_as(user)
       end
 
       it 'returns a 404 response' do
-        group = Group.create! valid_attributes
         get edit_group_url(group)
         expect(response).to have_http_status(:not_found)
       end
     end
 
-    context 'when guest' do
-      it 'returns a 302 response' do
-        group = Group.create! valid_attributes
+    context 'when user is not logged in' do
+      it 'redirects to root_path' do
         get edit_group_url(group)
         expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe 'POST /create' do
-    context 'when authenticated' do
+  describe 'POST /groups' do
+    context 'when user is logged in' do
       before do
-        github_mock(alice)
-        login
+        login_as(user)
       end
 
       it 'creates a new Group with valid parameters' do
         expect do
           post groups_url, params: { group: valid_attributes }
         end.to change(Group, :count).by(1)
-      end
 
-      it 'redirects to the created group with valid parameters' do
-        post groups_url, params: { group: valid_attributes }
         expect(response).to redirect_to(group_url(Group.last))
       end
 
       it 'does not create a new Group with invalid parameters' do
         expect do
           post groups_url, params: { group: invalid_attributes }
-        end.to change(Group, :count).by(0)
-      end
+        end.not_to change(Group, :count)
 
-      it 'renders a response with 422 status with invalid parameters' do
-        post groups_url, params: { group: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
-    context 'when not authenticated' do
-      it 'returns a 302 response' do
-        post groups_url, params: { group: valid_attributes }
+    context 'when user is not logged in' do
+      it 'does not create a new Group' do
+        expect do
+          post groups_url, params: { group: valid_attributes }
+        end.not_to change(Group, :count)
+
         expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe 'PATCH /update' do
+  describe 'PATCH /groups/:id' do
     let(:new_attributes) { attributes_for(:group, name: 'New Group Name') }
 
-    context 'when owner' do
+    context 'when logged in user is the group owner' do
       before do
-        github_mock(owner)
-        login
+        login_as(group.owner)
       end
 
-      it 'updates the requested group with valid parameters' do
-        group = Group.create! valid_attributes
+      it 'updates the group with valid parameters' do
         patch group_url(group), params: { group: new_attributes }
         group.reload
         expect(group.name).to eq 'New Group Name'
-      end
-
-      it 'redirects to the group with valid parameters' do
-        group = Group.create! valid_attributes
-        patch group_url(group), params: { group: new_attributes }
-        group.reload
         expect(response).to redirect_to(group_url(group))
       end
 
-      it 'renders a response with 422 status with invalid parameters' do
-        group = Group.create! valid_attributes
+      it 'does not update the group and renders a response with 422 status with invalid parameters' do
         patch group_url(group), params: { group: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'renders a response with 422 status when capacity is set less than the number of participants' do
-        group = Group.create! valid_attributes
+      it 'does not update the group and renders a response with 422 status when capacity is set less than the number of participants' do
         create_list(:ticket, 2, group:)
         patch group_url(group), params: { group: { capacity: 1 } }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
-    context 'when other user' do
+    context 'when logged in user is not the group owner' do
       before do
-        github_mock(alice)
-        login
+        login_as(user)
       end
 
       it 'returns a 404 response' do
-        group = Group.create! valid_attributes
         patch group_url(group), params: { group: new_attributes }
         expect(response).to have_http_status(:not_found)
       end
     end
 
-    context 'when guest' do
-      it 'returns a 302 response' do
-        group = Group.create! valid_attributes
+    context 'when user is not logged in' do
+      it 'redirects to root_path' do
         patch group_url(group), params: { group: new_attributes }
         expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe 'DELETE /destroy' do
-    context 'when owner' do
+  describe 'DELETE /groups/:id' do
+    context 'when logged in user is the group owner' do
       before do
-        github_mock(owner)
-        login
+        login_as(group.owner)
       end
 
-      it 'destroys the requested group' do
-        group = Group.create! valid_attributes
+      it 'deletes the group' do
         expect do
           delete group_url(group)
         end.to change(Group, :count).by(-1)
-      end
 
-      it 'redirects to the groups list' do
-        group = Group.create! valid_attributes
-        delete group_url(group)
         expect(response).to redirect_to(groups_url)
       end
     end
 
-    context 'when other user' do
+    context 'when logged in user is not the group owner' do
       before do
-        github_mock(alice)
-        login
+        login_as(user)
       end
 
-      it 'returns a 404 response' do
-        group = Group.create! valid_attributes
-        delete group_url(group)
+      it 'does not delete the group and returns a 404 response' do
+        expect do
+          delete group_url(group)
+        end.not_to change(Group, :count)
+
         expect(response).to have_http_status(:not_found)
       end
     end
 
-    context 'when guest' do
-      it 'returns a 302 response' do
-        group = Group.create! valid_attributes
-        delete group_url(group)
+    context 'when user is not logged in' do
+      it 'does not delete the group and redirects to root_path' do
+        expect do
+          delete group_url(group)
+        end.not_to change(Group, :count)
+
         expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(root_path)
       end
     end
   end

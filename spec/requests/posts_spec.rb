@@ -4,19 +4,46 @@ require 'rails_helper'
 
 RSpec.describe 'Posts', type: :request do
   let(:group) { create(:group) }
-  let(:alice) { create(:user, :alice) }
+  let(:user) { create(:user) }
 
   describe 'POST /groups/:id/posts' do
-    context 'when user is logged in' do
+    context 'with valid input' do
       before do
-        github_mock(alice)
-        login
+        login_as(user)
       end
 
       it 'creates a post and redirects to the group page' do
         expect do
           post group_posts_path(group), params: { post: { content: 'test post' } }
         end.to change(Post, :count).by(1)
+
+        expect(response).to redirect_to(group_path(group))
+      end
+    end
+
+    context 'with empty input' do
+      before do
+        login_as(user)
+      end
+
+      it 'does not create the post and redirects to the group page' do
+        expect do
+          post group_posts_path(group), params: { post: { content: '' } }
+        end.not_to change(Post, :count)
+
+        expect(response).to redirect_to(group_path(group))
+      end
+    end
+
+    context 'with more than 2000 characters' do
+      before do
+        login_as(user)
+      end
+
+      it 'does not create the post and redirects to the group page' do
+        expect do
+          post group_posts_path(group), params: { post: { content: 'a' * 2001 } }
+        end.not_to change(Post, :count)
 
         expect(response).to redirect_to(group_path(group))
       end
@@ -34,15 +61,14 @@ RSpec.describe 'Posts', type: :request do
   end
 
   describe 'DELETE /groups/:id/posts/:id' do
+    let!(:post) { create(:post, group:) }
+
     context 'when logged in as the post owner' do
       before do
-        github_mock(alice)
-        login
+        login_as(post.user)
       end
 
       it 'deletes a post and redirects to the group page' do
-        post = create(:post, user: alice, group:)
-
         expect do
           delete group_post_path(group, post)
         end.to change(Post, :count).by(-1)
@@ -53,13 +79,10 @@ RSpec.describe 'Posts', type: :request do
 
     context 'when logged in as a non-post owner' do
       before do
-        github_mock(alice)
-        login
+        login_as(user)
       end
 
       it 'does not delete the post and returns a 404 response' do
-        post = create(:post, user: group.owner, group:)
-
         expect do
           delete group_post_path(group, post)
         end.not_to change(Post, :count)
@@ -70,8 +93,6 @@ RSpec.describe 'Posts', type: :request do
 
     context 'when not logged in' do
       it 'does not delete the post and redirects to the root path' do
-        post = create(:post, user: alice, group:)
-
         expect do
           delete group_post_path(group, post)
         end.not_to change(Post, :count)
