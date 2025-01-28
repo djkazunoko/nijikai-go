@@ -29,14 +29,15 @@ div
             target: '_blank', rel: 'noopener',
             class: 'btn'
 
-div
-  h2 掲示板
-  - if @posts.any?
-    - @posts.each do |post|
-      == render partial: 'posts/post', locals: { post:, group: @group }
-  - else
-    p
-      | まだ投稿はありません。
+.p-4.my-4.shadow-md
+  p.mb-4 掲示板
+  .overflow-y-auto.max-h-80
+    - if @posts.any?
+      - @posts.each do |post|
+        == render partial: 'posts/post', locals: { post:, group: @group }
+    - else
+      p
+        | まだ投稿はありません。
 
 div
   - if logged_in?
