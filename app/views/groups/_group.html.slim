@@ -1,20 +1,34 @@
-div id="#{dom_id group}"
-  p
-    | 主催者
-    = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
-      = image_tag(group.owner.image_url, width: '50', height: '50')
-  p
-    = "#{group.hashtag} の2次会"
-  p
-    = group.name
-  p
-    = "#{Group.human_attribute_name('details')}: #{group.details}"
-  p
-    = "参加者: #{tickets.count} / #{group.capacity}人"
-    - tickets.each do |ticket|
-      = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
-        = image_tag(ticket.user.image_url, width: '50', height: '50')
-  p
-    = "#{Group.human_attribute_name('location')}: #{group.location}"
-  p
-    = "#{Group.human_attribute_name('payment_method')}: #{group.payment_method}"
+.p-6.shadow-md.space-y-6
+  .flex.justify-between.items-center
+    .flex.items-center.space-x-4
+      div
+        p 主催者
+        = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
+          = image_tag(group.owner.image_url, class: 'w-12 h-12 rounded-full')
+    p = "#{group.hashtag} の2次会"
+
+  .flex.justify-between.items-center.border-t.pt-4
+    p グループ名
+    p = group.name
+
+  .flex.justify-between.items-center.border-t.pt-4
+    p 募集内容
+    p = group.details
+
+  .border-t.pt-4
+    .flex.justify-between.items-center.mb-4
+      p 参加者
+      .flex.items-center.space-x-4
+        - tickets.each do |ticket|
+          = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
+            = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full')
+        p = "#{tickets.count} / #{group.capacity}人"
+    = link_to '参加者一覧を見る', '#', class: 'block w-full text-center bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg'
+
+  .flex.justify-between.items-center.border-t.pt-4
+    p 会場
+    p = group.location
+
+  .flex.justify-between.items-center.border-t.pt-4
+    p 会計方法
+    p = group.payment_method
