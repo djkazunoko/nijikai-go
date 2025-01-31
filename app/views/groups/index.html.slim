@@ -14,28 +14,23 @@ p.mb-4
     span.text-xs
       | GitHubアカウントが必要です
 
-p.text-xl.font-bold.mb-4
-  | 2次会グループ一覧
-
 #groups
+  p.text-xl.font-bold.mb-4
+    | 2次会グループ一覧
+
   - if @groups.any?
     - @groups.each do |group|
-      p
-        | 主催者
-        = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
-          = image_tag(group.owner.image_url, width: '50', height: '50')
-      p
-        = "#{group.hashtag} の2次会"
-      p
-        = group.name
-      p
-        = group.details
-      p
-        = "#{group.tickets.count} / #{group.capacity}人"
-      p
-        = "▼ #{group.location}"
-      p.mb-4
-        = link_to '詳細を見る', group
+      = link_to group_path(group), class: 'flex justify-between items-start mb-4 p-4 shadow-md' do
+        .flex.flex-col.items-center
+          p.text-sm.font-bold 主催者
+          = image_tag(group.owner.image_url, class: 'w-12 h-12 rounded-full')
+        .flex-1.ml-4
+          p.font-bold = "#{group.hashtag} の2次会"
+          p.text-lg.font-semibold = group.name
+          p.text-sm.text-gray-600 = group.details
+          .flex.justify-between.items-center.mt-2
+            p.text-sm.text-gray-600 会場: #{group.location}
+            p.text-sm.text-gray-600 = "#{group.tickets.count} / #{group.capacity}人"
   - else
     p
       | まだ2次会グループはありません。

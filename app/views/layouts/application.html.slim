@@ -11,12 +11,11 @@ html
     = javascript_importmap_tags
     link[href="https://cdn.jsdelivr.net/npm/daisyui@4.10.5/dist/full.min.css" rel="stylesheet" type="text/css"]
     script[src="https://cdn.tailwindcss.com"]
-  body
-    .container.mx-auto
-      = render 'application/header'
-      main
-        - if flash.notice
-          p style="color: green" = notice
-        - if flash.alert
-          p style="color: red" = alert
-        = yield
+  body.max-w-screen-sm.mx-auto.min-h-screen.flex.flex-col
+    = render 'application/header'
+    main
+      - if flash.notice
+        p style="color: green" = notice
+      - if flash.alert
+        p style="color: red" = alert
+      = yield
