@@ -16,8 +16,11 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    post = current_user.posts.find(params[:id])
-    post.destroy!
-    redirect_to group_path(params[:group_id]), notice: '投稿が削除されました'
+    @post = current_user.posts.find(params[:id])
+    @post.destroy!
+    respond_to do |format|
+      format.html { redirect_to group_path(params[:group_id]), notice: '投稿が削除されました' }
+      format.turbo_stream { flash.now[:notice] = '投稿が削除されました' }
+    end
   end
 end

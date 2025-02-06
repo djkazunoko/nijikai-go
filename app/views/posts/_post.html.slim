@@ -1,20 +1,21 @@
-.chat.chat-start
-  .chat-image.avatar
-    .w-10.rounded-full
-      = link_to("https://github.com/#{post.user.name}", target: '_blank', rel: 'noopener') do
-        = image_tag(post.user.image_url, alt: post.user.name)
-  .chat-header
-    span.text-xs
-      = post.user.name
-      | &nbsp;
-    time.text-xs.opacity-50
-      = l post.created_at, format: :short
-  .flex.items-end.gap-x-2
-    .chat-bubble
-      = post.content
-    - if post.created_by?(current_user)
-      = button_to '削除',
-                  group_post_path(group, post),
-                  method: :delete,
-                  data: { turbo_confirm: '本当に削除しますか？' },
-                  class: 'text-xs'
+= turbo_frame_tag post do
+  .chat.chat-start
+    .chat-image.avatar
+      .w-10.rounded-full
+        = link_to("https://github.com/#{post.user.name}", target: '_blank', rel: 'noopener') do
+          = image_tag(post.user.image_url, alt: post.user.name)
+    .chat-header
+      span.text-xs
+        = post.user.name
+        | &nbsp;
+      time.text-xs.opacity-50
+        = l post.created_at, format: :short
+    .flex.items-end.gap-x-2
+      .chat-bubble
+        = post.content
+      - if post.created_by?(current_user)
+        = button_to '削除',
+                    group_post_path(group, post),
+                    method: :delete,
+                    data: { turbo_confirm: '本当に削除しますか？' },
+                    class: 'text-xs'
