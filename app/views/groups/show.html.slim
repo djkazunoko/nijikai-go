@@ -34,7 +34,8 @@ div
   p.mb-4 掲示板
   .overflow-y-auto.max-h-80
     - if @posts.any?
-      == render partial: 'posts/post', collection: @posts, locals: { group: @group }
+      #posts
+        == render partial: 'posts/post', collection: @posts, locals: { group: @group }
     - else
       p
         | まだ投稿はありません。

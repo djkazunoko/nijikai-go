@@ -1,5 +1,6 @@
-= form_with(model: [group, Post.new], class: 'flex space-x-2') do |form|
-  = form.text_field :content, placeholder: '投稿内容を入力', class: 'input input-bordered flex-grow'
+= turbo_frame_tag 'new_post' do
+  = form_with(model: [group, Post.new], class: 'flex space-x-2') do |form|
+    = form.text_field :content, placeholder: '投稿内容を入力', class: 'input input-bordered flex-grow'
 
-  div
-    = form.submit '投稿を作成する', class: 'btn'
+    div
+      = form.submit '投稿を作成する', class: 'btn'
