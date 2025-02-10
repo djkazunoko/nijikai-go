@@ -32,13 +32,10 @@ div
 
 .p-4.my-4.shadow-md
   p.mb-4 掲示板
-  .overflow-y-auto.max-h-80
-    - if @posts.any?
-      #posts
-        == render partial: 'posts/post', collection: @posts, locals: { group: @group }
-    - else
-      p
-        | まだ投稿はありません。
+  #posts.overflow-y-auto.max-h-80
+    == render partial: 'posts/post', collection: @posts, locals: { group: @group }
+    .hidden.only:block
+      | まだ投稿はありません。
 
 div
   - if logged_in?

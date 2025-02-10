@@ -101,12 +101,14 @@ RSpec.describe 'Posts', type: :system do
 
         click_button 'サインアップ / ログインをして投稿を作成する'
         expect(page).to have_current_path(group_path(group))
+        expect(page).to have_content 'まだ投稿はありません。'
 
         expect do
           fill_in 'post_content', with: 'テストコメント'
           click_button '投稿を作成する'
           expect(page).to have_content '投稿が作成されました'
           expect(page).to have_content 'テストコメント'
+          expect(page).not_to have_content 'まだ投稿はありません。'
         end.to change(Post, :count).by(1)
 
         expect(page).to have_current_path(group_path(group))
@@ -159,6 +161,7 @@ RSpec.describe 'Posts', type: :system do
     it 'deletes a post' do
       visit group_path(group)
       expect(page).to have_content post.content
+      expect(page).not_to have_content 'まだ投稿はありません。'
 
       expect do
         accept_confirm do
@@ -169,6 +172,7 @@ RSpec.describe 'Posts', type: :system do
 
         expect(page).to have_content '投稿が削除されました'
         expect(page).not_to have_content post.content
+        expect(page).to have_content 'まだ投稿はありません。'
       end.to change(Post, :count).by(-1)
 
       expect(page).to have_current_path(group_path(group))
