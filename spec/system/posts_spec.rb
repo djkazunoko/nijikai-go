@@ -109,6 +109,9 @@ RSpec.describe 'Posts', type: :system do
           expect(page).to have_content '投稿が作成されました'
           expect(page).to have_content 'テストコメント'
           expect(page).not_to have_content 'まだ投稿はありません。'
+          within('.chat') do
+            expect(page).to have_button '削除'
+          end
         end.to change(Post, :count).by(1)
 
         expect(page).to have_current_path(group_path(group))
