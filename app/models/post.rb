@@ -11,4 +11,6 @@ class Post < ApplicationRecord
 
     user_id == user.id
   end
+
+  after_destroy_commit -> { broadcast_remove_to('posts') }
 end
