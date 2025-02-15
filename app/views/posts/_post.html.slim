@@ -13,9 +13,10 @@
     .flex.items-end.gap-x-2
       .chat-bubble
         = post.content
-      - if post.created_by?(current_user)
-        = button_to '削除',
-                    group_post_path(group, post),
-                    method: :delete,
-                    data: { turbo_confirm: '本当に削除しますか？' },
-                    class: 'text-xs'
+      = turbo_frame_tag "delete_button_#{post.id}" do
+        - if post.created_by?(current_user)
+          = button_to '削除',
+                      group_post_path(group, post),
+                      method: :delete,
+                      data: { turbo_confirm: '本当に削除しますか？' },
+                      class: 'text-xs'

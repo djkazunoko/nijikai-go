@@ -1,0 +1,5 @@
+= button_to '削除',
+            group_post_path(group, post),
+            method: :delete,
+            data: { turbo_confirm: '本当に削除しますか？' },
+            class: 'text-xs'

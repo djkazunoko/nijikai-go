@@ -12,6 +12,7 @@ class Post < ApplicationRecord
     user_id == user.id
   end
 
-  after_create_commit -> { broadcast_append_later_to 'posts', locals: { post: self, group: } }
+  after_create_commit -> { broadcast_append_to 'posts', locals: { post: self } }
+  after_create_commit -> { broadcast_append_to user, target: "delete_button_#{id}", partial: 'posts/delete_button', locals: { post: self, group: } }
   after_destroy_commit -> { broadcast_remove_to('posts') }
 end

@@ -1,4 +1,5 @@
 = turbo_stream_from 'posts'
+= turbo_stream_from current_user
 
 .mb-4
   == render partial: 'groups/group', locals: { group: @group, tickets: @tickets }
