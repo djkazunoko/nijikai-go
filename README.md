@@ -26,6 +26,17 @@ GitHubのOAuthアプリの登録と`Client ID`、`Client secrets`の設定を行
 
 詳細な手順については、[PR #67](https://github.com/djkazunoko/nijikai-go/pull/67#issue-2221954700) の「**動作確認方法**」>「**1. 事前準備**」セクションを参照してください。
 
+### 3. Redisのインストールと起動
+Turbo StreamsでAction Cableを使用する際にRedisが必要です。
+
+以下の手順でRedisをインストールし、起動します。
+
+```bash
+# macOSの場合
+$ brew install redis
+$ brew services start redis
+```
+
 ## Lint
 ```
 $ bin/lint

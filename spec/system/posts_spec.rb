@@ -101,12 +101,17 @@ RSpec.describe 'Posts', type: :system do
 
         click_button 'サインアップ / ログインをして投稿を作成する'
         expect(page).to have_current_path(group_path(group))
+        expect(page).to have_content 'まだ投稿はありません。'
 
         expect do
           fill_in 'post_content', with: 'テストコメント'
           click_button '投稿を作成する'
           expect(page).to have_content '投稿が作成されました'
           expect(page).to have_content 'テストコメント'
+          expect(page).not_to have_content 'まだ投稿はありません。'
+          within('.chat') do
+            expect(page).to have_button '削除'
+          end
         end.to change(Post, :count).by(1)
 
         expect(page).to have_current_path(group_path(group))
@@ -147,31 +152,75 @@ RSpec.describe 'Posts', type: :system do
         expect(page).to have_current_path(group_path(group))
       end
     end
+
+    context 'when creating a post' do
+      it 'display the creates post and does not display the post delete button in a different session' do
+        visit group_path(group)
+        expect(page).to have_content 'まだ投稿はありません。'
+
+        using_session('post creator session') do
+          login_as(user)
+          visit group_path(group)
+          fill_in 'post_content', with: 'テストコメント'
+          click_button '投稿を作成する'
+        end
+
+        # reverts to different session
+        expect(page).to have_content 'テストコメント'
+        expect(page).not_to have_content 'まだ投稿はありません。'
+        expect(page).not_to have_content '投稿が作成されました'
+        within('.chat') do
+          expect(page).not_to have_button '削除'
+        end
+      end
+    end
   end
 
   describe 'deleting a post' do
     let(:post) { create(:post, group:) }
 
-    before do
-      login_as(post.user)
-    end
+    context 'when post owner deletes a post' do
+      it 'deletes a post' do
+        login_as(post.user)
+        visit group_path(group)
+        expect(page).to have_content post.content
+        expect(page).not_to have_content 'まだ投稿はありません。'
 
-    it 'deletes a post' do
-      visit group_path(group)
-      expect(page).to have_content post.content
+        expect do
+          accept_confirm do
+            within('.chat') do
+              click_button '削除'
+            end
+          end
 
-      expect do
-        accept_confirm do
-          within('.chat') do
-            click_button '削除'
+          expect(page).to have_content '投稿が削除されました'
+          expect(page).not_to have_content post.content
+          expect(page).to have_content 'まだ投稿はありません。'
+        end.to change(Post, :count).by(-1)
+
+        expect(page).to have_current_path(group_path(group))
+      end
+
+      it 'does not display the deleted post in a different session' do
+        visit group_path(group)
+        expect(page).to have_content post.content
+        expect(page).not_to have_content 'まだ投稿はありません。'
+
+        using_session('post owner session') do
+          login_as(post.user)
+          visit group_path(group)
+          accept_confirm do
+            within('.chat') do
+              click_button '削除'
+            end
           end
         end
 
-        expect(page).to have_content '投稿が削除されました'
+        # reverts to different session
         expect(page).not_to have_content post.content
-      end.to change(Post, :count).by(-1)
-
-      expect(page).to have_current_path(group_path(group))
+        expect(page).to have_content 'まだ投稿はありません。'
+        expect(page).not_to have_content '投稿が削除されました'
+      end
     end
   end
 end

@@ -1,3 +1,6 @@
+= turbo_stream_from 'posts'
+= turbo_stream_from current_user
+
 .mb-4
   == render partial: 'groups/group', locals: { group: @group, tickets: @tickets }
 
@@ -32,13 +35,10 @@ div
 
 .p-4.my-4.shadow-md
   p.mb-4 掲示板
-  .overflow-y-auto.max-h-80
-    - if @posts.any?
-      - @posts.each do |post|
-        == render partial: 'posts/post', locals: { post:, group: @group }
-    - else
-      p
-        | まだ投稿はありません。
+  #posts.overflow-y-auto.max-h-80
+    == render partial: 'posts/post', collection: @posts, locals: { group: @group }
+    .hidden.only:block
+      | まだ投稿はありません。
 
 div
   - if logged_in?
