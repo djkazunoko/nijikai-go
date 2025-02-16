@@ -14,13 +14,7 @@ class PostsController < ApplicationController
         format.turbo_stream { flash.now[:notice] = '投稿が作成されました' }
       else
         format.html { redirect_to @group, alert: @post.errors.full_messages.to_sentence }
-        format.turbo_stream do
-          flash.now[:alert] = @post.errors.full_messages.to_sentence
-          render turbo_stream: [
-            turbo_stream.replace('new_post', partial: 'posts/form', locals: { group: @group }),
-            turbo_stream.prepend('flash', partial: 'application/flash')
-          ]
-        end
+        format.turbo_stream { flash.now[:alert] = @post.errors.full_messages.to_sentence }
       end
     end
   end
