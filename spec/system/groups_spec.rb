@@ -127,6 +127,19 @@ RSpec.describe 'Groups', type: :system do
           expect(page).to have_css('.additional-participants-count', text: '+1')
         end
       end
+
+      it 'displays all participant icons and names in the modal' do
+        visit group_path(group_with_4_participants)
+        click_button '参加者一覧を見る'
+
+        within('dialog#participant_list.modal') do
+          group_with_4_participants.tickets.each do |ticket|
+            expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
+            expect(page).to have_css("img[src='#{ticket.user.image_url}']")
+            expect(page).to have_content(ticket.user.name)
+          end
+        end
+      end
     end
   end
 
