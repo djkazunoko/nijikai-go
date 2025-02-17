@@ -26,8 +26,9 @@
           .flex.items-center.justify-center.w-10.h-10.rounded-full.bg-gray-200.text-gray-700.additional-participants-count
             p = "+#{tickets.size - displayable_participant_icons_count}"
         p = "#{tickets.count} / #{group.capacity}人"
-    button.block.w-full.text-center.bg-blue-500.hover:bg-blue-600.text-white.py-2.rounded-lg onclick="participant_list.showModal()"
-      | 参加者一覧を見る
+    - if tickets.any?
+      button.block.w-full.text-center.bg-blue-500.hover:bg-blue-600.text-white.py-2.rounded-lg onclick="participant_list.showModal()"
+        | 参加者一覧を見る
 
   .flex.justify-between.items-center.border-t.pt-4
     p 会場

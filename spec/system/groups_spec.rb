@@ -60,6 +60,7 @@ RSpec.describe 'Groups', type: :system do
       expect(page).to have_content group.name
       expect(page).to have_content group.details
       expect(page).to have_content group.capacity
+      expect(page).not_to have_button('参加者一覧を見る')
       expect(page).to have_content group.location
       expect(page).to have_content group.payment_method
     end
