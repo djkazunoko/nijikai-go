@@ -60,6 +60,7 @@ RSpec.describe 'Groups', type: :system do
       expect(page).to have_content group.name
       expect(page).to have_content group.details
       expect(page).to have_content group.capacity
+      expect(page).not_to have_button('参加者一覧を見る')
       expect(page).to have_content group.location
       expect(page).to have_content group.payment_method
     end
@@ -95,6 +96,50 @@ RSpec.describe 'Groups', type: :system do
         visit group_path(group)
         expect(page).not_to have_link('編集')
         expect(page).not_to have_button('削除')
+      end
+    end
+
+    context 'when group has participants' do
+      let(:group_with_2_participants) { create(:group) }
+      let(:group_with_4_participants) { create(:group) }
+
+      before do
+        create_list(:ticket, 2, group: group_with_2_participants)
+        create_list(:ticket, 4, group: group_with_4_participants)
+      end
+
+      it 'displays all participant icons when there are 3 or fewer participants' do
+        visit group_path(group_with_2_participants)
+        within('.participants') do
+          group_with_2_participants.tickets.each do |ticket|
+            expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
+          end
+          expect(page).not_to have_css('.additional-participants-count')
+        end
+      end
+
+      it 'displays up to 3 participant icons when there are more than 3 participants' do
+        visit group_path(group_with_4_participants)
+        within('.participants') do
+          group_with_4_participants.tickets.first(3).each do |ticket|
+            expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
+          end
+          expect(page).not_to have_css("a[href='https://github.com/#{group_with_4_participants.tickets.last.user.name}']")
+          expect(page).to have_css('.additional-participants-count', text: '+1')
+        end
+      end
+
+      it 'displays all participant icons and names in the modal' do
+        visit group_path(group_with_4_participants)
+        click_button '参加者一覧を見る'
+
+        within('dialog#participant_list.modal') do
+          group_with_4_participants.tickets.each do |ticket|
+            expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
+            expect(page).to have_css("img[src='#{ticket.user.image_url}']")
+            expect(page).to have_content(ticket.user.name)
+          end
+        end
       end
     end
   end
