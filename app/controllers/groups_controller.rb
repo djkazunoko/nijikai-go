@@ -17,7 +17,6 @@ class GroupsController < ApplicationController
 
   def new
     @group = current_user.groups.new(
-      name: 'みんなで飲みましょう!!',
       details: '誰でも参加OK!!',
       capacity: 10,
       location: '未定',
