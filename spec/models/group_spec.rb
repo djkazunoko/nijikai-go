@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe Group, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:hashtag) }
-    it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:details) }
     it { is_expected.to validate_presence_of(:capacity) }
     it { is_expected.to validate_presence_of(:location) }
@@ -13,7 +12,6 @@ RSpec.describe Group, type: :model do
     it { is_expected.to validate_numericality_of(:capacity).only_integer }
     it { is_expected.to validate_numericality_of(:capacity).is_greater_than(0) }
     it { is_expected.to validate_length_of(:hashtag).is_at_most(50) }
-    it { is_expected.to validate_length_of(:name).is_at_most(50) }
     it { is_expected.to validate_length_of(:details).is_at_most(2000) }
     it { is_expected.to validate_length_of(:location).is_at_most(100) }
     it { is_expected.to validate_length_of(:payment_method).is_at_most(50) }

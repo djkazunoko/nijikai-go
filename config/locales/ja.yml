@@ -5,7 +5,6 @@ ja:
     attributes:
       group:
         hashtag: イベントのハッシュタグ
-        name: 2次会グループ名
         details: 募集内容
         capacity: 定員
         location: 会場
