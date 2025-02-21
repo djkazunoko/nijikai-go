@@ -20,7 +20,6 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_content '2次会グループ一覧'
         expect(page).to have_css("img[src='#{group.owner.image_url}']")
         expect(page).to have_content group.hashtag
-        expect(page).to have_content group.name
         expect(page).to have_content group.details
         expect(page).to have_content group.capacity
         expect(page).to have_content group.location
@@ -57,7 +56,6 @@ RSpec.describe 'Groups', type: :system do
       visit group_path(group)
       expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
       expect(page).to have_content group.hashtag
-      expect(page).to have_content group.name
       expect(page).to have_content group.details
       expect(page).to have_content group.capacity
       expect(page).not_to have_button('参加者一覧を見る')
@@ -158,7 +156,6 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(new_group_path)
         expect(page).to have_content '2次会グループを作成'
         expect(page).to have_field 'イベントのハッシュタグ'
-        expect(page).to have_field '2次会グループ名', with: 'みんなで飲みましょう!!'
         expect(page).to have_field '募集内容', with: '誰でも参加OK!!'
         expect(page).to have_field '定員', with: 10
         expect(page).to have_field '会場', with: '未定'
@@ -190,7 +187,6 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(new_group_path)
         expect do
           fill_in 'イベントのハッシュタグ', with: 'rubykaigi'
-          fill_in '2次会グループ名', with: 'みんなで飲みましょう!!'
           fill_in '募集内容', with: '誰でも参加OK!!'
           fill_in '定員', with: 10
           fill_in '会場', with: '未定'
@@ -209,7 +205,6 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(new_group_path)
         expect do
           fill_in 'イベントのハッシュタグ', with: ''
-          fill_in '2次会グループ名', with: 'みんなで飲みましょう!!'
           fill_in '募集内容', with: '誰でも参加OK!!'
           fill_in '定員', with: 10
           fill_in '会場', with: '未定'
@@ -237,7 +232,6 @@ RSpec.describe 'Groups', type: :system do
         visit edit_group_path(group)
         expect(page).to have_content '2次会グループを編集'
         expect(page).to have_field 'イベントのハッシュタグ', with: group.hashtag
-        expect(page).to have_field '2次会グループ名', with: group.name
         expect(page).to have_field '募集内容', with: group.details
         expect(page).to have_field '定員', with: group.capacity
         expect(page).to have_field '会場', with: group.location

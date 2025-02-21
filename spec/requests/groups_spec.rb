@@ -111,7 +111,7 @@ RSpec.describe '/groups', type: :request do
   end
 
   describe 'PATCH /groups/:id' do
-    let(:new_attributes) { attributes_for(:group, name: 'New Group Name') }
+    let(:new_attributes) { attributes_for(:group, details: 'New Group Details') }
 
     context 'when logged in user is the group owner' do
       before do
@@ -121,7 +121,7 @@ RSpec.describe '/groups', type: :request do
       it 'updates the group with valid parameters' do
         patch group_url(group), params: { group: new_attributes }
         group.reload
-        expect(group.name).to eq 'New Group Name'
+        expect(group.details).to eq 'New Group Details'
         expect(response).to redirect_to(group_url(group))
       end
 

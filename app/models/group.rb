@@ -6,7 +6,6 @@ class Group < ApplicationRecord
   has_many :posts, dependent: :destroy
 
   validates :hashtag, presence: true, length: { maximum: 50 }
-  validates :name, presence: true, length: { maximum: 50 }
   validates :details, presence: true, length: { maximum: 2000 }
   validates :capacity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :location, presence: true, length: { maximum: 100 }
