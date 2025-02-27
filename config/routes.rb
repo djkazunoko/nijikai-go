@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   delete "/logout" => "user_sessions#destroy"
   post "/retirements" => "retirements#create"
   get "pp" => "pages#pp"
+  get "tos" => "pages#tos"
 end
