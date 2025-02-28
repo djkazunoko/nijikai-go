@@ -1,0 +1,8 @@
+footer
+  ul.flex.justify-center.space-x-8.pt-4.pb-4
+    li.text-xs.hover:underline.hover:text-gray-400 = link_to '利用規約', tos_path
+    li.text-xs.hover:underline.hover:text-gray-400 = link_to 'プライバシーポリシー', pp_path
+    li.text-xs.hover:underline.hover:text-gray-400 = link_to 'GitHub', 'https://github.com/djkazunoko/nijikai-go', target: '_blank', rel: 'noopener'
+  p.text-center.text-xs.pb-4
+    = "© #{Time.current.year} "
+    = link_to 'djkazunoko', 'https://x.com/djkazunoko', target: '_blank', rel: 'noopener', class: 'hover:underline hover:text-gray-400'
