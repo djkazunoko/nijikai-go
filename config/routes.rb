@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   get "auth/failure" => "user_sessions#failure"
   delete "/logout" => "user_sessions#destroy"
   post "/retirements" => "retirements#create"
+  get "pp" => "pages#pp"
+  get "tos" => "pages#tos"
 end
