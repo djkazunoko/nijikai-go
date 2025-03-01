@@ -62,14 +62,15 @@ RSpec.describe 'Tickets', type: :system do
         expect(page).not_to have_button 'サインアップ / ログインをして2次会グループに参加'
         expect(page).not_to have_content '定員に達したため参加できません'
 
-        expect(page).to have_link href: "https://github.com/#{user.name}"
-        expect(page).to have_content "1 / #{group.capacity}人"
+        within('.participants') do
+          expect(page).to have_link href: "https://github.com/#{user.name}"
+          expect(page).to have_content '1人の参加者'
+        end
 
         expect do
           click_button '参加をキャンセルする'
           expect(page).to have_content 'この2次会グループの参加をキャンセルしました'
-          expect(page).not_to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content "0 / #{group.capacity}人"
+          expect(page).not_to have_css('.participants')
           expect(page).to have_button 'この2次会グループに参加する'
         end.to change(Ticket, :count).by(-1)
 
@@ -88,14 +89,15 @@ RSpec.describe 'Tickets', type: :system do
         expect(page).not_to have_button 'サインアップ / ログインをして2次会グループに参加'
         expect(page).not_to have_content '定員に達したため参加できません'
 
-        expect(page).to have_link href: "https://github.com/#{user.name}"
-        expect(page).to have_content "1 / #{group.capacity}人"
+        within('.participants') do
+          expect(page).to have_link href: "https://github.com/#{user.name}"
+          expect(page).to have_content '1人の参加者'
+        end
 
         expect do
           click_button '参加をキャンセルする'
           expect(page).to have_content 'この2次会グループの参加をキャンセルしました'
-          expect(page).not_to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content "0 / #{group.capacity}人"
+          expect(page).not_to have_css('.participants')
           expect(page).to have_button 'この2次会グループに参加する'
         end.to change(Ticket, :count).by(-1)
 
@@ -130,14 +132,15 @@ RSpec.describe 'Tickets', type: :system do
         expect(page).not_to have_button '参加をキャンセルする'
         expect(page).not_to have_content '定員に達したため参加できません'
 
-        expect(page).not_to have_link href: "https://github.com/#{user.name}"
-        expect(page).to have_content "0 / #{group.capacity}人"
+        expect(page).not_to have_css('.participants')
 
         expect do
           click_button 'この2次会グループに参加する'
           expect(page).to have_content '2次会グループに参加しました'
-          expect(page).to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content "1 / #{group.capacity}人"
+          within('.participants') do
+            expect(page).to have_link href: "https://github.com/#{user.name}"
+            expect(page).to have_content '1人の参加者'
+          end
           expect(page).to have_button '参加をキャンセルする'
         end.to change(Ticket, :count).by(1)
 
@@ -219,14 +222,15 @@ RSpec.describe 'Tickets', type: :system do
 
         expect(page).not_to have_css('.avatar')
 
-        expect(page).not_to have_link href: "https://github.com/#{user.name}"
-        expect(page).to have_content "0 / #{group.capacity}人"
+        expect(page).not_to have_css('.participants')
 
         expect do
           click_button 'サインアップ / ログインをして2次会グループに参加'
           expect(page).to have_content '2次会グループに参加しました'
-          expect(page).to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content "1 / #{group.capacity}人"
+          within('.participants') do
+            expect(page).to have_link href: "https://github.com/#{user.name}"
+            expect(page).to have_content '1人の参加者'
+          end
           expect(page).to have_button '参加をキャンセルする'
         end.to change(Ticket, :count).by(1)
 

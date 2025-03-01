@@ -57,8 +57,7 @@ RSpec.describe 'Groups', type: :system do
       expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
       expect(page).to have_content group.hashtag
       expect(page).to have_content group.details
-      expect(page).to have_content group.capacity
-      expect(page).not_to have_button('参加者一覧を見る')
+      expect(page).not_to have_button('すべて見る')
       expect(page).to have_content group.location
       expect(page).to have_content group.payment_method
     end
@@ -112,7 +111,6 @@ RSpec.describe 'Groups', type: :system do
           group_with_2_participants.tickets.each do |ticket|
             expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
           end
-          expect(page).not_to have_css('.additional-participants-count')
         end
       end
 
@@ -123,15 +121,14 @@ RSpec.describe 'Groups', type: :system do
             expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
           end
           expect(page).not_to have_css("a[href='https://github.com/#{group_with_4_participants.tickets.last.user.name}']")
-          expect(page).to have_css('.additional-participants-count', text: '+1')
         end
       end
 
       it 'displays all participant icons and names in the modal' do
         visit group_path(group_with_4_participants)
-        click_button '参加者一覧を見る'
+        click_button 'すべて見る'
 
-        within('dialog#participant_list.modal') do
+        within('dialog#modal.modal') do
           group_with_4_participants.tickets.each do |ticket|
             expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
             expect(page).to have_css("img[src='#{ticket.user.image_url}']")

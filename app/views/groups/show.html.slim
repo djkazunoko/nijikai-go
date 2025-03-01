@@ -27,7 +27,7 @@
                   class: 'btn w-full'
 
 - if @tickets.any?
-  .participant-list
+  == render partial: 'groups/participants', locals: { tickets: @tickets }
 
 .mt-4
   = link_to 'Xでシェアして参加者を募集する',
