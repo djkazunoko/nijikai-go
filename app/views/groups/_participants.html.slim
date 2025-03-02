@@ -1,6 +1,6 @@
 .participants
   .flex.justify-between.mb-2
-    p.text-lg.font-bold = "#{tickets.count}人の参加者"
+    p.text-lg.font-bold = "参加者(#{tickets.count}名 / #{group.capacity}名)"
     button.hover:underline.hover:text-gray-400 onclick="modal.showModal()"
       | すべて見る
   .flex.justify-around

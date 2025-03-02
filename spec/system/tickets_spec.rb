@@ -64,7 +64,7 @@ RSpec.describe 'Tickets', type: :system do
 
         within('.participants') do
           expect(page).to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content '1人の参加者'
+          expect(page).to have_content '参加者(1名 / 1名)'
         end
 
         expect do
@@ -91,7 +91,7 @@ RSpec.describe 'Tickets', type: :system do
 
         within('.participants') do
           expect(page).to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content '1人の参加者'
+          expect(page).to have_content '参加者(1名 / 10名)'
         end
 
         expect do
@@ -139,7 +139,7 @@ RSpec.describe 'Tickets', type: :system do
           expect(page).to have_content '2次会グループに参加しました'
           within('.participants') do
             expect(page).to have_link href: "https://github.com/#{user.name}"
-            expect(page).to have_content '1人の参加者'
+            expect(page).to have_content '参加者(1名 / 10名)'
           end
           expect(page).to have_button '参加をキャンセルする'
         end.to change(Ticket, :count).by(1)
@@ -229,7 +229,7 @@ RSpec.describe 'Tickets', type: :system do
           expect(page).to have_content '2次会グループに参加しました'
           within('.participants') do
             expect(page).to have_link href: "https://github.com/#{user.name}"
-            expect(page).to have_content '1人の参加者'
+            expect(page).to have_content '参加者(1名 / 10名)'
           end
           expect(page).to have_button '参加をキャンセルする'
         end.to change(Ticket, :count).by(1)
