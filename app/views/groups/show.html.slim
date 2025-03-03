@@ -8,25 +8,7 @@
     = link_to '編集', edit_group_path(@group)
     = button_to '削除', @group, method: :delete, data: { turbo_confirm: '本当に削除しますか？' }
 - else
-  .participation-action-items
-    - if @ticket
-      = button_to '参加をキャンセルする',
-                  group_ticket_path(@group, @ticket),
-                  method: :delete,
-                  class: 'btn btn-error w-full'
-    - elsif @group.full_capacity?
-      p.w-full.bg-red-100.text-red-700.p-4.rounded.text-center
-        | 定員に達したため参加できません
-    - elsif logged_in?
-      = button_to 'この2次会グループに参加する',
-                  group_tickets_path(@group),
-                  data: { turbo: false },
-                  class: 'btn w-full'
-    - else
-      = button_to 'サインアップ / ログインをして2次会グループに参加',
-                  "/auth/github/?group_id=#{@group.id}",
-                  data: { turbo: false },
-                  class: 'btn w-full'
+  == render partial: 'groups/participation', locals: { group: @group, ticket: @ticket }
 
 - if @tickets.any?
   == render partial: 'groups/participants', locals: { group: @group, tickets: @tickets }
