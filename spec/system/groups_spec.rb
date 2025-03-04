@@ -72,8 +72,8 @@ RSpec.describe 'Groups', type: :system do
 
       it 'display edit and delete links' do
         visit group_path(group)
-        expect(page).to have_link('編集')
-        expect(page).to have_button('削除')
+        expect(page).to have_link('内容修正')
+        expect(page).to have_button('削除する')
       end
     end
 
@@ -86,16 +86,16 @@ RSpec.describe 'Groups', type: :system do
 
       it 'does not display edit and delete links' do
         visit group_path(group)
-        expect(page).not_to have_link('編集')
-        expect(page).not_to have_button('削除')
+        expect(page).not_to have_link('内容修正')
+        expect(page).not_to have_button('削除する')
       end
     end
 
     context 'when guest' do
       it 'does not display edit and delete links' do
         visit group_path(group)
-        expect(page).not_to have_link('編集')
-        expect(page).not_to have_button('削除')
+        expect(page).not_to have_link('内容修正')
+        expect(page).not_to have_button('削除する')
       end
     end
 
@@ -268,7 +268,7 @@ RSpec.describe 'Groups', type: :system do
     before do
       login_as(group.owner)
       visit group_path(group)
-      click_link '編集'
+      click_link '内容修正'
     end
 
     context 'with valid input' do
@@ -323,7 +323,7 @@ RSpec.describe 'Groups', type: :system do
 
       expect do
         accept_confirm do
-          click_button '削除'
+          click_button '削除する'
         end
 
         expect(page).to have_content '2次会グループが削除されました'
