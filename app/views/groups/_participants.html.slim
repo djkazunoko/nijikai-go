@@ -1,7 +1,7 @@
-.participants
+.participants.m-4
   .flex.justify-between.mb-2
     p.text-lg.font-bold = "参加者(#{tickets.count}名 / #{group.capacity}名)"
-    button.hover:underline.hover:text-gray-400 onclick="modal.showModal()"
+    button.text-blue-700.underline.hover:no-underline.hover:text-blue-500 onclick="modal.showModal()"
       | すべて見る
   .flex.justify-around
     - tickets.first(displayable_participant_icons_count).each do |ticket|
@@ -15,7 +15,7 @@ dialog#modal.modal
       .flex.items-center.space-x-4.mb-2
         = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
           = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50')
-        p = ticket.user.name
+        = link_to ticket.user.name, "https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener', class: 'text-blue-700 underline hover:text-blue-500 hover:no-underline'
     .modal-action
       form method="dialog"
         button.btn 閉じる
