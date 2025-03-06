@@ -21,12 +21,7 @@
 
 == render partial: 'groups/share_button', locals: { group: @group }
 
-.p-4.my-4.shadow-md
-  p.mb-4 掲示板
-  #posts.overflow-y-auto.max-h-80
-    == render partial: 'posts/post', collection: @posts, locals: { group: @group }
-    .hidden.only:block
-      | まだ投稿はありません。
+== render partial: 'posts/posts', locals: { group: @group, posts: @posts }
 
 div
   - if logged_in?
