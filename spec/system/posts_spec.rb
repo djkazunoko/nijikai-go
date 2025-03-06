@@ -31,14 +31,14 @@ RSpec.describe 'Posts', type: :system do
       it 'displays the post form' do
         visit group_path(group)
         expect(page).to have_field 'post_content'
-        expect(page).to have_button '投稿を作成する'
+        expect(page).to have_button 'コメントする'
       end
     end
 
     context 'when user is not logged in' do
       it 'displays a log in and create button' do
         visit group_path(group)
-        expect(page).to have_button 'サインアップ / ログインをして投稿を作成する'
+        expect(page).to have_button 'サインアップ / ログインをしてコメントする'
       end
 
       it 'does not display the delete button' do
@@ -89,12 +89,12 @@ RSpec.describe 'Posts', type: :system do
       it 'creates a post' do
         visit group_path(group)
 
-        click_button 'サインアップ / ログインをして投稿を作成する'
+        click_button 'サインアップ / ログインをしてコメントする'
         expect(page).to have_current_path(group_path(group))
 
         expect do
           fill_in 'post_content', with: 'テストコメント'
-          click_button '投稿を作成する'
+          click_button 'コメントする'
           expect(page).to have_content '投稿が作成されました'
           expect(page).to have_content 'テストコメント'
           within('.post') do
@@ -115,7 +115,7 @@ RSpec.describe 'Posts', type: :system do
         visit group_path(group)
 
         expect do
-          click_button '投稿を作成する'
+          click_button 'コメントする'
           expect(page).to have_content '投稿内容を入力してください'
         end.not_to change(Post, :count)
 
@@ -133,7 +133,7 @@ RSpec.describe 'Posts', type: :system do
 
         expect do
           fill_in 'post_content', with: 'a' * 2001
-          click_button '投稿を作成する'
+          click_button 'コメントする'
           expect(page).to have_content '投稿内容は2000文字以内で入力してください'
         end.not_to change(Post, :count)
 
@@ -149,7 +149,7 @@ RSpec.describe 'Posts', type: :system do
           login_as(user)
           visit group_path(group)
           fill_in 'post_content', with: 'テストコメント'
-          click_button '投稿を作成する'
+          click_button 'コメントする'
         end
 
         # reverts to different session
