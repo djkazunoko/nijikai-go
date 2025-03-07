@@ -23,6 +23,10 @@ class Group < ApplicationRecord
     tickets.count >= capacity
   end
 
+  def remaining_slots
+    capacity - tickets.count
+  end
+
   private
 
   def capacity_cannot_be_less_than_participants

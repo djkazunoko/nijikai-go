@@ -1,0 +1,27 @@
+.participation-action-items.m-4
+  - if ticket
+    .flex.flex-col.items-center.border.border-lime-500.bg-lime-100.rounded-lg.p-4
+      p.text-lime-700.mb-2 参加登録しています
+      = button_to '参加を取り消す',
+                  group_ticket_path(group, ticket),
+                  method: :delete,
+                  class: 'text-sm text-gray-400 underline hover:no-underline'
+  - elsif group.full_capacity?
+    p.text-center.text-red-700.border.border-red-500.bg-red-100.rounded-lg.p-4 定員に達したため参加できません
+  - elsif logged_in?
+    .flex.flex-col.items-center.border.border-blue-500.bg-blue-100.rounded-lg.p-4
+      p.text-sm.text-blue-700.mb-2 = "あと#{group.remaining_slots}名が参加できます"
+      .w-4/5
+        = button_to '2次会に参加する',
+                    group_tickets_path(group),
+                    data: { turbo: false },
+                    class: 'btn w-full text-white bg-blue-500 hover:bg-blue-700',
+                    id: 'participate-button'
+  - else
+    .flex.flex-col.items-center.border.border-blue-500.bg-blue-100.rounded-lg.p-4
+      p.text-sm.text-blue-700.mb-2 = "あと#{group.remaining_slots}名が参加できます"
+      .w-4/5
+        = button_to "/auth/github/?group_id=#{group.id}", data: { turbo: false }, class: 'btn w-full h-auto text-white leading-5 bg-blue-500 hover:bg-blue-700 py-2', id: 'signup-participate-button' do
+          | サインアップ / ログインをして
+          br
+          | 2次会に参加する

@@ -1,50 +1,17 @@
-.p-6.shadow-md.space-y-6
-  .flex.justify-between.items-center
-    .flex.items-center.space-x-4
-      div
-        p 主催者
-        = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
-          = image_tag(group.owner.image_url, class: 'w-12 h-12 rounded-full')
-    p = "#{group.hashtag} の2次会"
+.group-details.mx-4
+  .flex.items-center.border-b.py-2
+    = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
+      = image_tag(group.owner.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50 mr-2')
+    p.text-lg.font-bold
+      = link_to "##{group.hashtag}", "https://x.com/search?q=%23#{group.hashtag}", target: '_blank', rel: 'noopener', class: 'text-blue-700 underline hover:text-blue-500 hover:no-underline'
+      | &nbsp;の2次会
 
-  .flex.justify-between.items-center.border-t.pt-4
-    p 募集内容
-    p = group.details
+  p.text-2xl.font-bold.border-b.py-2 = group.details
 
-  .border-t.pt-4.participants
-    .flex.justify-between.items-center.mb-4
-      p 参加者
-      .flex.items-center.space-x-4
-        - tickets.first(displayable_participant_icons_count).each do |ticket|
-          = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
-            = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full')
-        - if tickets.size > displayable_participant_icons_count
-          .flex.items-center.justify-center.w-10.h-10.rounded-full.bg-gray-200.text-gray-700.additional-participants-count
-            p = "+#{tickets.size - displayable_participant_icons_count}"
-        p = "#{tickets.count} / #{group.capacity}人"
-    - if tickets.any?
-      button.block.w-full.text-center.bg-blue-500.hover:bg-blue-600.text-white.py-2.rounded-lg onclick="participant_list.showModal()"
-        | 参加者一覧を見る
-
-  .flex.justify-between.items-center.border-t.pt-4
-    p 会場
+  .flex.items-center.border-b.py-2
+    i.fa-solid.fa-location-dot.mr-2
     p = group.location
 
-  .flex.justify-between.items-center.border-t.pt-4
-    p 会計方法
+  .flex.items-center.border-b.py-2
+    i.fa-solid.fa-sack-dollar.mr-2
     p = group.payment_method
-
-dialog#participant_list.modal
-  .modal-box.w-11/12.max-w-5xl
-    h3.text-lg.font-bold 参加者一覧
-    .py-4
-      - tickets.each do |ticket|
-        .flex.items-center.space-x-4.mb-2
-          = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
-            = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full')
-          p = ticket.user.name
-    .modal-action
-      form method="dialog"
-        button.btn 閉じる
-  form.modal-backdrop method="dialog"
-    button close

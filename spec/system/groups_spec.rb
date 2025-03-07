@@ -54,13 +54,15 @@ RSpec.describe 'Groups', type: :system do
 
     it 'displays the group' do
       visit group_path(group)
-      expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
-      expect(page).to have_content group.hashtag
-      expect(page).to have_content group.details
-      expect(page).to have_content group.capacity
-      expect(page).not_to have_button('参加者一覧を見る')
-      expect(page).to have_content group.location
-      expect(page).to have_content group.payment_method
+      within('.group-details') do
+        expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
+        expect(page).to have_content group.hashtag
+        expect(page).to have_content group.details
+        expect(page).to have_content group.location
+        expect(page).to have_content group.payment_method
+      end
+      expect(page).not_to have_css('.participants')
+      expect(page).to have_css('.participation-action-items')
     end
 
     context 'when owner' do
@@ -70,8 +72,8 @@ RSpec.describe 'Groups', type: :system do
 
       it 'display edit and delete links' do
         visit group_path(group)
-        expect(page).to have_link('編集')
-        expect(page).to have_button('削除')
+        expect(page).to have_link('内容修正')
+        expect(page).to have_button('削除する')
       end
     end
 
@@ -84,55 +86,53 @@ RSpec.describe 'Groups', type: :system do
 
       it 'does not display edit and delete links' do
         visit group_path(group)
-        expect(page).not_to have_link('編集')
-        expect(page).not_to have_button('削除')
+        expect(page).not_to have_link('内容修正')
+        expect(page).not_to have_button('削除する')
       end
     end
 
     context 'when guest' do
       it 'does not display edit and delete links' do
         visit group_path(group)
-        expect(page).not_to have_link('編集')
-        expect(page).not_to have_button('削除')
+        expect(page).not_to have_link('内容修正')
+        expect(page).not_to have_button('削除する')
       end
     end
 
     context 'when group has participants' do
-      let(:group_with_2_participants) { create(:group) }
       let(:group_with_4_participants) { create(:group) }
+      let(:group_with_6_participants) { create(:group) }
 
       before do
-        create_list(:ticket, 2, group: group_with_2_participants)
         create_list(:ticket, 4, group: group_with_4_participants)
+        create_list(:ticket, 6, group: group_with_6_participants)
       end
 
-      it 'displays all participant icons when there are 3 or fewer participants' do
-        visit group_path(group_with_2_participants)
+      it 'displays all participant icons when there are 5 or fewer participants' do
+        visit group_path(group_with_4_participants)
         within('.participants') do
-          group_with_2_participants.tickets.each do |ticket|
+          group_with_4_participants.tickets.each do |ticket|
             expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
           end
-          expect(page).not_to have_css('.additional-participants-count')
         end
       end
 
-      it 'displays up to 3 participant icons when there are more than 3 participants' do
-        visit group_path(group_with_4_participants)
+      it 'displays up to 5 participant icons when there are more than 5 participants' do
+        visit group_path(group_with_6_participants)
         within('.participants') do
-          group_with_4_participants.tickets.first(3).each do |ticket|
+          group_with_6_participants.tickets.first(5).each do |ticket|
             expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
           end
-          expect(page).not_to have_css("a[href='https://github.com/#{group_with_4_participants.tickets.last.user.name}']")
-          expect(page).to have_css('.additional-participants-count', text: '+1')
+          expect(page).not_to have_css("a[href='https://github.com/#{group_with_6_participants.tickets.last.user.name}']")
         end
       end
 
       it 'displays all participant icons and names in the modal' do
-        visit group_path(group_with_4_participants)
-        click_button '参加者一覧を見る'
+        visit group_path(group_with_6_participants)
+        click_button 'すべて見る'
 
-        within('dialog#participant_list.modal') do
-          group_with_4_participants.tickets.each do |ticket|
+        within('dialog#modal.modal') do
+          group_with_6_participants.tickets.each do |ticket|
             expect(page).to have_css("a[href='https://github.com/#{ticket.user.name}']")
             expect(page).to have_css("img[src='#{ticket.user.image_url}']")
             expect(page).to have_content(ticket.user.name)
@@ -268,7 +268,7 @@ RSpec.describe 'Groups', type: :system do
     before do
       login_as(group.owner)
       visit group_path(group)
-      click_link '編集'
+      click_link '内容修正'
     end
 
     context 'with valid input' do
@@ -323,7 +323,7 @@ RSpec.describe 'Groups', type: :system do
 
       expect do
         accept_confirm do
-          click_button '削除'
+          click_button '削除する'
         end
 
         expect(page).to have_content '2次会グループが削除されました'

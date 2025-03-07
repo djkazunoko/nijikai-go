@@ -1,5 +1,6 @@
-= button_to '削除',
-            group_post_path(group, post),
-            method: :delete,
-            data: { turbo_confirm: '本当に削除しますか？' },
-            class: 'text-xs'
+.border-t.text-center.p-1
+  = button_to '削除する',
+              group_post_path(group, post),
+              method: :delete,
+              data: { turbo_confirm: '本当に削除しますか？' },
+              class: 'text-sm text-gray-400 underline hover:text-red-500 hover:no-underline'

@@ -7,29 +7,19 @@ RSpec.describe 'Posts', type: :system do
   let(:user) { create(:user) }
 
   describe 'show posts' do
-    context 'when there are no posts' do
-      it 'displays a no posts message' do
-        visit group_path(group)
-        expect(page).to have_content 'まだ投稿はありません。'
-      end
-    end
-
     context 'when there are posts' do
       let!(:posts) { create_list(:post, 2, group:) }
       let(:post) { posts.first }
 
       it 'displays a list of posts' do
         visit group_path(group)
-        within all('.chat-header').first do
-          expect(page).to have_content post.user.name
-          expect(page).to have_content I18n.l(post.created_at, format: :short)
-        end
-        within all('.chat-image').first do
-          expect(page).to have_link(href: "https://github.com/#{post.user.name}")
+        within all('.post').first do
           expect(page).to have_css("img[src='#{post.user.image_url}']")
+          expect(page).to have_link(post.user.name, href: "https://github.com/#{post.user.name}")
+          expect(page).to have_content I18n.l(post.created_at, format: :short)
+          expect(page).to have_content post.content
         end
-        expect(page).to have_content post.content
-        expect(page).to have_css('.chat-start', count: 2)
+        expect(page).to have_css('.post', count: 2)
       end
     end
 
@@ -41,21 +31,21 @@ RSpec.describe 'Posts', type: :system do
       it 'displays the post form' do
         visit group_path(group)
         expect(page).to have_field 'post_content'
-        expect(page).to have_button '投稿を作成する'
+        expect(page).to have_button 'コメントする'
       end
     end
 
     context 'when user is not logged in' do
       it 'displays a log in and create button' do
         visit group_path(group)
-        expect(page).to have_button 'サインアップ / ログインをして投稿を作成する'
+        expect(page).to have_button 'サインアップ / ログインをしてコメントする'
       end
 
       it 'does not display the delete button' do
         create(:post, group:)
         visit group_path(group)
-        within('.chat') do
-          expect(page).not_to have_button '削除'
+        within('.post') do
+          expect(page).not_to have_button '削除する'
         end
       end
     end
@@ -69,8 +59,8 @@ RSpec.describe 'Posts', type: :system do
 
       it 'displays the delete button' do
         visit group_path(group)
-        within('.chat') do
-          expect(page).to have_button '削除'
+        within('.post') do
+          expect(page).to have_button '削除する'
         end
       end
     end
@@ -83,8 +73,8 @@ RSpec.describe 'Posts', type: :system do
 
       it 'does not display the delete button' do
         visit group_path(group)
-        within('.chat') do
-          expect(page).not_to have_button '削除'
+        within('.post') do
+          expect(page).not_to have_button '削除する'
         end
       end
     end
@@ -99,18 +89,16 @@ RSpec.describe 'Posts', type: :system do
       it 'creates a post' do
         visit group_path(group)
 
-        click_button 'サインアップ / ログインをして投稿を作成する'
+        click_button 'サインアップ / ログインをしてコメントする'
         expect(page).to have_current_path(group_path(group))
-        expect(page).to have_content 'まだ投稿はありません。'
 
         expect do
           fill_in 'post_content', with: 'テストコメント'
-          click_button '投稿を作成する'
+          click_button 'コメントする'
           expect(page).to have_content '投稿が作成されました'
           expect(page).to have_content 'テストコメント'
-          expect(page).not_to have_content 'まだ投稿はありません。'
-          within('.chat') do
-            expect(page).to have_button '削除'
+          within('.post') do
+            expect(page).to have_button '削除する'
           end
         end.to change(Post, :count).by(1)
 
@@ -127,7 +115,7 @@ RSpec.describe 'Posts', type: :system do
         visit group_path(group)
 
         expect do
-          click_button '投稿を作成する'
+          click_button 'コメントする'
           expect(page).to have_content '投稿内容を入力してください'
         end.not_to change(Post, :count)
 
@@ -145,7 +133,7 @@ RSpec.describe 'Posts', type: :system do
 
         expect do
           fill_in 'post_content', with: 'a' * 2001
-          click_button '投稿を作成する'
+          click_button 'コメントする'
           expect(page).to have_content '投稿内容は2000文字以内で入力してください'
         end.not_to change(Post, :count)
 
@@ -156,21 +144,19 @@ RSpec.describe 'Posts', type: :system do
     context 'when creating a post' do
       it 'display the creates post and does not display the post delete button in a different session' do
         visit group_path(group)
-        expect(page).to have_content 'まだ投稿はありません。'
 
         using_session('post creator session') do
           login_as(user)
           visit group_path(group)
           fill_in 'post_content', with: 'テストコメント'
-          click_button '投稿を作成する'
+          click_button 'コメントする'
         end
 
         # reverts to different session
         expect(page).to have_content 'テストコメント'
-        expect(page).not_to have_content 'まだ投稿はありません。'
         expect(page).not_to have_content '投稿が作成されました'
-        within('.chat') do
-          expect(page).not_to have_button '削除'
+        within('.post') do
+          expect(page).not_to have_button '削除する'
         end
       end
     end
@@ -184,18 +170,16 @@ RSpec.describe 'Posts', type: :system do
         login_as(post.user)
         visit group_path(group)
         expect(page).to have_content post.content
-        expect(page).not_to have_content 'まだ投稿はありません。'
 
         expect do
           accept_confirm do
-            within('.chat') do
-              click_button '削除'
+            within('.post') do
+              click_button '削除する'
             end
           end
 
           expect(page).to have_content '投稿が削除されました'
           expect(page).not_to have_content post.content
-          expect(page).to have_content 'まだ投稿はありません。'
         end.to change(Post, :count).by(-1)
 
         expect(page).to have_current_path(group_path(group))
@@ -204,21 +188,19 @@ RSpec.describe 'Posts', type: :system do
       it 'does not display the deleted post in a different session' do
         visit group_path(group)
         expect(page).to have_content post.content
-        expect(page).not_to have_content 'まだ投稿はありません。'
 
         using_session('post owner session') do
           login_as(post.user)
           visit group_path(group)
           accept_confirm do
-            within('.chat') do
-              click_button '削除'
+            within('.post') do
+              click_button '削除する'
             end
           end
         end
 
         # reverts to different session
         expect(page).not_to have_content post.content
-        expect(page).to have_content 'まだ投稿はありません。'
         expect(page).not_to have_content '投稿が削除されました'
       end
     end

@@ -58,4 +58,28 @@ RSpec.describe Group, type: :model do
       end
     end
   end
+
+  describe '#remaining_slots' do
+    let(:group) { create(:group, capacity: 3) }
+
+    context 'when there are no participants' do
+      it 'returns the capacity' do
+        expect(group.remaining_slots).to eq 3
+      end
+    end
+
+    context 'when there are some participants' do
+      it 'returns the number of remaining slots' do
+        create_list(:ticket, 2, group:)
+        expect(group.remaining_slots).to eq 1
+      end
+    end
+
+    context 'when the group is full' do
+      it 'returns 0' do
+        create_list(:ticket, 3, group:)
+        expect(group.remaining_slots).to eq 0
+      end
+    end
+  end
 end

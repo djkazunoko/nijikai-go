@@ -50,6 +50,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'active_decorator'
+gem 'font-awesome-sass', '~> 6.7', '>= 6.7.2'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'

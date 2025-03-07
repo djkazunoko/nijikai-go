@@ -41,9 +41,9 @@ RSpec.describe 'Tickets', type: :system do
       it 'does not display participation buttons and messages' do
         visit group_path(group)
 
-        expect(page).not_to have_button 'この2次会グループに参加する'
-        expect(page).not_to have_button 'サインアップ / ログインをして2次会グループに参加'
-        expect(page).not_to have_button '参加をキャンセルする'
+        expect(page).not_to have_button '2次会に参加する', id: 'participate-button'
+        expect(page).not_to have_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
+        expect(page).not_to have_button '参加を取り消す'
         expect(page).not_to have_content '定員に達したため参加できません'
       end
     end
@@ -58,19 +58,20 @@ RSpec.describe 'Tickets', type: :system do
       it 'displays a cancel button and allows cancellation' do
         visit group_path(group)
 
-        expect(page).not_to have_button 'この2次会グループに参加する'
-        expect(page).not_to have_button 'サインアップ / ログインをして2次会グループに参加'
+        expect(page).not_to have_button '2次会に参加する', id: 'participate-button'
+        expect(page).not_to have_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
         expect(page).not_to have_content '定員に達したため参加できません'
 
-        expect(page).to have_link href: "https://github.com/#{user.name}"
-        expect(page).to have_content "1 / #{group.capacity}人"
+        within('.participants') do
+          expect(page).to have_link href: "https://github.com/#{user.name}"
+          expect(page).to have_content '参加者(1名 / 1名)'
+        end
 
         expect do
-          click_button '参加をキャンセルする'
+          click_button '参加を取り消す'
           expect(page).to have_content 'この2次会グループの参加をキャンセルしました'
-          expect(page).not_to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content "0 / #{group.capacity}人"
-          expect(page).to have_button 'この2次会グループに参加する'
+          expect(page).not_to have_css('.participants')
+          expect(page).to have_button '2次会に参加する', id: 'participate-button'
         end.to change(Ticket, :count).by(-1)
 
         expect(page).to have_current_path(group_path(group))
@@ -84,19 +85,20 @@ RSpec.describe 'Tickets', type: :system do
       it 'displays a cancel button and allows cancellation' do
         visit group_path(group)
 
-        expect(page).not_to have_button 'この2次会グループに参加する'
-        expect(page).not_to have_button 'サインアップ / ログインをして2次会グループに参加'
+        expect(page).not_to have_button '2次会に参加する', id: 'participate-button'
+        expect(page).not_to have_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
         expect(page).not_to have_content '定員に達したため参加できません'
 
-        expect(page).to have_link href: "https://github.com/#{user.name}"
-        expect(page).to have_content "1 / #{group.capacity}人"
+        within('.participants') do
+          expect(page).to have_link href: "https://github.com/#{user.name}"
+          expect(page).to have_content '参加者(1名 / 10名)'
+        end
 
         expect do
-          click_button '参加をキャンセルする'
+          click_button '参加を取り消す'
           expect(page).to have_content 'この2次会グループの参加をキャンセルしました'
-          expect(page).not_to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content "0 / #{group.capacity}人"
-          expect(page).to have_button 'この2次会グループに参加する'
+          expect(page).not_to have_css('.participants')
+          expect(page).to have_button '2次会に参加する', id: 'participate-button'
         end.to change(Ticket, :count).by(-1)
 
         expect(page).to have_current_path(group_path(group))
@@ -114,9 +116,9 @@ RSpec.describe 'Tickets', type: :system do
 
         expect(page).to have_content '定員に達したため参加できません'
 
-        expect(page).not_to have_button 'この2次会グループに参加する'
-        expect(page).not_to have_button 'サインアップ / ログインをして2次会グループに参加'
-        expect(page).not_to have_button '参加をキャンセルする'
+        expect(page).not_to have_button '2次会に参加する', id: 'participate-button'
+        expect(page).not_to have_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
+        expect(page).not_to have_button '参加を取り消す'
       end
     end
 
@@ -126,19 +128,20 @@ RSpec.describe 'Tickets', type: :system do
       it 'displays a participation button and allows participation' do
         visit group_path(group)
 
-        expect(page).not_to have_button 'サインアップ / ログインをして2次会グループに参加'
-        expect(page).not_to have_button '参加をキャンセルする'
+        expect(page).not_to have_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
+        expect(page).not_to have_button '参加を取り消す'
         expect(page).not_to have_content '定員に達したため参加できません'
 
-        expect(page).not_to have_link href: "https://github.com/#{user.name}"
-        expect(page).to have_content "0 / #{group.capacity}人"
+        expect(page).not_to have_css('.participants')
 
         expect do
-          click_button 'この2次会グループに参加する'
+          click_button '2次会に参加する', id: 'participate-button'
           expect(page).to have_content '2次会グループに参加しました'
-          expect(page).to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content "1 / #{group.capacity}人"
-          expect(page).to have_button '参加をキャンセルする'
+          within('.participants') do
+            expect(page).to have_link href: "https://github.com/#{user.name}"
+            expect(page).to have_content '参加者(1名 / 10名)'
+          end
+          expect(page).to have_button '参加を取り消す'
         end.to change(Ticket, :count).by(1)
 
         expect(page).to have_current_path(group_path(group))
@@ -156,9 +159,9 @@ RSpec.describe 'Tickets', type: :system do
 
         expect(page).to have_content '定員に達したため参加できません'
 
-        expect(page).not_to have_button 'この2次会グループに参加する'
-        expect(page).not_to have_button 'サインアップ / ログインをして2次会グループに参加'
-        expect(page).not_to have_button '参加をキャンセルする'
+        expect(page).not_to have_button '2次会に参加する', id: 'participate-button'
+        expect(page).not_to have_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
+        expect(page).not_to have_button '参加を取り消す'
       end
     end
 
@@ -168,14 +171,14 @@ RSpec.describe 'Tickets', type: :system do
       it 'displays a log in and participation button but prevents participation for the owner' do
         visit group_path(group)
 
-        expect(page).not_to have_button 'この2次会グループに参加する'
-        expect(page).not_to have_button '参加をキャンセルする'
+        expect(page).not_to have_button '2次会に参加する', id: 'participate-button'
+        expect(page).not_to have_button '参加を取り消す'
         expect(page).not_to have_content '定員に達したため参加できません'
 
         expect(page).not_to have_css('.avatar')
 
         expect do
-          click_button 'サインアップ / ログインをして2次会グループに参加'
+          click_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
           expect(page).to have_content '自身が主催したグループには参加できません'
         end.not_to change(Ticket, :count)
 
@@ -191,14 +194,14 @@ RSpec.describe 'Tickets', type: :system do
       it 'displays a log in and participation button but prevents participation for members' do
         visit group_path(group)
 
-        expect(page).not_to have_button 'この2次会グループに参加する'
-        expect(page).not_to have_button '参加をキャンセルする'
+        expect(page).not_to have_button '2次会に参加する', id: 'participate-button'
+        expect(page).not_to have_button '参加を取り消す'
         expect(page).not_to have_content '定員に達したため参加できません'
 
         expect(page).not_to have_css('.avatar')
 
         expect do
-          click_button 'サインアップ / ログインをして2次会グループに参加'
+          click_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
           expect(page).to have_content 'この2次会グループには既に参加しています'
         end.not_to change(Ticket, :count)
 
@@ -213,21 +216,22 @@ RSpec.describe 'Tickets', type: :system do
       it 'displays a log in and participation button and allows participation' do
         visit group_path(group)
 
-        expect(page).not_to have_button 'この2次会グループに参加する'
-        expect(page).not_to have_button '参加をキャンセルする'
+        expect(page).not_to have_button '2次会に参加する', id: 'participate-button'
+        expect(page).not_to have_button '参加を取り消す'
         expect(page).not_to have_content '定員に達したため参加できません'
 
         expect(page).not_to have_css('.avatar')
 
-        expect(page).not_to have_link href: "https://github.com/#{user.name}"
-        expect(page).to have_content "0 / #{group.capacity}人"
+        expect(page).not_to have_css('.participants')
 
         expect do
-          click_button 'サインアップ / ログインをして2次会グループに参加'
+          click_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
           expect(page).to have_content '2次会グループに参加しました'
-          expect(page).to have_link href: "https://github.com/#{user.name}"
-          expect(page).to have_content "1 / #{group.capacity}人"
-          expect(page).to have_button '参加をキャンセルする'
+          within('.participants') do
+            expect(page).to have_link href: "https://github.com/#{user.name}"
+            expect(page).to have_content '参加者(1名 / 10名)'
+          end
+          expect(page).to have_button '参加を取り消す'
         end.to change(Ticket, :count).by(1)
 
         expect(page).to have_css(".avatar img[src='#{user.image_url}']")
