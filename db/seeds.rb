@@ -8,8 +8,8 @@ users = users_data.map { |user_data| User.create!(user_data) }
 
 groups_data = [
   { hashtag: 'rubykaigi', details: '誰でも参加OK!!', capacity: 2, location: '未定', payment_method: '割り勘', owner_id: users[0].id },
-  { hashtag: 'kaigionrails', details: 'サシで話したい', capacity: 1, location: '未定', payment_method: '奢ります', owner_id: users[1].id },
-  { hashtag: 'rubyworld', details: 'Anyone who loves Ruby is welcome to join', capacity: 10, location: 'Somewhere in Japan',
+  { hashtag: 'rubykaigi', details: 'サシで話したい', capacity: 1, location: '未定', payment_method: '奢ります', owner_id: users[1].id },
+  { hashtag: 'rubykaigi', details: 'Anyone who loves Ruby is welcome to join', capacity: 10, location: 'Somewhere in Japan',
     payment_method: 'split bill', owner_id: users[2].id },
   { hashtag: 'bigparty', details: 'みんなで楽しく飲みましょう！', capacity: 100, location: '未定', payment_method: '割り勘', owner_id: users[0].id }
 ]
