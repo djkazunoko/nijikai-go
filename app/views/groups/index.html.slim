@@ -14,22 +14,4 @@ p.mb-4
     span.text-xs
       | GitHubアカウントが必要です
 
-#groups
-  p.text-xl.font-bold.mb-4
-    | 2次会グループ一覧
-
-  - if @groups.any?
-    - @groups.each do |group|
-      = link_to group_path(group), class: 'flex justify-between items-start mb-4 p-4 shadow-md' do
-        .flex.flex-col.items-center
-          p.text-sm.font-bold 主催者
-          = image_tag(group.owner.image_url, class: 'w-12 h-12 rounded-full')
-        .flex-1.ml-4
-          p.font-bold = "#{group.hashtag} の2次会"
-          p.text-lg.font-semibold = group.details
-          .flex.justify-between.items-center.mt-2
-            p.text-sm.text-gray-600 会場: #{group.location}
-            p.text-sm.text-gray-600 = "#{group.tickets.count} / #{group.capacity}人"
-  - else
-    p
-      | まだ2次会グループはありません。
+== render partial: 'groups/groups', locals: { groups_grouped_by_hashtag: @groups_grouped_by_hashtag }

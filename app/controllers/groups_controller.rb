@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
   skip_before_action :authenticate, only: %i[index show]
 
   def index
-    @groups = Group.order(:created_at)
+    @groups_grouped_by_hashtag = Group.order(:hashtag, :created_at).group_by(&:hashtag)
   end
 
   def show
