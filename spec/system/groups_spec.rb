@@ -15,16 +15,26 @@ RSpec.describe 'Groups', type: :system do
       let!(:groups) { create_list(:group, 2) }
       let(:group) { groups.first }
 
+      before do
+        create(:post, group:)
+      end
+
       it 'displays a list of groups' do
         visit groups_path
-        expect(page).to have_content '2次会グループ一覧'
-        expect(page).to have_css("img[src='#{group.owner.image_url}']")
-        expect(page).to have_content group.hashtag
-        expect(page).to have_content group.details
-        expect(page).to have_content group.capacity
-        expect(page).to have_content group.location
-        expect(page).not_to have_content group.payment_method
-        expect(page).to have_css('#groups a', count: groups.count)
+        expect(page).to have_content "##{group.hashtag} の2次会一覧"
+        within all('.group').first do
+          expect(page).to have_css("img[src='#{group.owner.image_url}']")
+          expect(page).to have_link href: "https://github.com/#{group.owner.name}"
+          expect(page).to have_link(group.details, href: group_path(group))
+          expect(page).to have_content group.location
+          expect(page).to have_content group.payment_method
+          expect(page).to have_content "#{group.tickets.count}名 / #{group.capacity}名"
+          expect(page).to have_content "コメント(#{group.posts.count})"
+        end
+        within all('.group').last do
+          expect(page).not_to have_content 'コメント'
+        end
+        expect(page).to have_css('.group', count: groups.count)
       end
     end
 
