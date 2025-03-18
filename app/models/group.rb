@@ -5,13 +5,14 @@ class Group < ApplicationRecord
   has_many :tickets, dependent: :destroy
   has_many :posts, dependent: :destroy
 
-  validates :hashtag, presence: true, length: { maximum: 50 }, format: { with: /\A[\p{Alnum}_]+\z/, message: 'にはスペースや記号は使用できません。' }
+  validates :hashtag, presence: true, length: { maximum: 50 }
   validates :details, presence: true, length: { maximum: 2000 }
   validates :capacity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :location, presence: true, length: { maximum: 100 }
   validates :payment_method, presence: true, length: { maximum: 50 }
 
   validate :capacity_cannot_be_less_than_participants, on: :update
+  validate :hashtag_format
   validate :hashtag_cannot_be_numbers_or_underscores_only
 
   def created_by?(user)
@@ -34,6 +35,13 @@ class Group < ApplicationRecord
     return unless capacity < tickets.count
 
     errors.add(:capacity, 'は参加人数以上の値にしてください')
+  end
+
+  def hashtag_format
+    return if hashtag.blank?
+    return if hashtag.match?(/\A[\p{Alnum}_]+\z/)
+
+    errors.add(:hashtag, 'にはスペースや記号は使用できません。')
   end
 
   def hashtag_cannot_be_numbers_or_underscores_only
