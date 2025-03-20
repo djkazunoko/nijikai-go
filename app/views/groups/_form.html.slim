@@ -6,33 +6,40 @@
         - group.errors.each do |error|
           li = error.full_message
 
-  .mb-4
-    = form.label :hashtag, style: 'display: block'
-    = form.text_field :hashtag
-    p.text-gray-400.text-sm
-      | 現在参加しているイベントのハッシュタグを入力してください。
+  .form__items
+    .form-item.mb-6
+      = form.label :hashtag, class: 'block text-sm font-bold mb-2'
+      = form.text_field :hashtag, class: 'block w-full rounded-md mb-1', placeholder: 'rubykaigi'
+      p.text-gray-400.text-sm
+        | 現在参加しているイベントのハッシュタグを入力してください。
+    .form-item.mb-6
+      = form.label :details, class: 'block text-sm font-bold mb-2'
+      = form.text_area :details, class: 'block w-full rounded-md p-2  mb-1', rows: 3, placeholder: '誰でも参加OK！'
+      p.text-gray-400.text-sm
+        | どんな人に参加して欲しいですか？どんな2次会を開催予定ですか？<br>例）イベント参加者限定、〇〇について語りたい！
+    .form-item.mb-6
+      = form.label :capacity, class: 'block text-sm font-bold mb-2'
+      = form.number_field :capacity, class: 'block w-full rounded-md mb-1', placeholder: '10'
+    .form-item.mb-6
+      = form.label :location, class: 'block text-sm font-bold mb-2'
+      = form.text_field :location, class: 'block w-full rounded-md mb-1', placeholder: '未定'
+      p.text-gray-400.text-sm
+        | 例）〇〇駅周辺の居酒屋
+    .form-item.mb-6
+      = form.label :payment_method, class: 'block text-sm font-bold mb-2'
+      = form.text_field :payment_method, class: 'block w-full rounded-md mb-1', placeholder: '割り勘'
+      p.text-gray-400.text-sm
+        | トラブル防止のため、事前に会計方法を決めておきましょう。<br>例）乾杯前に3000円集金します、個別会計
 
-  .mb-4
-    = form.label :details, style: 'display: block'
-    = form.text_area :details
-    p.text-gray-400.text-sm
-      | どんな人に参加して欲しいですか？どんな2次会を開催予定ですか？<br>例）女性限定、イベントの参加者で交流したい！
-
-  .mb-4
-    = form.label :capacity, style: 'display: block'
-    = form.number_field :capacity
-
-  .mb-4
-    = form.label :location, style: 'display: block'
-    = form.text_field :location
-    p.text-gray-400.text-sm
-      | 例）〇〇駅周辺の居酒屋
-
-  .mb-4
-    = form.label :payment_method, style: 'display: block'
-    = form.text_field :payment_method
-    p.text-gray-400.text-sm
-      | トラブル防止のため、事前に会計方法を決めておきましょう。<br>例）乾杯前に3000円集金します、個別会計
-
-  div
-    = form.submit
+  .form-actions
+    ul.form-actions__items
+      li.form-actions__item.is-main.mb-2
+        - if group.new_record?
+          = form.submit '2次会グループを作成', class: 'btn bg-blue-500 hover:bg-blue-700 text-white w-full'
+        - else
+          = form.submit '内容を更新', class: 'btn bg-blue-500 hover:bg-blue-700 text-white w-full'
+      li.form-actions__item.is-sub.text-center
+        - if group.new_record?
+          = link_to 'キャンセル', groups_path, class: 'text-sm text-gray-400 underline hover:no-underline'
+        - else
+          = link_to 'キャンセル', group_path(group), class: 'text-sm text-gray-400 underline hover:no-underline'

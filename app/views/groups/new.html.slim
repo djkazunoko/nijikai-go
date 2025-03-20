@@ -1,10 +1,5 @@
-h1.text-2xl.font-bold.mb-4
-  | 2次会グループを作成
+.m-4
+  h2.text-xl.font-bold.mb-4
+    | 2次会グループ作成
 
-p.mb-4
-  | 2次会グループを作成して、イベントのハッシュタグをつけてXに投稿して参加者を募集しましょう。<br>作成した2次会グループページ上で参加者と連絡を取ることができます。
-
-== render 'form', group: @group
-
-div
-  = link_to 'キャンセル', groups_path
+  == render 'form', group: @group

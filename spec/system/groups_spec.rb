@@ -164,13 +164,14 @@ RSpec.describe 'Groups', type: :system do
         visit groups_path
         click_link '2次会グループを作成'
         expect(page).to have_current_path(new_group_path)
-        expect(page).to have_content '2次会グループを作成'
+        expect(page).to have_content '2次会グループ作成'
         expect(page).to have_field 'イベントのハッシュタグ'
-        expect(page).to have_field '募集内容', with: '誰でも参加OK!!'
+        expect(page).to have_field '募集内容', with: '誰でも参加OK！'
         expect(page).to have_field '定員', with: 10
         expect(page).to have_field '会場', with: '未定'
         expect(page).to have_field '会計方法', with: '割り勘'
-        expect(page).to have_button '登録する'
+        expect(page).to have_button '2次会グループを作成'
+        expect(page).to have_link('キャンセル', href: groups_path)
       end
     end
 
@@ -197,11 +198,11 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(new_group_path)
         expect do
           fill_in 'イベントのハッシュタグ', with: 'rubykaigi'
-          fill_in '募集内容', with: '誰でも参加OK!!'
+          fill_in '募集内容', with: '誰でも参加OK！'
           fill_in '定員', with: 10
           fill_in '会場', with: '未定'
           fill_in '会計方法', with: '割り勘'
-          click_button '登録する'
+          click_button '2次会グループを作成'
 
           expect(page).to have_content '2次会グループが作成されました'
         end.to change(Group, :count).by(1)
@@ -215,11 +216,11 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(new_group_path)
         expect do
           fill_in 'イベントのハッシュタグ', with: ''
-          fill_in '募集内容', with: '誰でも参加OK!!'
+          fill_in '募集内容', with: '誰でも参加OK！'
           fill_in '定員', with: 10
           fill_in '会場', with: '未定'
           fill_in '会計方法', with: '割り勘'
-          click_button '登録する'
+          click_button '2次会グループを作成'
 
           expect(page).to have_content '2次会グループに1個のエラーが発生しました'
           expect(page).to have_content 'イベントのハッシュタグを入力してください'
@@ -240,13 +241,13 @@ RSpec.describe 'Groups', type: :system do
 
       it 'displays a form to edit the group' do
         visit edit_group_path(group)
-        expect(page).to have_content '2次会グループを編集'
+        expect(page).to have_content '2次会グループ編集'
         expect(page).to have_field 'イベントのハッシュタグ', with: group.hashtag
         expect(page).to have_field '募集内容', with: group.details
         expect(page).to have_field '定員', with: group.capacity
         expect(page).to have_field '会場', with: group.location
         expect(page).to have_field '会計方法', with: group.payment_method
-        expect(page).to have_button '更新する'
+        expect(page).to have_button '内容を更新'
       end
     end
 
@@ -286,7 +287,7 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(edit_group_path(group))
 
         fill_in '会場', with: 'とある居酒屋'
-        click_button '更新する'
+        click_button '内容を更新'
 
         expect(page).to have_content '2次会グループが更新されました'
         expect(page).to have_content 'とある居酒屋'
@@ -299,7 +300,7 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(edit_group_path(group))
 
         fill_in '会場', with: ''
-        click_button '更新する'
+        click_button '内容を更新'
 
         expect(page).to have_content '2次会グループに1個のエラーが発生しました'
         expect(page).to have_content '会場を入力してください'
@@ -312,7 +313,7 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_current_path(edit_group_path(group))
 
         fill_in '定員', with: '1'
-        click_button '更新する'
+        click_button '内容を更新'
 
         expect(page).to have_content '2次会グループに1個のエラーが発生しました'
         expect(page).to have_content '定員は参加人数以上の値にしてください'
