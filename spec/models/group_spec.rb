@@ -17,6 +17,74 @@ RSpec.describe Group, type: :model do
     it { is_expected.to validate_length_of(:payment_method).is_at_most(50) }
   end
 
+  describe '#hashtag_format' do
+    let(:group) { build(:group) }
+
+    it 'is valid with a valid hashtag' do
+      group.hashtag = 'validHashtag'
+      expect(group).to be_valid
+    end
+
+    it 'is valid with a hashtag starting with #' do
+      group.hashtag = '#validHashtag'
+      expect(group).to be_valid
+    end
+
+    it 'is invalid with a hashtag starting with multiple #' do
+      group.hashtag = '##invalidHashtag'
+      expect(group).to be_invalid
+    end
+
+    it 'is invalid with a hashtag containing spaces' do
+      group.hashtag = 'invalid hashtag'
+      expect(group).to be_invalid
+      expect(group.errors[:hashtag]).to include('にはスペースや記号は使用できません。')
+    end
+
+    it 'is invalid with a hashtag containing special characters' do
+      group.hashtag = 'invalid@hashtag'
+      expect(group).to be_invalid
+      expect(group.errors[:hashtag]).to include('にはスペースや記号は使用できません。')
+    end
+  end
+
+  describe '#hashtag_cannot_be_numbers_or_underscores_only' do
+    let(:group) { build(:group) }
+
+    it 'is invalid with a hashtag containing only numbers' do
+      group.hashtag = '123'
+      expect(group).to be_invalid
+      expect(group.errors[:hashtag]).to include('は数字、アンダースコアのみでは登録できません')
+    end
+
+    it 'is invalid with a hashtag containing only underscores' do
+      group.hashtag = '_'
+      expect(group).to be_invalid
+      expect(group.errors[:hashtag]).to include('は数字、アンダースコアのみでは登録できません')
+    end
+
+    it 'is invalid with a hashtag containing only numbers and underscores' do
+      group.hashtag = '123_'
+      expect(group).to be_invalid
+      expect(group.errors[:hashtag]).to include('は数字、アンダースコアのみでは登録できません')
+    end
+
+    it 'is valid with a hashtag containing letters and numbers' do
+      group.hashtag = 'valid123'
+      expect(group).to be_valid
+    end
+  end
+
+  describe '#remove_leading_hash_from_hashtag' do
+    let(:group) { build(:group) }
+
+    it 'removes leading # from hashtag before save' do
+      group.hashtag = '#validHashtag'
+      group.save
+      expect(group.hashtag).to eq('validHashtag')
+    end
+  end
+
   describe '#created_by?' do
     let(:owner) { create(:user) }
     let(:other_user) { create(:user) }
