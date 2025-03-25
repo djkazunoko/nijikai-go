@@ -74,6 +74,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
+  gem 'dockerfile-rails', '>= 1.7', require: false
   gem 'html2slim-ruby3'
   gem 'rubocop', require: false
   gem 'rubocop-capybara', require: false

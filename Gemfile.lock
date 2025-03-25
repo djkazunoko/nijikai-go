@@ -103,6 +103,8 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
+    dockerfile-rails (1.7.9)
+      rails (>= 3.0.0)
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
@@ -407,6 +409,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  dockerfile-rails (>= 1.7)
   factory_bot_rails
   font-awesome-sass (~> 6.7, >= 6.7.2)
   html2slim-ruby3

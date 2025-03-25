@@ -1,5 +1,6 @@
 = turbo_stream_from 'posts'
-= turbo_stream_from current_user
+- if logged_in?
+  = turbo_stream_from current_user
 
 == render partial: 'groups/group', locals: { group: @group }
 

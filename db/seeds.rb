@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+unless Rails.env.development?
+  Rails.logger.debug 'このseedファイルは開発環境でのみ実行されます。'
+  return
+end
+
 users_data = (1..50).map do |i|
   { provider: 'github', uid: i.to_s, name: "user#{i}", image_url: "https://picsum.photos/id/#{i}/200" }
 end
