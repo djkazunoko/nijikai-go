@@ -1,0 +1,15 @@
+name: Schedule Destroy Groups
+
+on:
+  schedule:
+    - cron: '0 20 * * *'
+
+jobs:
+  destroy-groups:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: fly ssh console -C "/rails/bin/rails groups:destroy_all"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
