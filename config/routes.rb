@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get "auth/:provider/callback" => "user_sessions#create"
   get "auth/failure" => "user_sessions/failure#create"
   delete "/logout" => "user_sessions#destroy"
-  post "/retirements" => "retirements#create"
+  resource :retirements, only: [:create]
   get "pp" => "pages#pp"
   get "tos" => "pages#tos"
 end
