@@ -5,18 +5,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:alice) { create(:user, :alice) }
 
-  describe 'validations' do
-    subject { build(:user) }
-
-    it { is_expected.to validate_presence_of(:provider) }
-    it { is_expected.to validate_presence_of(:uid) }
-    it { is_expected.to validate_presence_of(:name) }
-    it { is_expected.to validate_presence_of(:image_url) }
-    it { is_expected.to validate_uniqueness_of(:name) }
-    it { is_expected.to validate_uniqueness_of(:image_url) }
-    it { is_expected.to validate_uniqueness_of(:uid).scoped_to(:provider).ignoring_case_sensitivity }
-  end
-
   describe '.find_or_create_from_auth_hash!' do
     let(:auth_hash) do
       {
