@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:create, :destroy]
   end
   get "auth/:provider/callback" => "user_sessions#create"
-  get "auth/failure" => "user_sessions#failure"
+  get "auth/failure" => "user_sessions/failure#create"
   delete "/logout" => "user_sessions#destroy"
   post "/retirements" => "retirements#create"
   get "pp" => "pages#pp"
