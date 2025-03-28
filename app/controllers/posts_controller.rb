@@ -10,6 +10,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
+        @post = Post.new
         format.html { redirect_to @group, notice: '投稿が作成されました' }
         format.turbo_stream { flash.now[:notice] = '投稿が作成されました' }
       else
