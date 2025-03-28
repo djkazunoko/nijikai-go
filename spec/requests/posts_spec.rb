@@ -35,14 +35,14 @@ RSpec.describe 'Posts', type: :request do
       end
     end
 
-    context 'with more than 2000 characters' do
+    context 'with more than 1000 characters' do
       before do
         login_as(user)
       end
 
       it 'does not create the post and redirects to the group page' do
         expect do
-          post group_posts_path(group), params: { post: { content: 'a' * 2001 } }
+          post group_posts_path(group), params: { post: { content: 'a' * 1001 } }
         end.not_to change(Post, :count)
 
         expect(response).to redirect_to(group_path(group))
