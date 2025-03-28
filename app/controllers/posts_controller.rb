@@ -14,8 +14,8 @@ class PostsController < ApplicationController
         format.html { redirect_to @group, notice: '投稿が作成されました' }
         format.turbo_stream { flash.now[:notice] = '投稿が作成されました' }
       else
-        format.html { redirect_to @group, alert: @post.errors.full_messages.to_sentence }
-        format.turbo_stream { flash.now[:alert] = @post.errors.full_messages.to_sentence }
+        format.html { redirect_to @group }
+        format.turbo_stream
       end
     end
   end
