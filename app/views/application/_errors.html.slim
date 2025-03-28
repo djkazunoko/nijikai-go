@@ -1,0 +1,6 @@
+- if object.errors.any?
+  div style="color: red"
+    h2 = t('errors.template.header', model: object.model_name.human, count: object.errors.count)
+    ul
+      - object.errors.each do |error|
+        li = error.full_message

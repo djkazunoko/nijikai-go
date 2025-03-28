@@ -41,5 +41,6 @@ module Nijikaigo
     config.i18n.default_locale = :ja
     config.active_model.i18n_customize_full_message = true
     config.time_zone = 'Tokyo'
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag.html_safe }
   end
 end

@@ -123,7 +123,7 @@ RSpec.describe 'Posts', type: :system do
       end
     end
 
-    context 'with more than 2000 characters' do
+    context 'with more than 1000 characters' do
       before do
         login_as(user)
       end
@@ -134,7 +134,7 @@ RSpec.describe 'Posts', type: :system do
         expect do
           fill_in 'post_content', with: 'a' * 2001
           click_button 'コメントする'
-          expect(page).to have_content '投稿内容は2000文字以内で入力してください'
+          expect(page).to have_content '投稿内容は1000文字以内で入力してください'
         end.not_to change(Post, :count)
 
         expect(page).to have_current_path(group_path(group))
