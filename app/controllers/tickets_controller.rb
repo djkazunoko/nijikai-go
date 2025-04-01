@@ -8,6 +8,6 @@ class TicketsController < ApplicationController
   def destroy
     ticket = current_user.tickets.find_by!(group_id: params[:group_id])
     ticket.destroy!
-    redirect_to group_path(params[:group_id]), notice: 'この2次会グループの参加をキャンセルしました'
+    redirect_to group_path(params[:group_id]), notice: '2次会グループへの参加をキャンセルしました。'
   end
 end

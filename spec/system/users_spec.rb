@@ -17,7 +17,7 @@ RSpec.describe 'Users', type: :system do
         expect(page).not_to have_css('.avatar')
 
         click_button 'サインアップ / ログイン'
-        expect(page).to have_content 'ログインしました'
+        expect(page).to have_content 'ログインしました。'
         expect(page).to have_current_path(root_path)
         expect(page).to have_css(".avatar img[src='#{user.image_url}']")
       end
@@ -33,7 +33,7 @@ RSpec.describe 'Users', type: :system do
         expect(page).not_to have_css('.avatar')
 
         click_button 'サインアップ / ログイン'
-        expect(page).to have_content 'ログインをキャンセルしました'
+        expect(page).to have_content 'ログインをキャンセルしました。'
         expect(page).to have_current_path(root_path)
         expect(page).not_to have_css('.avatar')
       end
@@ -52,7 +52,7 @@ RSpec.describe 'Users', type: :system do
       find('.avatar').click
       click_button 'ログアウト'
       expect(page).to have_current_path(root_path)
-      expect(page).to have_content 'ログアウトしました'
+      expect(page).to have_content 'ログアウトしました。'
       expect(page).not_to have_css('.avatar')
     end
   end
@@ -72,7 +72,7 @@ RSpec.describe 'Users', type: :system do
           accept_confirm do
             click_button 'アカウント削除'
           end
-          expect(page).to have_content 'アカウントが削除されました'
+          expect(page).to have_content 'アカウントが削除されました。'
         end.to change(User, :count).by(-1)
 
         expect(page).to have_current_path(root_path)
@@ -94,7 +94,7 @@ RSpec.describe 'Users', type: :system do
           accept_confirm do
             click_button 'アカウント削除'
           end
-          expect(page).to have_content '主催の2次会グループが存在するため、アカウントを削除できません'
+          expect(page).to have_content '主催の2次会グループが存在するため、アカウントを削除できません。'
         end.not_to change(User, :count)
 
         expect(page).to have_current_path(root_path)
@@ -117,7 +117,7 @@ RSpec.describe 'Users', type: :system do
           accept_confirm do
             click_button 'アカウント削除'
           end
-          expect(page).to have_content '参加中の2次会グループが存在するため、アカウントを削除できません'
+          expect(page).to have_content '参加中の2次会グループが存在するため、アカウントを削除できません。'
         end.not_to change(User, :count)
 
         expect(page).to have_current_path(root_path)

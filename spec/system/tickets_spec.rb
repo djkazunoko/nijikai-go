@@ -69,7 +69,7 @@ RSpec.describe 'Tickets', type: :system do
 
         expect do
           click_button '参加を取り消す'
-          expect(page).to have_content 'この2次会グループの参加をキャンセルしました'
+          expect(page).to have_content '2次会グループへの参加をキャンセルしました。'
           expect(page).not_to have_css('.participants')
           expect(page).to have_button '2次会に参加する', id: 'participate-button'
         end.to change(Ticket, :count).by(-1)
@@ -96,7 +96,7 @@ RSpec.describe 'Tickets', type: :system do
 
         expect do
           click_button '参加を取り消す'
-          expect(page).to have_content 'この2次会グループの参加をキャンセルしました'
+          expect(page).to have_content '2次会グループへの参加をキャンセルしました。'
           expect(page).not_to have_css('.participants')
           expect(page).to have_button '2次会に参加する', id: 'participate-button'
         end.to change(Ticket, :count).by(-1)
@@ -136,7 +136,7 @@ RSpec.describe 'Tickets', type: :system do
 
         expect do
           click_button '2次会に参加する', id: 'participate-button'
-          expect(page).to have_content '2次会グループに参加しました'
+          expect(page).to have_content '2次会グループに参加しました。'
           within('.participants') do
             expect(page).to have_link href: "https://github.com/#{user.name}"
             expect(page).to have_content '参加者(1名 / 10名)'
@@ -179,7 +179,7 @@ RSpec.describe 'Tickets', type: :system do
 
         expect do
           click_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
-          expect(page).to have_content '自身が主催したグループには参加できません'
+          expect(page).to have_content '自身が主催したグループには参加できません。'
         end.not_to change(Ticket, :count)
 
         expect(page).to have_css(".avatar img[src='#{user.image_url}']")
@@ -202,7 +202,7 @@ RSpec.describe 'Tickets', type: :system do
 
         expect do
           click_button 'サインアップ / ログインをして2次会に参加する', id: 'signup-participate-button'
-          expect(page).to have_content 'この2次会グループには既に参加しています'
+          expect(page).to have_content 'この2次会グループには既に参加しています。'
         end.not_to change(Ticket, :count)
 
         expect(page).to have_css(".avatar img[src='#{user.image_url}']")

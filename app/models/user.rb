@@ -30,14 +30,14 @@ class User < ApplicationRecord
   def check_no_owned_groups_exist
     return unless groups.exists?
 
-    errors.add(:base, '主催の2次会グループが存在するため、アカウントを削除できません')
+    errors.add(:base, '主催の2次会グループが存在するため、アカウントを削除できません。')
     throw(:abort)
   end
 
   def check_no_participating_groups_exist
     return unless tickets.exists?
 
-    errors.add(:base, '参加中の2次会グループが存在するため、アカウントを削除できません')
+    errors.add(:base, '参加中の2次会グループが存在するため、アカウントを削除できません。')
     throw(:abort)
   end
 end

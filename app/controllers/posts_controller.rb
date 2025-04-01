@@ -11,8 +11,8 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         @post = Post.new
-        format.html { redirect_to @group, notice: '投稿が作成されました' }
-        format.turbo_stream { flash.now[:notice] = '投稿が作成されました' }
+        format.html { redirect_to @group, notice: 'コメントが作成されました。' }
+        format.turbo_stream { flash.now[:notice] = 'コメントが作成されました。' }
       else
         format.html { redirect_to @group }
         format.turbo_stream
@@ -24,8 +24,8 @@ class PostsController < ApplicationController
     @post = current_user.posts.find(params[:id])
     @post.destroy!
     respond_to do |format|
-      format.html { redirect_to group_path(params[:group_id]), notice: '投稿が削除されました' }
-      format.turbo_stream { flash.now[:notice] = '投稿が削除されました' }
+      format.html { redirect_to group_path(params[:group_id]), notice: 'コメントが削除されました。' }
+      format.turbo_stream { flash.now[:notice] = 'コメントが削除されました。' }
     end
   end
 end

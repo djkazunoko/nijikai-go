@@ -11,12 +11,12 @@ class UserSessionsController < ApplicationController
     if params['group_id']
       create_ticket_and_redirect(user, params['group_id'])
     else
-      redirect_to request.env['omniauth.origin'] || root_path, notice: 'ログインしました'
+      redirect_to request.env['omniauth.origin'] || root_path, notice: 'ログインしました。'
     end
   end
 
   def destroy
     reset_session
-    redirect_to root_path, notice: 'ログアウトしました'
+    redirect_to root_path, notice: 'ログアウトしました。'
   end
 end

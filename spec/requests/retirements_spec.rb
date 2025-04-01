@@ -28,7 +28,7 @@ RSpec.describe 'Retirements', type: :request do
         post retirements_path
         expect(response).to redirect_to(root_path)
         follow_redirect!
-        expect(response.body).to include('アカウントが削除されました')
+        expect(response.body).to include('アカウントが削除されました。')
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe 'Retirements', type: :request do
         post retirements_path
         expect(response).to redirect_to(root_path)
         follow_redirect!
-        expect(response.body).to include('主催の2次会グループが存在するため、アカウントを削除できません')
+        expect(response.body).to include('主催の2次会グループが存在するため、アカウントを削除できません。')
       end
     end
 
@@ -79,7 +79,7 @@ RSpec.describe 'Retirements', type: :request do
         post retirements_path
         expect(response).to redirect_to(root_path)
         follow_redirect!
-        expect(response.body).to include('参加中の2次会グループが存在するため、アカウントを削除できません')
+        expect(response.body).to include('参加中の2次会グループが存在するため、アカウントを削除できません。')
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe 'Retirements', type: :request do
         post retirements_path
         expect(response).to redirect_to(root_path)
         follow_redirect!
-        expect(response.body).to include('ログインしてください')
+        expect(response.body).to include('ログインしてください。')
       end
     end
   end

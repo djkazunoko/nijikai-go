@@ -95,7 +95,7 @@ RSpec.describe 'Posts', type: :system do
         expect do
           fill_in 'post_content', with: 'テストコメント'
           click_button 'コメントする'
-          expect(page).to have_content '投稿が作成されました'
+          expect(page).to have_content 'コメントが作成されました。'
           expect(page).to have_content 'テストコメント'
           within('.post') do
             expect(page).to have_button '削除する'
@@ -154,7 +154,7 @@ RSpec.describe 'Posts', type: :system do
 
         # reverts to different session
         expect(page).to have_content 'テストコメント'
-        expect(page).not_to have_content '投稿が作成されました'
+        expect(page).not_to have_content 'コメントが作成されました。'
         within('.post') do
           expect(page).not_to have_button '削除する'
         end
@@ -178,7 +178,7 @@ RSpec.describe 'Posts', type: :system do
             end
           end
 
-          expect(page).to have_content '投稿が削除されました'
+          expect(page).to have_content 'コメントが削除されました。'
           expect(page).not_to have_content post.content
         end.to change(Post, :count).by(-1)
 
@@ -201,7 +201,7 @@ RSpec.describe 'Posts', type: :system do
 
         # reverts to different session
         expect(page).not_to have_content post.content
-        expect(page).not_to have_content '投稿が削除されました'
+        expect(page).not_to have_content 'コメントが削除されました。'
       end
     end
   end

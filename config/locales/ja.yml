@@ -19,4 +19,4 @@ ja:
           attributes:
             group_id:
               format: '%{message}'
-              taken: この%{attribute}には既に参加しています
+              taken: この%{attribute}には既に参加しています。

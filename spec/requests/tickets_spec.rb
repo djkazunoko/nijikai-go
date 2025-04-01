@@ -31,7 +31,7 @@ RSpec.describe 'Tickets', type: :request do
         end.to change(Ticket, :count).by(1)
         expect(response).to redirect_to(group_path(group))
         follow_redirect!
-        expect(response.body).to include('2次会グループに参加しました')
+        expect(response.body).to include('2次会グループに参加しました。')
       end
     end
 
@@ -45,7 +45,7 @@ RSpec.describe 'Tickets', type: :request do
         end.not_to change(Ticket, :count)
         expect(response).to redirect_to(group_path(group))
         follow_redirect!
-        expect(response.body).to include('自身が主催したグループには参加できません')
+        expect(response.body).to include('自身が主催したグループには参加できません。')
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe 'Tickets', type: :request do
         end.not_to change(Ticket, :count)
         expect(response).to redirect_to(group_path(group))
         follow_redirect!
-        expect(response.body).to include('この2次会グループには既に参加しています')
+        expect(response.body).to include('この2次会グループには既に参加しています。')
       end
     end
 
@@ -76,7 +76,7 @@ RSpec.describe 'Tickets', type: :request do
         end.not_to change(user.tickets, :count)
         expect(response).to redirect_to(group_path(full_capacity_group))
         follow_redirect!
-        expect(response.body).to include('定員を超えて参加することはできません')
+        expect(response.body).to include('定員を超えて参加することはできません。')
       end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe 'Tickets', type: :request do
         end.not_to change(Ticket, :count)
         expect(response).to redirect_to(root_path)
         follow_redirect!
-        expect(response.body).to include('ログインしてください')
+        expect(response.body).to include('ログインしてください。')
       end
     end
   end
@@ -107,7 +107,7 @@ RSpec.describe 'Tickets', type: :request do
         end.to change(Ticket, :count).by(-1)
         expect(response).to redirect_to(group_path(group))
         follow_redirect!
-        expect(response.body).to include('この2次会グループの参加をキャンセルしました')
+        expect(response.body).to include('2次会グループへの参加をキャンセルしました。')
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe 'Tickets', type: :request do
         end.not_to change(Ticket, :count)
         expect(response).to redirect_to(root_path)
         follow_redirect!
-        expect(response.body).to include('ログインしてください')
+        expect(response.body).to include('ログインしてください。')
       end
     end
   end
