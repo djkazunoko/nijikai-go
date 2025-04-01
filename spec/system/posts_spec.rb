@@ -116,7 +116,7 @@ RSpec.describe 'Posts', type: :system do
 
         expect do
           click_button 'コメントする'
-          expect(page).to have_content '投稿内容を入力してください'
+          expect(page).to have_content 'コメントを入力してください'
         end.not_to change(Post, :count)
 
         expect(page).to have_current_path(group_path(group))
@@ -134,7 +134,7 @@ RSpec.describe 'Posts', type: :system do
         expect do
           fill_in 'post_content', with: 'a' * 2001
           click_button 'コメントする'
-          expect(page).to have_content '投稿内容は1000文字以内で入力してください'
+          expect(page).to have_content 'コメントは1000文字以内で入力してください'
         end.not_to change(Post, :count)
 
         expect(page).to have_current_path(group_path(group))

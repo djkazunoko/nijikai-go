@@ -12,7 +12,7 @@ ja:
       ticket:
         group_id: 2次会グループ
       post:
-        content: 投稿内容
+        content: コメント
     errors:
       models:
         ticket:

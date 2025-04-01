@@ -1,6 +1,8 @@
 - if object.errors.any?
-  div style="color: red"
-    h2 = t('errors.template.header', model: object.model_name.human, count: object.errors.count)
+  .errors.text-red-700.border.border-red-500.bg-red-100.rounded-lg.p-4.max-w-md.mb-2.mx-auto
+    p.text-center.font-bold.text-sm.pb-2
+      | 入力内容にエラーがありました。
     ul
       - object.errors.each do |error|
-        li = error.full_message
+        li.text-sm.pb-1
+          = error.full_message

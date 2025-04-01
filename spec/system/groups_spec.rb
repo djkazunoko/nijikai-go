@@ -222,7 +222,7 @@ RSpec.describe 'Groups', type: :system do
           fill_in '会計方法', with: '割り勘'
           click_button '2次会グループを作成'
 
-          expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+          expect(page).to have_content '入力内容にエラーがありました。'
           expect(page).to have_content 'イベントのハッシュタグを入力してください'
         end.not_to change(Group, :count)
 
@@ -302,7 +302,7 @@ RSpec.describe 'Groups', type: :system do
         fill_in '会場', with: ''
         click_button '内容を更新'
 
-        expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+        expect(page).to have_content '入力内容にエラーがありました。'
         expect(page).to have_content '会場を入力してください'
         expect(page).to have_current_path(edit_group_path(group))
       end
@@ -315,7 +315,7 @@ RSpec.describe 'Groups', type: :system do
         fill_in '定員', with: '1'
         click_button '内容を更新'
 
-        expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+        expect(page).to have_content '入力内容にエラーがありました。'
         expect(page).to have_content '定員は参加人数以上の値にしてください'
         expect(page).to have_current_path(edit_group_path(group))
       end
