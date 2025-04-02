@@ -1,15 +1,14 @@
-.navbar.bg-base-100.border-b
+.navbar.bg-base-100.shadow-sm.border-b
   .flex-1
-    = link_to '2次会GO！',
-              root_path,
-              class: 'btn btn-ghost text-xl'
+    = link_to root_path do
+      = image_tag 'logo-sm.svg', alt: '2次会GO!のロゴ', class: 'h-11 hover:opacity-50'
   - if logged_in?
-    .flex-none.gap-2
+    .flex-none
       .dropdown.dropdown-end
         .btn.btn-ghost.btn-circle.avatar tabindex="0" role="button"
           .w-10.rounded-full
             = image_tag(current_user.image_url)
-        ul.mt-3.z-1.p-2.shadow.menu.menu-sm.dropdown-content.bg-base-100.rounded-box.w-52 tabindex="0"
+        ul.menu.menu-sm.dropdown-content.bg-base-100.rounded-box.z-1.mt-3.w-52.p-2.shadow tabindex="0"
           li
             = button_to 'ログアウト', logout_path, method: :delete
           li
