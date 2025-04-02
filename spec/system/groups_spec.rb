@@ -178,7 +178,7 @@ RSpec.describe 'Groups', type: :system do
     context 'when user is not logged in' do
       it 'redirects to root_path' do
         visit new_group_path
-        expect(page).to have_content 'ログインしてください'
+        expect(page).to have_content 'ログインしてください。'
         expect(page).to have_current_path(root_path)
       end
     end
@@ -204,7 +204,7 @@ RSpec.describe 'Groups', type: :system do
           fill_in '会計方法', with: '割り勘'
           click_button '2次会グループを作成'
 
-          expect(page).to have_content '2次会グループが作成されました'
+          expect(page).to have_content '2次会グループが作成されました。'
         end.to change(Group, :count).by(1)
 
         expect(page).to have_current_path(group_path(Group.last))
@@ -222,7 +222,7 @@ RSpec.describe 'Groups', type: :system do
           fill_in '会計方法', with: '割り勘'
           click_button '2次会グループを作成'
 
-          expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+          expect(page).to have_content '入力内容にエラーがありました。'
           expect(page).to have_content 'イベントのハッシュタグを入力してください'
         end.not_to change(Group, :count)
 
@@ -267,7 +267,7 @@ RSpec.describe 'Groups', type: :system do
     context 'when guest' do
       it 'redirects to root_path' do
         visit edit_group_path(group)
-        expect(page).to have_content 'ログインしてください'
+        expect(page).to have_content 'ログインしてください。'
         expect(page).to have_current_path(root_path)
       end
     end
@@ -289,7 +289,7 @@ RSpec.describe 'Groups', type: :system do
         fill_in '会場', with: 'とある居酒屋'
         click_button '内容を更新'
 
-        expect(page).to have_content '2次会グループが更新されました'
+        expect(page).to have_content '2次会グループが更新されました。'
         expect(page).to have_content 'とある居酒屋'
         expect(page).to have_current_path(group_path(group))
       end
@@ -302,7 +302,7 @@ RSpec.describe 'Groups', type: :system do
         fill_in '会場', with: ''
         click_button '内容を更新'
 
-        expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+        expect(page).to have_content '入力内容にエラーがありました。'
         expect(page).to have_content '会場を入力してください'
         expect(page).to have_current_path(edit_group_path(group))
       end
@@ -315,7 +315,7 @@ RSpec.describe 'Groups', type: :system do
         fill_in '定員', with: '1'
         click_button '内容を更新'
 
-        expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+        expect(page).to have_content '入力内容にエラーがありました。'
         expect(page).to have_content '定員は参加人数以上の値にしてください'
         expect(page).to have_current_path(edit_group_path(group))
       end
@@ -337,7 +337,7 @@ RSpec.describe 'Groups', type: :system do
           click_button '削除する'
         end
 
-        expect(page).to have_content '2次会グループが削除されました'
+        expect(page).to have_content '2次会グループが削除されました。'
       end.to change(Group, :count).by(-1)
 
       expect(page).to have_current_path(groups_path)

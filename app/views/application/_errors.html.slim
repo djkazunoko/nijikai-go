@@ -1,0 +1,8 @@
+- if object.errors.any?
+  .errors.text-red-700.border.border-red-500.bg-red-100.rounded-lg.p-4.max-w-md.mb-2.mx-auto
+    p.text-center.font-bold.text-sm.pb-2
+      | 入力内容にエラーがありました。
+    ul
+      - object.errors.each do |error|
+        li.text-sm.pb-1
+          = error.full_message

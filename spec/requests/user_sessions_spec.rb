@@ -24,7 +24,7 @@ RSpec.describe 'UserSessions', type: :request do
         get '/auth/github/callback'
         expect(response).to redirect_to(root_path)
         follow_redirect!
-        expect(response.body).to include('ログインしました')
+        expect(response.body).to include('ログインしました。')
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe 'UserSessions', type: :request do
       delete '/logout'
       expect(response).to redirect_to(root_path)
       follow_redirect!
-      expect(response.body).to include('ログアウトしました')
+      expect(response.body).to include('ログアウトしました。')
     end
   end
 
@@ -75,7 +75,7 @@ RSpec.describe 'UserSessions', type: :request do
       get '/auth/failure'
       expect(response).to redirect_to(root_path)
       follow_redirect!
-      expect(response.body).to include('ログインをキャンセルしました')
+      expect(response.body).to include('ログインをキャンセルしました。')
     end
   end
 end

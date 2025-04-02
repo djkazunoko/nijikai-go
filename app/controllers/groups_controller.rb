@@ -30,7 +30,7 @@ class GroupsController < ApplicationController
     @group = current_user.groups.new(group_params)
 
     if @group.save
-      redirect_to group_url(@group), notice: '2次会グループが作成されました'
+      redirect_to group_url(@group), notice: '2次会グループが作成されました。'
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class GroupsController < ApplicationController
 
   def update
     if @group.update(group_params)
-      redirect_to group_url(@group), notice: '2次会グループが更新されました'
+      redirect_to group_url(@group), notice: '2次会グループが更新されました。'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -47,7 +47,7 @@ class GroupsController < ApplicationController
   def destroy
     @group.destroy!
 
-    redirect_to groups_url, notice: '2次会グループが削除されました'
+    redirect_to groups_url, notice: '2次会グループが削除されました。'
   end
 
   private

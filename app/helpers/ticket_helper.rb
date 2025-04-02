@@ -5,7 +5,7 @@ module TicketHelper
     group = Group.find(group_id)
     ticket = user.tickets.build(group:)
     if ticket.save
-      redirect_to group, notice: '2次会グループに参加しました'
+      redirect_to group, notice: '2次会グループに参加しました。'
     else
       redirect_to group, alert: ticket.errors.full_messages.to_sentence
     end
