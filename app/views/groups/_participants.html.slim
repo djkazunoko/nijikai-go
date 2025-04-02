@@ -6,7 +6,7 @@
   .flex.justify-around
     - tickets.first(displayable_participant_icons_count).each do |ticket|
       = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
-          = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50')
+        = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50')
 
 dialog#modal.modal
   .modal-box

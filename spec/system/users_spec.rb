@@ -14,11 +14,10 @@ RSpec.describe 'Users', type: :system do
 
       it 'can login' do
         visit root_path
-        expect(page).not_to have_css('.avatar')
 
-        click_button 'サインアップ / ログイン'
+        click_button 'サインアップ / ログインをして2次会グループを作成'
         expect(page).to have_content 'ログインしました。'
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(new_group_path)
         expect(page).to have_css(".avatar img[src='#{user.image_url}']")
       end
     end
@@ -30,9 +29,8 @@ RSpec.describe 'Users', type: :system do
 
       it 'can not login and redirect to root_path' do
         visit root_path
-        expect(page).not_to have_css('.avatar')
 
-        click_button 'サインアップ / ログイン'
+        click_button 'サインアップ / ログインをして2次会グループを作成'
         expect(page).to have_content 'ログインをキャンセルしました。'
         expect(page).to have_current_path(root_path)
         expect(page).not_to have_css('.avatar')
@@ -46,7 +44,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'can logout' do
-      visit root_path
+      visit new_group_path
       expect(page).to have_css(".avatar img[src='#{user.image_url}']")
 
       find('.avatar').click
@@ -64,7 +62,7 @@ RSpec.describe 'Users', type: :system do
       end
 
       it 'can delete own account' do
-        visit root_path
+        visit new_group_path
         expect(page).to have_css(".avatar img[src='#{user.image_url}']")
 
         find('.avatar').click
@@ -86,7 +84,7 @@ RSpec.describe 'Users', type: :system do
       end
 
       it 'cannot delete own account' do
-        visit root_path
+        visit new_group_path
         expect(page).to have_css(".avatar img[src='#{group.owner.image_url}']")
 
         find('.avatar').click
@@ -98,7 +96,6 @@ RSpec.describe 'Users', type: :system do
         end.not_to change(User, :count)
 
         expect(page).to have_current_path(root_path)
-        expect(page).to have_css(".avatar img[src='#{group.owner.image_url}']")
       end
     end
 
@@ -109,7 +106,7 @@ RSpec.describe 'Users', type: :system do
       end
 
       it 'cannot delete own account' do
-        visit root_path
+        visit new_group_path
         expect(page).to have_css(".avatar img[src='#{user.image_url}']")
 
         find('.avatar').click
@@ -121,7 +118,6 @@ RSpec.describe 'Users', type: :system do
         end.not_to change(User, :count)
 
         expect(page).to have_current_path(root_path)
-        expect(page).to have_css(".avatar img[src='#{user.image_url}']")
       end
     end
   end

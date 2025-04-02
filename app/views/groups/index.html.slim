@@ -1,17 +1,20 @@
-p.mb-4
-  | 2次会GO！は、テック系イベントの二次会参加者を簡単に集めることができる、二次会参加者募集ツールです。
+.logo-lg.w-1/2.md:w-2/5.mx-auto.mt-2.mb-4
+  = image_tag 'logo-lg.svg', alt: '2次会GO!のロゴ'
 
-.mb-4
-  - if logged_in?
-    = link_to '2次会グループを作成',
-              new_group_path,
-              class: 'btn'
-  - else
-    = button_to 'サインアップ / ログインをして2次会グループを作成',
-                "/auth/github?origin=#{new_group_path}",
-                data: { turbo: false },
-                class: 'btn'
-    span.text-xs
-      | GitHubアカウントが必要です
+p.text-center.text-lg.mb-4
+  | 2次会GO!はテックイベントの
+  br
+  | 2次会参加者募集ツールです。
+
+p.text-center.mb-2
+  | 現在参加しているイベントの
+  br
+  | 2次会グループを作成しましょう！
+
+== render 'groups/group_creation_button'
+
+p.text-3xl.text-center.font-bold.mt-4
+  = Time.zone.today.strftime('%Y/%m/%d')
+  | &nbsp;の2次会一覧
 
 == render partial: 'groups/groups', locals: { groups_grouped_by_hashtag: @groups_grouped_by_hashtag }

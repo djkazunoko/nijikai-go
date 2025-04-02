@@ -12,7 +12,8 @@ html.bg-gray-100
     link[href="https://cdn.jsdelivr.net/npm/daisyui@4.10.5/dist/full.min.css" rel="stylesheet" type="text/css"]
     script[src="https://cdn.tailwindcss.com"]
   body.max-w-screen-sm.mx-auto.min-h-screen.flex.flex-col
-    = render 'application/header'
+    - unless current_page?(root_path) || current_page?(groups_path)
+      = render 'application/header'
     main.bg-white
       = render 'application/flash'
       = yield
