@@ -30,9 +30,9 @@
     ul.form-actions__items
       li.form-actions__item.is-main.mb-2
         - if group.new_record?
-          = form.submit '2次会グループを作成', class: 'btn bg-blue-500 hover:bg-blue-700 text-white w-full'
+          = form.submit '2次会グループを作成', class: 'btn nijikai-btn-primary w-full'
         - else
-          = form.submit '内容を更新', class: 'btn bg-blue-500 hover:bg-blue-700 text-white w-full'
+          = form.submit '内容を更新', class: 'btn nijikai-btn-primary w-full'
       li.form-actions__item.is-sub.text-center
         - if group.new_record?
           = link_to 'キャンセル', groups_path, class: 'text-sm text-gray-400 underline hover:no-underline'

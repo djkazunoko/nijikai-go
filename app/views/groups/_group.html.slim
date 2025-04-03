@@ -3,7 +3,7 @@
     = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
       = image_tag(group.owner.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50 mr-2')
     p.text-lg.font-bold
-      = link_to "##{group.hashtag}", "https://x.com/search?q=%23#{group.hashtag}", target: '_blank', rel: 'noopener', class: 'text-blue-700 underline hover:text-blue-500 hover:no-underline'
+      = link_to "##{group.hashtag}", "https://x.com/search?q=%23#{group.hashtag}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
       | &nbsp;の2次会
 
   p.text-2xl.font-bold.border-b.py-2 = group.details
