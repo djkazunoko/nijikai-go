@@ -1,9 +1,7 @@
 doctype html
 html.bg-base-yellow-100.text-accent-black-800
   head
-    title
-      | Nijikaigo
-    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = display_meta_tags(default_meta_tags)
     = csrf_meta_tags
     = csp_meta_tag
     link[href="https://cdn.jsdelivr.net/npm/daisyui@4.10.5/dist/full.min.css" rel="stylesheet" type="text/css"]

@@ -1,3 +1,6 @@
+- title 'グループ詳細'
+- set_meta_tags description: 'グループ詳細ページです。'
+
 = turbo_stream_from 'posts'
 - if logged_in?
   = turbo_stream_from current_user
