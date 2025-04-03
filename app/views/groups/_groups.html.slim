@@ -11,14 +11,14 @@
             = image_tag(group.owner.image_url, class: 'min-w-10 h-10 rounded-full hover:opacity-50 mr-2')
           div
             = link_to group.details, group_path(group), class: 'font-bold nijikai-link-primary'
-            .flex.text-sm.text-gray-500.pt-1
+            .flex.text-sm.pt-1
               .flex.items-center.mr-4
                 i.fa-solid.fa-location-dot.mr-1
                 p = group.location
               .flex.items-center
                 i.fa-solid.fa-sack-dollar.mr-1
                 p = group.payment_method
-            .flex.text-sm.text-gray-500.pt-1
+            .flex.text-sm.pt-1
               p = "#{group.tickets.count}名 / #{group.capacity}名"
               - if group.posts.any?
                 p.ml-4 = "コメント(#{group.posts.count})"
