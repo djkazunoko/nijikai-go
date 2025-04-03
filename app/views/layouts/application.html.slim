@@ -1,15 +1,15 @@
 doctype html
-html.bg-gray-100
+html.bg-base-yellow-100
   head
     title
       | Nijikaigo
     meta[name="viewport" content="width=device-width,initial-scale=1"]
     = csrf_meta_tags
     = csp_meta_tag
+    link[href="https://cdn.jsdelivr.net/npm/daisyui@4.10.5/dist/full.min.css" rel="stylesheet" type="text/css"]
     = stylesheet_link_tag 'tailwind', 'inter-font', 'data-turbo-track': 'reload'
     = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
     = javascript_importmap_tags
-    link[href="https://cdn.jsdelivr.net/npm/daisyui@4.10.5/dist/full.min.css" rel="stylesheet" type="text/css"]
     script[src="https://cdn.tailwindcss.com"]
   body.max-w-screen-sm.mx-auto.min-h-screen.flex.flex-col
     - unless current_page?(root_path) || current_page?(groups_path)
