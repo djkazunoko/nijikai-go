@@ -6,4 +6,8 @@
   .nijikai-btn-primary {
     @apply bg-main-orange-400 hover:bg-main-orange-400 hover:opacity-80 text-white border-none;
   }
+
+  .nijikai-link-primary {
+    @apply text-main-orange-400 underline hover:text-main-orange-400 hover:opacity-80 hover:no-underline;
+  }
 }
