@@ -51,6 +51,7 @@ gem 'bootsnap', require: false
 
 gem 'active_decorator'
 gem 'font-awesome-sass', '~> 6.7', '>= 6.7.2'
+gem 'meta-tags'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
