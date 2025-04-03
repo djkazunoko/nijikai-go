@@ -2,14 +2,14 @@
   - if logged_in?
     = link_to '2次会グループを作成',
               new_group_path,
-              class: 'btn'
+              class: 'btn nijikai-btn-primary'
   - else
     span.text-sm
       | GitHubアカウントが必要です。
     = button_to 'サインアップ / ログインをして2次会グループを作成',
                 "/auth/github?origin=#{new_group_path}",
                 data: { turbo: false },
-                class: 'btn mb-2'
+                class: 'btn nijikai-btn-primary mb-2'
     span.text-sm
       = link_to '利用規約', tos_path, class: 'text-blue-700 underline hover:text-blue-500 hover:no-underline'
       | ・
