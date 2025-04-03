@@ -10,8 +10,8 @@ RSpec.describe GroupDecorator do
     it 'returns tweet web intent url' do
       query_params = {
         url: group_url(group),
-        hashtags: "#{group.hashtag},2次会GO",
-        text: "#{group.hashtag}の2次会に参加しよう！"
+        hashtags: '2次会GO',
+        text: "##{group.hashtag} の2次会に参加しよう！"
       }
       expected_url = "https://twitter.com/intent/tweet?#{URI.encode_www_form(query_params)}"
       expect(group.twitter_share_url).to eq expected_url
