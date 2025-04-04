@@ -76,7 +76,6 @@ group :development do
   # gem "spring"
 
   gem 'dockerfile-rails', '>= 1.7', require: false
-  gem 'html2slim-ruby3'
   gem 'rubocop', require: false
   gem 'rubocop-capybara', require: false
   gem 'rubocop-factory_bot', require: false

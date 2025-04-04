@@ -128,9 +128,6 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
-    hpricot (0.8.6)
-    html2slim-ruby3 (0.2.1)
-      hpricot
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -414,7 +411,6 @@ DEPENDENCIES
   dockerfile-rails (>= 1.7)
   factory_bot_rails
   font-awesome-sass (~> 6.7, >= 6.7.2)
-  html2slim-ruby3
   importmap-rails
   jbuilder
   meta-tags
