@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UserSessionsController < ApplicationController
+  include TicketCreation
   skip_before_action :authenticate, only: %i[create]
 
   def create

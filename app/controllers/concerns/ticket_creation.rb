@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-module TicketHelper
+module TicketCreation
+  extend ActiveSupport::Concern
+
+  private
+
   def create_ticket_and_redirect(user, group_id)
     group = Group.find(group_id)
     ticket = user.tickets.build(group:)
