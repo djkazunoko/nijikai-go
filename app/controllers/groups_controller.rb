@@ -57,6 +57,8 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:hashtag, :name, :details, :capacity, :location, :payment_method)
+    params.require(:group).permit(:hashtag, :name, :details, :capacity, :location, :payment_method).tap do |group_params|
+      group_params[:hashtag] = group_params[:hashtag].sub(/\A#+/, '') if group_params[:hashtag].present?
+    end
   end
 end
