@@ -14,10 +14,10 @@ p.text-center.mb-2
   br
   | 2次会グループを作成しましょう！
 
-== render 'groups/group_creation_button'
+= render 'groups/group_creation_button'
 
 p.text-3xl.text-center.font-bold.mt-4
   = Time.zone.today.strftime('%Y/%m/%d')
   | &nbsp;の2次会一覧
 
-== render partial: 'groups/groups', locals: { groups_grouped_by_hashtag: @groups_grouped_by_hashtag }
+= render partial: 'groups/groups', locals: { groups_grouped_by_hashtag: @groups_grouped_by_hashtag }

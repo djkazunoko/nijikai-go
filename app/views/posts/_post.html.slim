@@ -9,4 +9,4 @@
     p.p-2 = post.content
     = turbo_frame_tag "delete_button_#{post.id}" do
       - if post.created_by?(current_user)
-        == render partial: 'posts/delete_button', locals: { group:, post: }
+        = render partial: 'posts/delete_button', locals: { group:, post: }
