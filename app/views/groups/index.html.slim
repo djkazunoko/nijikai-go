@@ -18,6 +18,7 @@ p.text-center.mb-2
 
 p.text-3xl.text-center.font-bold.mt-4
   = Time.zone.today.strftime('%Y/%m/%d')
-  | &nbsp;の2次会一覧
+  span.ml-1
+    | の2次会一覧
 
 = render partial: 'groups/groups', locals: { groups_grouped_by_hashtag: @groups_grouped_by_hashtag }

@@ -21,7 +21,7 @@ RSpec.describe 'Groups', type: :system do
 
       it 'displays a list of groups' do
         visit groups_path
-        expect(page).to have_content "##{group.hashtag} の2次会一覧"
+        expect(page).to have_content "##{group.hashtag}の2次会一覧"
         within all('.group').first do
           expect(page).to have_css("img[src='#{group.owner.image_url}']")
           expect(page).to have_link href: "https://github.com/#{group.owner.name}"
