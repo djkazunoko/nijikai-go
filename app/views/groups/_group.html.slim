@@ -1,5 +1,5 @@
-.group-details.mx-4
-  .flex.items-center.border-b.py-2
+.group-details
+  .flex.items-center.bg-main-orange-100.pl-4.py-3
     = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
       = image_tag(group.owner.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50 mr-2')
     p.text-lg.font-bold
@@ -7,12 +7,14 @@
       span.ml-1
         | の2次会
 
-  p.text-2xl.font-bold.border-b.py-2 = group.details
+  == render partial: 'groups/share_button', locals: { group: @group }
 
-  .flex.items-center.border-b.py-2
+  p.font-bold.py-2.mx-4 = group.details
+
+  .flex.items-center.py-2.mx-4
     i.fa-solid.fa-location-dot.mr-2
     p = group.location
 
-  .flex.items-center.border-b.py-2
+  .flex.items-center.py-2.mx-4
     i.fa-solid.fa-sack-dollar.mr-2
     p = group.payment_method
