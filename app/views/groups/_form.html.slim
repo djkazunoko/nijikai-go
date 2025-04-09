@@ -16,7 +16,9 @@
         | どんな人に参加して欲しいですか？どんな2次会を開催予定ですか？<br>例）イベント参加者限定、〇〇について語りたい！
     .form-item.mb-6
       = form.label :capacity, class: 'block text-sm font-bold mb-2'
-      = form.number_field :capacity, class: 'block w-full rounded-md mb-1', placeholder: '10'
+      .flex
+        = form.number_field :capacity, class: 'block w-24 rounded-md mb-1', placeholder: '10'
+        span.self-center.ml-1 名
     .form-item.mb-6
       = form.label :location, class: 'block text-sm font-bold mb-2'
       = form.text_field :location, class: 'block w-full rounded-md mb-1', placeholder: '未定'
