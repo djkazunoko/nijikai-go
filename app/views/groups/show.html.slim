@@ -9,7 +9,7 @@
 
 - if @group.created_by?(current_user)
   .owner-action-items.flex.justify-center.relative.m-4
-    = link_to edit_group_path(@group), class: 'btn nijikai-btn-primary w-2/5' do
+    = link_to edit_group_path(@group), class: 'btn nijikai-btn-secondary w-full max-w-64 sm:max-w-80' do
       i.fa-solid.fa-pen
       | 内容修正
     = button_to '削除する',
