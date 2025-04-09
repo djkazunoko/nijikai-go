@@ -31,7 +31,7 @@
   - if logged_in?
     = render 'posts/form', group: @group, post: Post.new
   - else
-    = button_to 'サインアップ / ログインをしてコメントする',
+    = button_to 'ログインをしてコメントする',
                 '/auth/github',
                 data: { turbo: false },
                 class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80'

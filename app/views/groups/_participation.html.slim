@@ -22,6 +22,4 @@
       p.text-sm.font-bold.text-main-orange-600.mb-2 = "あと#{group.remaining_slots}名が参加できます。"
       .w-4/5
         = button_to "/auth/github/?group_id=#{group.id}", data: { turbo: false }, class: 'btn nijikai-btn-primary w-full h-auto leading-5 py-2', id: 'signup-participate-button' do
-          | サインアップ / ログインをして
-          br
-          | 2次会に参加する
+          | ログインをして2次会に参加する
