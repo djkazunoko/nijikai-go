@@ -7,6 +7,8 @@
       = form.text_field :hashtag, class: 'block w-full rounded-md mb-1', placeholder: 'rubykaigi'
       p.text-gray-400.text-sm
         | 現在参加しているイベントのハッシュタグを入力してください。
+        br
+        | #は入力不要です。
     .form-item.mb-6
       = form.label :details, class: 'block text-sm font-bold mb-2'
       = form.text_area :details, class: 'block w-full rounded-md p-2  mb-1', rows: 3, placeholder: '誰でも参加OK！'
