@@ -13,7 +13,9 @@
       = form.label :details, class: 'block text-sm font-bold mb-2'
       = form.text_area :details, class: 'block w-full rounded-md p-2  mb-1', rows: 3, placeholder: '誰でも参加OK！'
       p.text-gray-400.text-sm
-        | どんな人に参加して欲しいですか？どんな2次会を開催予定ですか？<br>例）イベント参加者限定、〇〇について語りたい！
+        | どんな人に参加して欲しいですか？どんな2次会を開催予定ですか？
+        br
+        | 例: イベント参加者限定、〇〇について語りたい！
     .form-item.mb-6
       = form.label :capacity, class: 'block text-sm font-bold mb-2'
       .flex
@@ -23,12 +25,14 @@
       = form.label :location, class: 'block text-sm font-bold mb-2'
       = form.text_field :location, class: 'block w-full rounded-md mb-1', placeholder: '未定'
       p.text-gray-400.text-sm
-        | 例）〇〇駅周辺の居酒屋
+        | 例: 〇〇駅周辺の居酒屋
     .form-item.mb-6
       = form.label :payment_method, class: 'block text-sm font-bold mb-2'
       = form.text_field :payment_method, class: 'block w-full rounded-md mb-1', placeholder: '割り勘'
       p.text-gray-400.text-sm
-        | トラブル防止のため、事前に会計方法を決めておきましょう。<br>例）乾杯前に3000円集金します、個別会計
+        | トラブル防止のため、事前に会計方法を決めておきましょう。
+        br
+        | 例: 乾杯前に3000円集金します、個別会計
 
   .form-actions
     ul.form-actions__items
