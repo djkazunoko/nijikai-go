@@ -4,12 +4,11 @@
               new_group_path,
               class: 'btn nijikai-btn-primary'
   - else
-    span.text-sm
-      | GitHubアカウントが必要です。
-    = button_to 'サインアップ / ログインをして2次会グループを作成',
-                "/auth/github?origin=#{new_group_path}",
+    = button_to "/auth/github?origin=#{new_group_path}",
                 data: { turbo: false },
-                class: 'btn nijikai-btn-primary mb-2'
+                class: 'btn nijikai-btn-primary mb-2' do 
+                i.fa-brands.fa-github.text-2xl
+                | GitHubアカウントでログイン
     span.text-sm
       = link_to '利用規約', tos_path, class: 'nijikai-link-primary'
       | ・
