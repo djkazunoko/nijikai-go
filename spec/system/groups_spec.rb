@@ -54,7 +54,7 @@ RSpec.describe 'Groups', type: :system do
     context 'when user is not logged in' do
       it 'displays log in and create group button' do
         visit groups_path
-        expect(page).to have_button 'サインアップ / ログインをして2次会グループを作成'
+        expect(page).to have_button 'GitHubアカウントでログイン'
       end
     end
   end
@@ -190,7 +190,7 @@ RSpec.describe 'Groups', type: :system do
     before do
       github_mock(user)
       visit groups_path
-      click_button 'サインアップ / ログインをして2次会グループを作成'
+      click_button 'GitHubアカウントでログイン'
     end
 
     context 'with valid input' do

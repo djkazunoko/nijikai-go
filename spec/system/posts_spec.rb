@@ -38,7 +38,7 @@ RSpec.describe 'Posts', type: :system do
     context 'when user is not logged in' do
       it 'displays a log in and create button' do
         visit group_path(group)
-        expect(page).to have_button 'サインアップ / ログインをしてコメントする'
+        expect(page).to have_button 'ログインをしてコメントする'
       end
 
       it 'does not display the delete button' do
@@ -89,7 +89,7 @@ RSpec.describe 'Posts', type: :system do
       it 'creates a post' do
         visit group_path(group)
 
-        click_button 'サインアップ / ログインをしてコメントする'
+        click_button 'ログインをしてコメントする'
         expect(page).to have_current_path(group_path(group))
 
         expect do
