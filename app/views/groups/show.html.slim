@@ -8,15 +8,15 @@
 = render partial: 'groups/group', locals: { group: @group }
 
 - if @group.created_by?(current_user)
-  .owner-action-items.flex.justify-center.relative.m-4
-    = link_to edit_group_path(@group), class: 'btn nijikai-btn-secondary w-full max-w-64 sm:max-w-80' do
+  .owner-action-items.flex.flex-col.items-center.m-4
+    = link_to edit_group_path(@group), class: 'btn nijikai-btn-secondary w-full max-w-64 sm:max-w-80 mb-1' do
       i.fa-solid.fa-pen
       | 内容修正
     = button_to '削除する',
                 @group,
                 method: :delete,
-                data: { turbo_confirm: '本当に削除しますか？' },
-                class: 'text-sm text-gray-400 underline hover:text-red-500 hover:no-underline absolute right-0 bottom-0'
+                data: { turbo_confirm: '本g当に削除しますか？' },
+                class: 'text-sm text-gray-400 underline hover:text-red-500 hover:no-underline'
 - else
   = render partial: 'groups/participation', locals: { group: @group, ticket: @ticket }
 
