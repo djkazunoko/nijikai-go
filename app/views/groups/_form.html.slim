@@ -35,13 +35,13 @@
         | 例: 乾杯前に3000円集金します、個別会計
 
   .form-actions
-    ul.form-actions__items
+    ul.form-actions__items.text-center
       li.form-actions__item.is-main.mb-2
         - if group.new_record?
-          = form.submit '2次会グループを作成', class: 'btn nijikai-btn-primary w-full'
+          = form.submit '2次会グループを作成', class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80'
         - else
-          = form.submit '内容を更新', class: 'btn nijikai-btn-primary w-full'
-      li.form-actions__item.is-sub.text-center
+          = form.submit '内容を更新', class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80'
+      li.form-actions__item.is-sub
         - if group.new_record?
           = link_to 'キャンセル', groups_path, class: 'text-sm text-gray-400 underline hover:no-underline'
         - else

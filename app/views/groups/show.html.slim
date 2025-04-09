@@ -27,11 +27,11 @@
 
 = render partial: 'posts/posts', locals: { group: @group, posts: @posts }
 
-.post-form.m-4
+.post-form.text-center.m-4
   - if logged_in?
     = render 'posts/form', group: @group, post: Post.new
   - else
     = button_to 'サインアップ / ログインをしてコメントする',
                 '/auth/github',
                 data: { turbo: false },
-                class: 'btn nijikai-btn-primary w-full'
+                class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80'

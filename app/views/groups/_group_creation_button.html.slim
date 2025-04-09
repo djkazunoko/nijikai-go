@@ -2,11 +2,11 @@
   - if logged_in?
     = link_to '2次会グループを作成',
               new_group_path,
-              class: 'btn nijikai-btn-primary'
+              class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80'
   - else
     = button_to "/auth/github?origin=#{new_group_path}",
                 data: { turbo: false },
-                class: 'btn nijikai-btn-primary mb-2' do 
+                class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80 mb-2' do 
                 i.fa-brands.fa-github.text-2xl
                 | GitHubアカウントでログイン
     span.text-xs
