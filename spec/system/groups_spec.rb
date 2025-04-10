@@ -64,15 +64,15 @@ RSpec.describe 'Groups', type: :system do
 
     it 'displays the group' do
       visit group_path(group)
+      expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
+      expect(page).to have_content group.hashtag
       within('.group-details') do
-        expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
-        expect(page).to have_content group.hashtag
         expect(page).to have_content group.details
         expect(page).to have_content group.location
         expect(page).to have_content group.payment_method
       end
       expect(page).not_to have_css('.participants')
-      expect(page).to have_css('.participation-action-items')
+      expect(page).to have_css('.participation-action-item')
     end
 
     context 'when owner' do
