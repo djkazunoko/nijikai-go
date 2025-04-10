@@ -1,30 +1,33 @@
-.m-4
-  - groups_grouped_by_hashtag.each do |hashtag, groups|
-    .groups_by_hashtag.border.rounded-md.mb-8
-      p.text-xl.font-bold.border-b.text-center.py-2
-        = link_to "##{hashtag}", "https://x.com/search?q=%23#{hashtag}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
-        span.ml-1
-        | の2次会一覧
+h2.text-2xl.font-bold.bg-base-yellow-50.border-l-8.border-main-orange-400.pl-3.py-2.mb-4
+  = Time.zone.today.strftime('%Y/%m/%d')
+  span.ml-1
+    | の2次会一覧
+- groups_grouped_by_hashtag.each do |hashtag, groups|
+  section.groups_by_hashtag.border.rounded-md.mb-8
+    h3.text-xl.font-bold.border-b.text-center.py-2
+      = link_to "##{hashtag}", "https://x.com/search?q=%23#{hashtag}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
+      span.ml-1
+      | の2次会一覧
 
-      .groups
-        - groups.each do |group|
-          .group.flex.items-start.border-b.border-dashed.last:border-none.py-2.px-4
-            = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
-              = image_tag(group.owner.image_url, class: 'min-w-10 h-10 rounded-full hover:opacity-50 mr-2')
-            div
-              = link_to group.details, group_path(group), class: 'font-bold nijikai-link-primary'
-              .flex.text-sm.pt-1
-                .flex.items-center.mr-4
-                  i.fa-solid.fa-location-dot.mr-1
-                  p = group.location
-                .flex.items-center
-                  i.fa-solid.fa-sack-dollar.mr-1
-                  p = group.payment_method
-              .flex.text-sm.pt-1
-                p = "#{group.tickets.count}名 / #{group.capacity}名"
-                - if group.posts.any?
-                  p.ml-4 = "コメント(#{group.posts.count})"
+    .groups
+      - groups.each do |group|
+        .group.flex.items-start.border-b.border-dashed.last:border-none.py-2.px-4
+          = link_to("https://github.com/#{group.owner.name}", target: '_blank', rel: 'noopener') do
+            = image_tag(group.owner.image_url, class: 'min-w-10 h-10 rounded-full hover:opacity-50 mr-2')
+          div
+            = link_to group.details, group_path(group), class: 'font-bold nijikai-link-primary'
+            .flex.text-sm.pt-1
+              .flex.items-center.mr-4
+                i.fa-solid.fa-location-dot.mr-1
+                p = group.location
+              .flex.items-center
+                i.fa-solid.fa-sack-dollar.mr-1
+                p = group.payment_method
+            .flex.text-sm.pt-1
+              p = "#{group.tickets.count}名 / #{group.capacity}名"
+              - if group.posts.any?
+                p.ml-4 = "コメント(#{group.posts.count})"
 
-  .hidden.only:block
-    p.text-center.font-bold.text-xl.my-8.sm:my-16
-      | まだ2次会グループはありません。
+.hidden.only:block
+  p.text-center.font-bold.text-xl.my-8.sm:my-16
+    | まだ2次会グループはありません。
