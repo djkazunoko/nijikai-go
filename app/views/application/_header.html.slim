@@ -1,7 +1,7 @@
 .navbar.bg-base-100.shadow-sm.border-b
   .flex-1
     = link_to root_path do
-      = image_tag 'logo-sm.svg', alt: '2次会GO!のロゴ', class: 'h-11 hover:opacity-50'
+      = image_tag 'logo-sm.svg', alt: '2次会GO!のロゴ', class: 'h-10 sm:h-11 hover:opacity-50'
   - if logged_in?
     .flex-none
       .dropdown.dropdown-end
