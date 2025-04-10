@@ -5,31 +5,39 @@
 - if logged_in?
   = turbo_stream_from current_user
 
-= render partial: 'groups/group', locals: { group: @group }
+section
+  h2.flex.items-center.bg-main-orange-100.pl-4.py-3.mb-4
+    = link_to("https://github.com/#{@group.owner.name}", target: '_blank', rel: 'noopener') do
+      = image_tag(@group.owner.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50 mr-2')
+    p.text-lg.font-bold
+      = link_to "##{@group.hashtag}", "https://x.com/search?q=%23#{@group.hashtag}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
+      span.ml-1
+        | の2次会
 
-- if @group.created_by?(current_user)
-  .owner-action-items.flex.flex-col.items-center.m-4.mb-6
-    = link_to edit_group_path(@group), class: 'btn nijikai-btn-secondary w-full max-w-64 sm:max-w-80 mb-1' do
-      i.fa-solid.fa-pen
-      | 内容修正
-    = button_to '削除する',
-                @group,
-                method: :delete,
-                data: { turbo_confirm: '本当に削除しますか？' },
-                class: 'text-sm text-gray-400 underline hover:text-red-500 hover:no-underline'
-- else
-  = render partial: 'groups/participation', locals: { group: @group, ticket: @ticket }
+  .x-share-button.text-center.mb-4
+    == render partial: 'groups/share_button', locals: { group: @group }
 
-- if @tickets.any?
-  == render partial: 'groups/participants', locals: { group: @group, tickets: @tickets }
+  section.mx-4
+    .group-details.mb-6
+      = render partial: 'groups/group', locals: { group: @group }
 
-== render partial: 'posts/posts', locals: { group: @group, posts: @posts }
+    - if @group.created_by?(current_user)
+      .owner-action-items.flex.flex-col.items-center.mb-6
+        = link_to edit_group_path(@group), class: 'btn nijikai-btn-secondary w-full max-w-64 sm:max-w-80 mb-1' do
+          i.fa-solid.fa-pen
+          | 内容修正
+        = button_to '削除する',
+                    @group,
+                    method: :delete,
+                    data: { turbo_confirm: '本当に削除しますか？' },
+                    class: 'text-sm text-gray-400 underline hover:text-red-500 hover:no-underline'
+    - else
+      .participation-action-item.mb-8
+        = render partial: 'groups/participation', locals: { group: @group, ticket: @ticket }
 
-.post-form.text-center.m-4
-  - if logged_in?
-    = render 'posts/form', group: @group, post: Post.new
-  - else
-    = button_to 'ログインをしてコメントする',
-                '/auth/github',
-                data: { turbo: false },
-                class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80'
+    - if @tickets.any?
+      section.participants.mb-8
+        == render partial: 'groups/participants', locals: { group: @group, tickets: @tickets }
+
+    section.bulletin-board.mb-4
+      == render partial: 'posts/posts', locals: { group: @group, posts: @posts }

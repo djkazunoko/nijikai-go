@@ -1,12 +1,12 @@
-.participants.m-4.mb-8
-  .flex.justify-between.bg-main-orange-100.border-l-8.border-main-orange-400.p-3.mb-6
-    p.font-bold = "参加者(#{tickets.count}名 / #{group.capacity}名)"
-    button.nijikai-link-primary onclick="modal.showModal()"
-      | すべて見る
-  .flex.justify-around
-    - tickets.first(displayable_participant_icons_count).each do |ticket|
-      = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
-        = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50')
+h3.flex.justify-between.bg-main-orange-100.border-l-8.border-main-orange-400.p-3.mb-6
+  p.font-bold = "参加者(#{tickets.count}名 / #{group.capacity}名)"
+  button.nijikai-link-primary onclick="modal.showModal()"
+    | すべて見る
+
+.flex.justify-around
+  - tickets.first(displayable_participant_icons_count).each do |ticket|
+    = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
+      = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50')
 
 dialog#modal.modal
   .modal-box

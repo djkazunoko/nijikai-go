@@ -1,26 +1,25 @@
-.participation-action-items.m-4.mb-8
-  - if ticket
-    .flex.flex-col.items-center.border.border-base-yellow-500.bg-base-yellow-100.rounded-lg.p-4
-      p.font-bold.text-base-yellow-700.mb-2 参加登録しています。
-      = button_to '参加を取り消す',
-                  group_ticket_path(group, ticket),
-                  method: :delete,
-                  class: 'text-sm text-gray-400 underline hover:no-underline hover:text-red-500'
-  - elsif group.full_capacity?
-    p.font-bold.text-center.text-red-700.border.border-red-500.bg-red-100.rounded-lg.p-4 定員に達したため参加できません。
-  - elsif logged_in?
-    .flex.flex-col.items-center.border.border-main-orange-400.bg-main-orange-100.rounded-lg.p-4.w-full
-      p.text-sm.font-bold.text-main-orange-600.mb-2 = "あと#{group.remaining_slots}名が参加できます。"
-      = button_to '2次会に参加する',
-                  group_tickets_path(group),
-                  data: { turbo: false },
-                  class: 'btn nijikai-btn-primary w-64 sm:w-80',
-                  id: 'participate-button'
-  - else
-    .flex.flex-col.items-center.border.border-main-orange-400.bg-main-orange-100.rounded-lg.p-4.w-full
-      p.text-sm.font-bold.text-main-orange-600.mb-2 = "あと#{group.remaining_slots}名が参加できます。"
-      = button_to 'ログインをして2次会に参加する',
-                  "/auth/github/?group_id=#{group.id}",
-                  data: { turbo: false },
-                  class: 'btn nijikai-btn-primary w-64 sm:w-80',
-                  id: 'signup-participate-button'
+- if ticket
+  .flex.flex-col.items-center.border.border-base-yellow-500.bg-base-yellow-100.rounded-lg.p-4
+    p.font-bold.text-base-yellow-700.mb-2 参加登録しています。
+    = button_to '参加を取り消す',
+                group_ticket_path(group, ticket),
+                method: :delete,
+                class: 'text-sm text-gray-400 underline hover:no-underline hover:text-red-500'
+- elsif group.full_capacity?
+  p.font-bold.text-center.text-red-700.border.border-red-500.bg-red-100.rounded-lg.p-4 定員に達したため参加できません。
+- elsif logged_in?
+  .flex.flex-col.items-center.border.border-main-orange-400.bg-main-orange-100.rounded-lg.p-4.w-full
+    p.text-sm.font-bold.text-main-orange-600.mb-2 = "あと#{group.remaining_slots}名が参加できます。"
+    = button_to '2次会に参加する',
+                group_tickets_path(group),
+                data: { turbo: false },
+                class: 'btn nijikai-btn-primary w-64 sm:w-80',
+                id: 'participate-button'
+- else
+  .flex.flex-col.items-center.border.border-main-orange-400.bg-main-orange-100.rounded-lg.p-4.w-full
+    p.text-sm.font-bold.text-main-orange-600.mb-2 = "あと#{group.remaining_slots}名が参加できます。"
+    = button_to 'ログインをして2次会に参加する',
+                "/auth/github/?group_id=#{group.id}",
+                data: { turbo: false },
+                class: 'btn nijikai-btn-primary w-64 sm:w-80',
+                id: 'signup-participate-button'
