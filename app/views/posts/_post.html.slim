@@ -1,12 +1,12 @@
 = turbo_frame_tag post do
   .post.border.rounded-md.mb-4
-    .flex.justify-between.items-center.border-b.p-2
+    .flex.justify-between.items-center.p-2
       .flex.items-center
         = link_to("https://github.com/#{post.user.name}", target: '_blank', rel: 'noopener') do
           = image_tag(post.user.image_url, class: 'w-6 h-6 rounded-full hover:opacity-50 mr-2', alt: post.user.name)
         = link_to post.user.name, "https://github.com/#{post.user.name}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
       time.text-sm = l post.created_at, format: :short
-    p.p-2 = post.content
+    p.px-2.pb-2 = post.content
     = turbo_frame_tag "delete_button_#{post.id}" do
       - if post.created_by?(current_user)
         = render partial: 'posts/delete_button', locals: { group:, post: }
