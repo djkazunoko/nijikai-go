@@ -8,7 +8,7 @@
 section
   h2.flex.items-center.bg-main-orange-100.pl-4.py-3.mb-4
     = link_to("https://github.com/#{@group.owner.name}", target: '_blank', rel: 'noopener') do
-      = image_tag(@group.owner.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50 mr-2')
+      = image_tag(@group.owner.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50 mr-2', alt: '主催者のアイコン画像')
     p.text-lg.font-bold
       = link_to "##{@group.hashtag}", "https://x.com/search?q=%23#{@group.hashtag}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
       span.ml-1
