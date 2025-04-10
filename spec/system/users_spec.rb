@@ -15,7 +15,7 @@ RSpec.describe 'Users', type: :system do
       it 'can login' do
         visit root_path
 
-        click_button 'サインアップ / ログインをして2次会グループを作成'
+        click_button 'GitHubアカウントでログイン'
         expect(page).to have_content 'ログインしました。'
         expect(page).to have_current_path(new_group_path)
         expect(page).to have_css(".avatar img[src='#{user.image_url}']")
@@ -30,7 +30,7 @@ RSpec.describe 'Users', type: :system do
       it 'can not login and redirect to root_path' do
         visit root_path
 
-        click_button 'サインアップ / ログインをして2次会グループを作成'
+        click_button 'GitHubアカウントでログイン'
         expect(page).to have_content 'ログインをキャンセルしました。'
         expect(page).to have_current_path(root_path)
         expect(page).not_to have_css('.avatar')

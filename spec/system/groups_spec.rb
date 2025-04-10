@@ -54,7 +54,7 @@ RSpec.describe 'Groups', type: :system do
     context 'when user is not logged in' do
       it 'displays log in and create group button' do
         visit groups_path
-        expect(page).to have_button 'サインアップ / ログインをして2次会グループを作成'
+        expect(page).to have_button 'GitHubアカウントでログイン'
       end
     end
   end
@@ -64,15 +64,15 @@ RSpec.describe 'Groups', type: :system do
 
     it 'displays the group' do
       visit group_path(group)
+      expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
+      expect(page).to have_content group.hashtag
       within('.group-details') do
-        expect(page).to have_link(href: "https://github.com/#{group.owner.name}")
-        expect(page).to have_content group.hashtag
         expect(page).to have_content group.details
         expect(page).to have_content group.location
         expect(page).to have_content group.payment_method
       end
       expect(page).not_to have_css('.participants')
-      expect(page).to have_css('.participation-action-items')
+      expect(page).to have_css('.participation-action-item')
     end
 
     context 'when owner' do
@@ -190,7 +190,7 @@ RSpec.describe 'Groups', type: :system do
     before do
       github_mock(user)
       visit groups_path
-      click_button 'サインアップ / ログインをして2次会グループを作成'
+      click_button 'GitHubアカウントでログイン'
     end
 
     context 'with valid input' do

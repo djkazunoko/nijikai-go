@@ -1,19 +1,17 @@
-.group_creation_button.text-center.mb-2
-  - if logged_in?
-    = link_to '2次会グループを作成',
-              new_group_path,
-              class: 'btn nijikai-btn-primary'
-  - else
-    span.text-sm
-      | GitHubアカウントが必要です。
-    = button_to 'サインアップ / ログインをして2次会グループを作成',
-                "/auth/github?origin=#{new_group_path}",
-                data: { turbo: false },
-                class: 'btn nijikai-btn-primary mb-2'
-    span.text-sm
-      = link_to '利用規約', tos_path, class: 'nijikai-link-primary'
-      | ・
-      = link_to 'プライバシーポリシー', pp_path, class: 'nijikai-link-primary'
-      | に
-      br
-      | 同意した上でログインしてください。
+- if logged_in?
+  = link_to '2次会グループを作成',
+            new_group_path,
+            class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80'
+- else
+  = button_to "/auth/github?origin=#{new_group_path}",
+              data: { turbo: false },
+              class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80 mb-2' do
+              i.fa-brands.fa-github.text-2xl
+              | GitHubアカウントでログイン
+  span.text-xs
+    = link_to '利用規約', tos_path, class: 'nijikai-link-primary'
+    | ・
+    = link_to 'プライバシーポリシー', pp_path, class: 'nijikai-link-primary'
+    | に
+    br
+    | 同意した上でログインしてください。

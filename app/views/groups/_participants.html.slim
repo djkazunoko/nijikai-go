@@ -1,12 +1,12 @@
-.participants.m-4
-  .flex.justify-between.mb-2
-    p.text-lg.font-bold = "参加者(#{tickets.count}名 / #{group.capacity}名)"
-    button.nijikai-link-primary onclick="modal.showModal()"
-      | すべて見る
-  .flex.justify-around
-    - tickets.first(displayable_participant_icons_count).each do |ticket|
-      = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
-        = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50')
+h3.flex.justify-between.bg-main-orange-100.border-l-8.border-main-orange-400.p-3.mb-6
+  p.font-bold = "参加者(#{tickets.count}名 / #{group.capacity}名)"
+  button.nijikai-link-primary onclick="modal.showModal()"
+    | すべて見る
+
+.flex.justify-around
+  - tickets.first(displayable_participant_icons_count).each do |ticket|
+    = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
+      = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50', alt: '参加者のアイコン画像')
 
 dialog#modal.modal
   .modal-box
@@ -14,7 +14,7 @@ dialog#modal.modal
     - tickets.each do |ticket|
       .flex.items-center.space-x-4.mb-2
         = link_to("https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener') do
-          = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50')
+          = image_tag(ticket.user.image_url, class: 'w-10 h-10 rounded-full hover:opacity-50', alt: '参加者のアイコン画像')
         = link_to ticket.user.name, "https://github.com/#{ticket.user.name}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
     .modal-action
       form method="dialog"

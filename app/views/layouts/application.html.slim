@@ -9,11 +9,10 @@ html.bg-base-yellow-100.text-accent-black-800
     = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
     = javascript_importmap_tags
     = favicon_link_tag('favicon.ico')
-    script[src="https://cdn.tailwindcss.com"]
   body.max-w-screen-sm.mx-auto.min-h-screen.flex.flex-col
     - unless current_page?(root_path) || current_page?(groups_path)
       = render 'application/header'
-    main.bg-white
+    main.bg-white.flex-1
       = render 'application/flash'
       = yield
     = render 'application/footer'

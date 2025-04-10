@@ -1,6 +1,16 @@
-.posts.m-4
-  p.text-xl.font-bold.mb-2
-    | 連絡・コメント
-    i.fa-regular.fa-comments.ml-1
-  #posts
-    = render partial: 'posts/post', collection: posts, locals: { group: }
+h3.font-bold.bg-main-orange-100.border-l-8.border-main-orange-400.p-3.mb-4
+  | 連絡・コメント
+  i.fa-regular.fa-comments.ml-1
+
+#posts
+  = render partial: 'posts/post', collection: posts, locals: { group: }
+
+.post-form.text-center
+  - if logged_in?
+    = render 'posts/form', group: @group, post: Post.new
+  - else
+    = button_to '/auth/github',
+                data: { turbo: false },
+                class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80' do
+                i.fa-brands.fa-github.text-2xl
+                | ログインをしてコメントする
