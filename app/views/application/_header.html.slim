@@ -14,7 +14,8 @@
           li
             = button_to 'アカウント削除', retirements_path, data: { turbo_confirm: '本当に削除しますか？' }
   - else
-    = button_to 'ログイン',
-                '/auth/github',
+    = button_to '/auth/github',
                 data: { turbo: false },
-                class: 'btn nijikai-btn-primary'
+                class: 'btn nijikai-btn-primary' do
+                i.fa-brands.fa-github.text-2xl
+                | ログイン
