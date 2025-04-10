@@ -5,7 +5,7 @@
 - if logged_in?
   = turbo_stream_from current_user
 
-== render partial: 'groups/group', locals: { group: @group }
+= render partial: 'groups/group', locals: { group: @group }
 
 - if @group.created_by?(current_user)
   .owner-action-items.flex.justify-center.relative.m-4
@@ -18,18 +18,18 @@
                 data: { turbo_confirm: '本当に削除しますか？' },
                 class: 'text-sm text-gray-400 underline hover:text-red-500 hover:no-underline absolute right-0 bottom-0'
 - else
-  == render partial: 'groups/participation', locals: { group: @group, ticket: @ticket }
+  = render partial: 'groups/participation', locals: { group: @group, ticket: @ticket }
 
 - if @tickets.any?
-  == render partial: 'groups/participants', locals: { group: @group, tickets: @tickets }
+  = render partial: 'groups/participants', locals: { group: @group, tickets: @tickets }
 
-== render partial: 'groups/share_button', locals: { group: @group }
+= render partial: 'groups/share_button', locals: { group: @group }
 
-== render partial: 'posts/posts', locals: { group: @group, posts: @posts }
+= render partial: 'posts/posts', locals: { group: @group, posts: @posts }
 
 .post-form.m-4
   - if logged_in?
-    == render 'posts/form', group: @group, post: Post.new
+    = render 'posts/form', group: @group, post: Post.new
   - else
     = button_to 'サインアップ / ログインをしてコメントする',
                 '/auth/github',

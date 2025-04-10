@@ -11,9 +11,9 @@ class Ticket < ApplicationRecord
   private
 
   def participants_cannot_exceed_capacity
-    return unless group.tickets.count >= group.capacity
-
-    errors.add(:base, '定員を超えて参加することはできません。')
+    group.with_lock do
+      errors.add(:base, '定員を超えて参加することはできません。') if group.tickets.count >= group.capacity
+    end
   end
 
   def owner_cannot_participate

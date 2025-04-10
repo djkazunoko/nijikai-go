@@ -1,6 +1,6 @@
 .posts.m-4
   p.text-xl.font-bold.mb-2
-    | 連絡・コメント&nbsp;
-    i.fa-regular.fa-comments
+    | 連絡・コメント
+    i.fa-regular.fa-comments.ml-1
   #posts
-    == render partial: 'posts/post', collection: posts, locals: { group: }
+    = render partial: 'posts/post', collection: posts, locals: { group: }

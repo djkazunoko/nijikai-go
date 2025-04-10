@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Group < ApplicationRecord
-  before_save :remove_leading_hash_from_hashtag
-
   belongs_to :owner, class_name: 'User', inverse_of: :groups
   has_many :tickets, dependent: :destroy
   has_many :posts, dependent: :destroy
@@ -41,7 +39,7 @@ class Group < ApplicationRecord
 
   def hashtag_format
     return if hashtag.blank?
-    return if hashtag.match?(/\A#?[\p{Alnum}_]+\z/)
+    return if hashtag.match?(/\A[\p{Alnum}_]+\z/)
 
     errors.add(:hashtag, 'にはスペースや記号は使用できません。')
   end
@@ -51,9 +49,5 @@ class Group < ApplicationRecord
     return unless hashtag.match?(/\A[0-9_]+\z/)
 
     errors.add(:hashtag, 'は数字、アンダースコアのみでは登録できません')
-  end
-
-  def remove_leading_hash_from_hashtag
-    self.hashtag = hashtag.delete_prefix('#')
   end
 end

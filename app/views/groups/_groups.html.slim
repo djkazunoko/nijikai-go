@@ -2,7 +2,8 @@
   - groups_grouped_by_hashtag.each do |hashtag, groups|
     p.text-xl.font-bold.mb-2
       = link_to "##{hashtag}", "https://x.com/search?q=%23#{hashtag}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
-      | &nbsp;の2次会一覧
+      span.ml-1
+        | の2次会一覧
 
     .groups.border.rounded-md.mb-2
       - groups.each do |group|

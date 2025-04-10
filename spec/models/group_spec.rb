@@ -11,13 +11,8 @@ RSpec.describe Group, type: :model do
       expect(group).to be_valid
     end
 
-    it 'is valid with a hashtag starting with #' do
+    it 'is invalid with a hashtag starting with #' do
       group.hashtag = '#validHashtag'
-      expect(group).to be_valid
-    end
-
-    it 'is invalid with a hashtag starting with multiple #' do
-      group.hashtag = '##invalidHashtag'
       expect(group).to be_invalid
     end
 
@@ -58,16 +53,6 @@ RSpec.describe Group, type: :model do
     it 'is valid with a hashtag containing letters and numbers' do
       group.hashtag = 'valid123'
       expect(group).to be_valid
-    end
-  end
-
-  describe '#remove_leading_hash_from_hashtag' do
-    let(:group) { build(:group) }
-
-    it 'removes leading # from hashtag before save' do
-      group.hashtag = '#validHashtag'
-      group.save
-      expect(group.hashtag).to eq('validHashtag')
     end
   end
 

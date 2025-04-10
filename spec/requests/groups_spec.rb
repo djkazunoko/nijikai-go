@@ -96,6 +96,16 @@ RSpec.describe '/groups', type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
+
+      it 'creates a new Group and removes the leading # from group.hashtag' do
+        expect do
+          post groups_url, params: { group: valid_attributes.merge(hashtag: '#example') }
+        end.to change(Group, :count).by(1)
+
+        group = Group.last
+        expect(group.hashtag).to eq 'example'
+        expect(response).to redirect_to(group_url(group))
+      end
     end
 
     context 'when user is not logged in' do
@@ -122,6 +132,13 @@ RSpec.describe '/groups', type: :request do
         patch group_url(group), params: { group: new_attributes }
         group.reload
         expect(group.details).to eq 'New Group Details'
+        expect(response).to redirect_to(group_url(group))
+      end
+
+      it 'updates the group and removes the leading # from group.hashtag' do
+        patch group_url(group), params: { group: { hashtag: '#newhashtag' } }
+        group.reload
+        expect(group.hashtag).to eq 'newhashtag'
         expect(response).to redirect_to(group_url(group))
       end
 
