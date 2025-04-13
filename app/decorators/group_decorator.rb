@@ -6,7 +6,7 @@ module GroupDecorator
     query_params = {
       url: Rails.application.routes.url_helpers.group_url(self),
       hashtags: '2次会GO',
-      text: "##{hashtag} の2次会に参加しよう！"
+      text: "##{hashtag} の2次会に参加しよう！\n"
     }
     "https://twitter.com/intent/tweet?#{URI.encode_www_form(query_params)}"
   end
