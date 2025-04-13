@@ -9,6 +9,7 @@ html.bg-base-yellow-100.text-accent-black-800
     = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
     = javascript_importmap_tags
     = favicon_link_tag('favicon.ico')
+    = favicon_link_tag('apple-touch-icon.png', rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png')
   body.max-w-screen-sm.mx-auto.min-h-screen.flex.flex-col
     - unless current_page?(root_path) || current_page?(groups_path)
       = render 'application/header'
