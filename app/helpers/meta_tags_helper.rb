@@ -29,7 +29,8 @@ module MetaTagsHelper
 
   def twitter
     {
-      card: 'summary',
+      card: 'summary_large_image',
+      creator: '@djkazunoko',
       image: image_url('ogp.png')
     }
   end
