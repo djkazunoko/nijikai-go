@@ -6,7 +6,7 @@
           = image_tag(post.user.image_url, class: 'w-6 h-6 rounded-full hover:opacity-50 mr-2', alt: '投稿者のアイコン画像')
         = link_to post.user.name, "https://github.com/#{post.user.name}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
       time.text-sm = l post.created_at, format: :short
-    p.px-2.pb-2 = post.content
+    p.px-2.pb-2 = safe_join(post.content.split("\n"), tag.br)
     = turbo_frame_tag "delete_button_#{post.id}" do
       - if post.created_by?(current_user)
         = render partial: 'posts/delete_button', locals: { group:, post: }
