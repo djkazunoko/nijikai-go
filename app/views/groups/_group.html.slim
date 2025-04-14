@@ -1,5 +1,5 @@
 .details.py-2
-  p.font-bold = group.details
+  p.font-bold = safe_join(group.details.split("\n"), tag.br)
 
 .location.flex.items-center.py-2
   i.fa-solid.fa-location-dot.mr-2
