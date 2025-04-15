@@ -1,6 +1,6 @@
 = turbo_frame_tag 'new_post' do
-  = form_with(model: [group, post], class: 'flex flex-col') do |form|
+  = form_with(model: [group, post], class: 'flex flex-col', data: { controller: 'post-form' }) do |form|
     = render 'application/errors', object: post
-    = form.text_area :content, placeholder: 'コメントを入力', class: 'rounded-md p-2 mb-2'
+    = form.text_area :content, placeholder: 'コメントを入力', class: 'rounded-md p-2 mb-2', data: { action: 'input->post-form#onInput', post_form_target: 'content' }
     .text-center
-      = form.submit 'コメントする', class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80'
+      = form.submit 'コメントする', class: 'btn nijikai-btn-primary w-full max-w-64 sm:max-w-80 disabled:bg-main-orange-400 disabled:text-white/60', data: { post_form_target: 'submit' }

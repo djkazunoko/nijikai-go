@@ -31,7 +31,7 @@ RSpec.describe 'Posts', type: :system do
       it 'displays the post form' do
         visit group_path(group)
         expect(page).to have_field 'post_content'
-        expect(page).to have_button 'コメントする'
+        expect(page).to have_button 'コメントする', disabled: true
       end
     end
 
@@ -106,23 +106,6 @@ RSpec.describe 'Posts', type: :system do
       end
     end
 
-    context 'with empty input' do
-      before do
-        login_as(user)
-      end
-
-      it 'does not create the post and displays an error message' do
-        visit group_path(group)
-
-        expect do
-          click_button 'コメントする'
-          expect(page).to have_content 'コメントを入力してください'
-        end.not_to change(Post, :count)
-
-        expect(page).to have_current_path(group_path(group))
-      end
-    end
-
     context 'with more than 1000 characters' do
       before do
         login_as(user)
@@ -132,7 +115,7 @@ RSpec.describe 'Posts', type: :system do
         visit group_path(group)
 
         expect do
-          fill_in 'post_content', with: 'a' * 2001
+          fill_in 'post_content', with: 'a' * 1001
           click_button 'コメントする'
           expect(page).to have_content 'コメントは1000文字以内で入力してください'
         end.not_to change(Post, :count)
