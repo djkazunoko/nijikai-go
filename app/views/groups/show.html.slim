@@ -1,10 +1,6 @@
 - title 'グループ詳細'
 - set_meta_tags description: 'グループ詳細ページです。'
 
-= turbo_stream_from 'posts'
-- if logged_in?
-  = turbo_stream_from current_user
-
 section
   h2.flex.items-center.bg-main-orange-100.pl-4.py-3.mb-4
     = link_to("https://github.com/#{@group.owner.name}", target: '_blank', rel: 'noopener') do
