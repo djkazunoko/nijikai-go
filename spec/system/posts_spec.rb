@@ -124,8 +124,10 @@ RSpec.describe 'Posts', type: :system do
       end
     end
 
-    context 'when creating a post' do
-      it 'display the creates post and does not display the post delete button in a different session' do
+    context 'when broadcasting a created post' do
+      include ActiveJob::TestHelper
+
+      it 'broadcasts the post to all users' do
         visit group_path(group)
 
         using_session('post creator session') do
@@ -133,11 +135,42 @@ RSpec.describe 'Posts', type: :system do
           visit group_path(group)
           fill_in 'post_content', with: 'テストコメント'
           click_button 'コメントする'
+          expect(page).to have_content 'テストコメント'
+          expect(page).to have_content 'コメントが作成されました。'
         end
 
-        # reverts to different session
+        # reverts to previous session
         expect(page).to have_content 'テストコメント'
         expect(page).not_to have_content 'コメントが作成されました。'
+      end
+
+      it 'broadcasts delete button only to the post owner' do
+        other_user = create(:user)
+
+        using_session('post creator session') do
+          login_as(user)
+          visit group_path(group)
+          fill_in 'post_content', with: 'テストコメント'
+          perform_enqueued_jobs do
+            click_button 'コメントする'
+          end
+          expect(page).to have_content 'テストコメント'
+          sleep 2
+          within('.post') do
+            expect(page).to have_button '削除する', wait: 5
+          end
+        end
+
+        using_session('other logged-in user session') do
+          login_as(other_user)
+          visit group_path(group)
+          within('.post') do
+            expect(page).not_to have_button '削除する'
+          end
+        end
+
+        # reverts to previous session
+        visit group_path(group)
         within('.post') do
           expect(page).not_to have_button '削除する'
         end
