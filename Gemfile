@@ -25,8 +25,8 @@ gem 'turbo-rails'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
 
-# Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
-gem 'tailwindcss-rails'
+# Tailwind CSSのアップグレードはRailsアップグレード後に別途行う
+gem 'tailwindcss-rails', '2.3.0'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
@@ -76,14 +76,15 @@ group :development do
   # gem "spring"
 
   gem 'dockerfile-rails', '>= 1.7', require: false
-  gem 'rubocop', require: false
-  gem 'rubocop-capybara', require: false
-  gem 'rubocop-factory_bot', require: false
-  gem 'rubocop-fjord', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'slim_lint', require: false
+  # rubocop関連のアップグレードはRailsアップグレード後に別途行う
+  gem 'rubocop', '1.75.2', require: false
+  gem 'rubocop-capybara', '2.20.0', require: false
+  gem 'rubocop-factory_bot', '2.25.1', require: false
+  gem 'rubocop-fjord', '0.3.0', require: false
+  gem 'rubocop-performance', '1.20.2', require: false
+  gem 'rubocop-rails', '2.24.0', require: false
+  gem 'rubocop-rspec', '2.27.1', require: false
+  gem 'slim_lint', '0.32.2', require: false
 end
 
 group :test do
