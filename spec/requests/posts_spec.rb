@@ -74,9 +74,9 @@ RSpec.describe 'Posts', type: :request do
         assert_turbo_stream action: 'replace', target: 'new_post'
         assert_turbo_stream action: 'prepend', target: 'flash'
 
-        turbo_streams_posts = capture_turbo_stream_broadcasts 'posts'
-        expect(turbo_streams_posts.first['action']).to eq('append')
-        expect(turbo_streams_posts.first['target']).to eq('posts')
+        turbo_streams_group = capture_turbo_stream_broadcasts group
+        expect(turbo_streams_group.first['action']).to eq('append')
+        expect(turbo_streams_group.first['target']).to eq('posts')
 
         turbo_streams_user = capture_turbo_stream_broadcasts user
         expect(turbo_streams_user.first['action']).to eq('append')
@@ -141,7 +141,7 @@ RSpec.describe 'Posts', type: :request do
         expect(response.media_type).to eq Mime[:turbo_stream]
         assert_turbo_stream action: 'prepend', target: 'flash'
 
-        turbo_streams = capture_turbo_stream_broadcasts 'posts'
+        turbo_streams = capture_turbo_stream_broadcasts group
         expect(turbo_streams.second['action']).to eq('remove')
         expect(turbo_streams.second['target']).to eq("post_#{post.id}")
       end

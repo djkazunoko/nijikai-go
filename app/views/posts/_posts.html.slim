@@ -2,7 +2,7 @@ h3.font-bold.bg-main-orange-100.border-l-8.border-main-orange-400.p-3.mb-4
   | 連絡・コメント
   i.fa-regular.fa-comments.ml-1
 
-= turbo_stream_from 'posts'
+= turbo_stream_from group
 - if logged_in?
   = turbo_stream_from current_user
 
