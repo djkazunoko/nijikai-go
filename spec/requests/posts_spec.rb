@@ -77,10 +77,58 @@ RSpec.describe 'Posts', type: :request do
         turbo_streams_group = capture_turbo_stream_broadcasts group
         expect(turbo_streams_group.first['action']).to eq('append')
         expect(turbo_streams_group.first['target']).to eq('posts')
+      end
+    end
+  end
 
-        turbo_streams_user = capture_turbo_stream_broadcasts user
-        expect(turbo_streams_user.first['action']).to eq('append')
-        expect(turbo_streams_user.first['target']).to eq("delete_button_#{Post.last.id}")
+  describe 'GET /groups/:group_id/posts/:post_id/delete_button' do
+    let(:post) { create(:post, group:) }
+
+    context 'when logged in as the post owner' do
+      before do
+        login_as(post.user)
+      end
+
+      it 'returns the delete button in a Turbo Frame' do
+        get group_post_delete_button_path(group, post)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(%(turbo-frame id="delete_button_#{post.id}"))
+        expect(response.body).to include('削除する')
+      end
+    end
+
+    context 'when logged in as a non-post owner' do
+      before do
+        login_as(user)
+      end
+
+      it 'returns an empty Turbo Frame' do
+        get group_post_delete_button_path(group, post)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(%(turbo-frame id="delete_button_#{post.id}"))
+        expect(response.body).not_to include('削除する')
+      end
+    end
+
+    context 'when not logged in' do
+      it 'returns an empty Turbo Frame' do
+        get group_post_delete_button_path(group, post)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(%(turbo-frame id="delete_button_#{post.id}"))
+        expect(response.body).not_to include('削除する')
+      end
+    end
+
+    context 'when the post does not belong to the group' do
+      it 'returns a 404 response' do
+        other_group = create(:group)
+
+        get group_post_delete_button_path(other_group, post)
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
