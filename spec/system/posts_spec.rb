@@ -160,6 +160,31 @@ RSpec.describe 'Posts', type: :system do
       # reverts to different session
       expect(page).not_to have_content 'テストコメント'
     end
+
+    it 'displays the delete button only to the post owner' do
+      other_user = create(:user)
+      login_as(other_user)
+      visit group_path(group)
+      expect(page).to have_css('turbo-cable-stream-source[connected]', visible: :all)
+
+      using_session('post creator session') do
+        login_as(user)
+        visit group_path(group)
+        fill_in 'post_content', with: 'テストコメント'
+        click_button 'コメントする'
+
+        expect(page).to have_content 'テストコメント'
+        within('.post') do
+          expect(page).to have_button '削除する'
+        end
+      end
+
+      # reverts to the session logged in as another user
+      expect(page).to have_content 'テストコメント'
+      within('.post') do
+        expect(page).not_to have_button '削除する'
+      end
+    end
   end
 
   describe 'deleting a post' do

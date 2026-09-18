@@ -7,6 +7,9 @@
         = link_to post.user.name, "https://github.com/#{post.user.name}", target: '_blank', rel: 'noopener', class: 'nijikai-link-primary'
       time.text-sm = l post.created_at, format: :short
     p.px-2.pb-2 = safe_join(post.content.split("\n"), tag.br)
-    = turbo_frame_tag "delete_button_#{post.id}" do
-      - if post.created_by?(current_user)
-        = render partial: 'posts/delete_button', locals: { group:, post: }
+    - if broadcasted
+      = turbo_frame_tag "delete_button_#{post.id}", src: group_post_delete_button_path(group, post)
+    - else
+      = turbo_frame_tag "delete_button_#{post.id}" do
+        - if post.created_by?(current_user)
+          = render partial: 'posts/delete_button', locals: { group:, post: }
