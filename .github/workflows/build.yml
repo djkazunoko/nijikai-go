@@ -1,5 +1,5 @@
 name: "Build"
-on: push
+on: workflow_call
 
 permissions:
   contents: read

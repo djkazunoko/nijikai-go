@@ -1,0 +1,24 @@
+name: "CI"
+on: push
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    uses: ./.github/workflows/lint.yml
+
+  test:
+    uses: ./.github/workflows/test.yml
+    secrets:
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+  build:
+    uses: ./.github/workflows/build.yml
+
+  deploy:
+    needs: [lint, test, build]
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/fly-deploy.yml
+    secrets:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
