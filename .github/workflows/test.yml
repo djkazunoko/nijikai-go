@@ -1,5 +1,9 @@
 name: "Test"
-on: push
+on:
+  workflow_call:
+    secrets:
+      RAILS_MASTER_KEY:
+        required: true
 
 jobs:
   test:

@@ -1,0 +1,16 @@
+name: "Build"
+on: workflow_call
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build production Docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build --tag nijikai-go:ci .
