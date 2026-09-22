@@ -91,6 +91,7 @@ RSpec.describe 'Posts', type: :system do
 
         click_button 'ログインをしてコメントする'
         expect(page).to have_current_path(group_path(group))
+        expect(page).to have_css('turbo-cable-stream-source[connected]', visible: :all)
 
         expect do
           fill_in 'post_content', with: 'テストコメント'
@@ -133,6 +134,7 @@ RSpec.describe 'Posts', type: :system do
       using_session('post creator session') do
         login_as(user)
         visit group_path(group)
+        expect(page).to have_css('turbo-cable-stream-source[connected]', visible: :all)
         fill_in 'post_content', with: 'テストコメント'
         click_button 'コメントする'
         expect(page).to have_content 'テストコメント'
@@ -152,6 +154,7 @@ RSpec.describe 'Posts', type: :system do
       using_session('post creator session') do
         login_as(user)
         visit group_path(group)
+        expect(page).to have_css('turbo-cable-stream-source[connected]', visible: :all)
         fill_in 'post_content', with: 'テストコメント'
         click_button 'コメントする'
         expect(page).to have_content 'テストコメント'
@@ -170,6 +173,7 @@ RSpec.describe 'Posts', type: :system do
       using_session('post creator session') do
         login_as(user)
         visit group_path(group)
+        expect(page).to have_css('turbo-cable-stream-source[connected]', visible: :all)
         fill_in 'post_content', with: 'テストコメント'
         click_button 'コメントする'
 
@@ -194,6 +198,7 @@ RSpec.describe 'Posts', type: :system do
       it 'deletes a post' do
         login_as(post.user)
         visit group_path(group)
+        expect(page).to have_css('turbo-cable-stream-source[connected]', visible: :all)
         expect(page).to have_content post.content
 
         expect do
@@ -212,11 +217,13 @@ RSpec.describe 'Posts', type: :system do
 
       it 'does not display the deleted post in a different session' do
         visit group_path(group)
+        expect(page).to have_css('turbo-cable-stream-source[connected]', visible: :all)
         expect(page).to have_content post.content
 
         using_session('post owner session') do
           login_as(post.user)
           visit group_path(group)
+          expect(page).to have_css('turbo-cable-stream-source[connected]', visible: :all)
           accept_confirm do
             within('.post') do
               click_button '削除する'
