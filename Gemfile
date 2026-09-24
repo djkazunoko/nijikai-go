@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby file: '.ruby-version'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '7.2.3.2'
+gem 'rails', '8.0.5.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -55,7 +55,7 @@ gem 'meta-tags'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
-gem 'rails-i18n', '~> 7.0.0'
+gem 'rails-i18n'
 gem 'slim-rails'
 
 group :development, :test do
