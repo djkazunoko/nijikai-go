@@ -27,7 +27,7 @@ https://nijikai-go.fly.dev/
 ```bash
 $ git clone https://github.com/djkazunoko/nijikai-go.git
 $ cd nijikai-go
-$ bin/setup
+$ bin/setup --skip-server
 ```
 
 ### 2. 環境変数の設定
